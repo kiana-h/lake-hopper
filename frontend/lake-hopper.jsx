@@ -5,12 +5,7 @@ import Root from "./components/root";
 
 //TESTING
 import { login, logout, signup } from "./actions/session_actions";
-// import { fetchHomes } from "./actions/home_actions";
-// import { fetchHomes } from "./actions/home_actions";
-window.login = login;
-window.logout = logout;
-window.signup = signup;
-// window.fetchHomes = fetchHomes;
+import { fetchTrips } from "./actions/trip_actions";
 
 document.addEventListener("DOMContentLoaded", () => {
   let store;
@@ -27,10 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
     store = configureStore();
   }
 
-  //
-  window.getState = store.getState;
+  window.login = login;
+  window.logout = logout;
+  window.signup = signup;
   window.dispatch = store.dispatch;
-  //
+  window.getState = store.getState;
+  window.fetchTrips = fetchTrips;
 
   const root = document.getElementById("root");
 

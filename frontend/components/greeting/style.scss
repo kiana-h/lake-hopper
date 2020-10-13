@@ -1,0 +1,40 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  margin-left: 30px;
+}
+
+nav {
+  margin: 15px 0;
+}
+
+.logo {
+  font-size: 30px;
+  color: #f50157;
+  font-weight: bold;
+  margin: 0;
+}
+.arrow {
+  border: solid #f50157;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 3px;
+}
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.user-greeting {
+  margin-left: 30px;
+  padding-left: 5px;
+  border-left: 1px solid grey;
+}
+.username {
+  padding: 0 20px 0 20px;
+  color: #f50157;
+}

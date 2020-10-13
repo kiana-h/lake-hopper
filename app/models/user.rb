@@ -6,8 +6,14 @@ class User < ApplicationRecord
     validates :username, :email , uniqueness: true
     after_initialize :ensure_session_token
 
-    def self.find_by_credentials (username, password) 
-        user = User.find_by(username: username)
+    has_many :trips
+    
+    has_many :activities, 
+    through: :trips, 
+    source: :activities
+
+    def self.find_by_credentials (email, password) 
+        user = User.find_by(email: email)
         return if !user
         user.is_password?(password) ? user : nil
     end

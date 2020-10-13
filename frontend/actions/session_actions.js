@@ -5,12 +5,12 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const RECEIVE_ERRORS = "RECEIVE_ERRORS";
 
 export const receiveUser = (user) => ({
-  type: RECEIVE_CURRENT_USER,
+  type: RECEIVE_USER,
   user: user,
 });
 
 export const logoutUser = () => ({
-  type: LOGOUT_CURRENT_USER,
+  type: LOGOUT_USER,
 });
 
 export const receiveErrors = (errors) => ({
@@ -33,5 +33,5 @@ export const login = (user) => (dispatch) => {
   );
 };
 export const logout = () => (dispatch) => {
-  return ApiUtil.logout().then(() => dispatch(logoutCurrentUser()));
+  return ApiUtil.logout().then(() => dispatch(logoutUser()));
 };
