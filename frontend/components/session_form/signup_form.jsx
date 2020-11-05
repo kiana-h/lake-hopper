@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import theme from "../theme/theme";
 
 function Copyright() {
   return (
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp({ errors, submit }) {
   const classes = useStyles();
+  const history = useHistory();
 
   const [state, setState] = useState({
     username: "",
@@ -53,9 +56,14 @@ export default function SignUp({ errors, submit }) {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    submit(state);
+    try {
+      await submit(state);
+      history.push("/home");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChange = (e) => {
@@ -138,7 +146,7 @@ export default function SignUp({ errors, submit }) {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={theme.palette.gradientPrimary}
             className={classes.submit}
             color="secondary"
           >
@@ -146,16 +154,16 @@ export default function SignUp({ errors, submit }) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
+      {/* <Box mt={5}>
         <Copyright />
-      </Box>
+      </Box> */}
     </Container>
   );
 }

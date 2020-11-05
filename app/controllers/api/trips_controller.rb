@@ -1,15 +1,22 @@
 class Api::TripsController < ApplicationController
 
     def index 
-        @trips = bounds ? Trip.in_bounds(bounds) : Trip.all
-        if params[:minCapacity] && params[:maxCapacity]
-            @trips = @trips.where(capacity: capacity_range)
+        @trips = []
+        if current_user
+            @trips = bounds ? current_user.trips.in_bounds(bounds) : current_user.trips     
         end
         render :index
     end
 
     def create
-        @trip = Trip.new(trip_params)
+        @trip = current_user.trips.new(trip_params)
+        actvs = activity_params
+        if actvs
+            @activities = []
+            actvs.each do |activity|
+                @activities.push(@trip.activities.new(activity))
+            end
+        end
         if @trip.save
             render "api/trips/show"
         else
@@ -24,12 +31,12 @@ class Api::TripsController < ApplicationController
     private
 
     def trip_params
-        params.require(:trip).permit(:title, :description, :lat, :lng, :capacity, :maxCapacity, :minCapacity, :photo)
+        params.require(:trip).permit(:title, :description, :user_id, :mapImageUrl, :start_date, :end_date, :location_lat, :location_lng, photos: [], activities_attributes: [:id, :elevation_gain, :distance, :trackpoints])
     end
 
-      def capacity_range
-    (params[:minCapacity]..params[:maxCapacity])
-        end
+    def activity_params
+        JSON.parse params.require(:trip).permit(:activities)["activities"]
+    end
 
     def bounds
         params[:bounds]

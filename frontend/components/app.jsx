@@ -5,24 +5,26 @@ import { AuthRoute, ProtectedRoute } from "../util/route_util.jsx";
 import Signup from "./session_form/signup_form_container";
 import Login from "./session_form/login_form_container";
 import TripIndex from "./trip_index/trip_index_container";
-// import Search from "./search/search_container";
-// import HomeForm from "./home_form/home_form_container";
-// import HomeShow from "./home_show/home_show_container";
+import TripCreator from "./trip_form/trip_creator_container";
+import TripShow from "./trip_show/trip_show_container";
+import Landing from "./landing/landing_container";
 
 const App = () => {
   return (
-    <div className="app-container">
+    <div>
       <header>
         <Greeting />
+        <Route exact path="/" component={Landing} />
       </header>
-
-      <Switch>
-        <AuthRoute exact path="/login" component={Login} />
-        <AuthRoute exact path="/signup" component={Signup} />
-        {/* <ProtectedRoute path="/homes/new" component={HomeForm} />
-        <Route path="/homes/:homeId" component={HomeShow} /> */}
-        <Route exact path="/" component={TripIndex} />
-      </Switch>
+      <div className="app-container">
+        <Switch>
+          <AuthRoute exact path="/login" component={Login} />
+          <AuthRoute exact path="/signup" component={Signup} />
+          <ProtectedRoute path="/trips/new" component={TripCreator} />
+          <Route path="/trips/:tripId" component={TripShow} />
+          <Route path="/home" component={TripIndex} />
+        </Switch>
+      </div>
     </div>
   );
 };

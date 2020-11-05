@@ -1,0 +1,24 @@
+.splash {
+  //   position: fixed;
+  background-image: url("/assets/bantersnaps-gdQnsMbhkUs-unsplash.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.landing-blurb {
+  padding-left: 100px;
+  margin: 0 auto;
+  margin-top: 200px;
+}
+.landing-title {
+  font-size: 50px;
+}
+
+.demo-button {
+  margin-top: 40px;
+}

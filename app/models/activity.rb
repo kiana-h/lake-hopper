@@ -1,6 +1,7 @@
 class Activity < ApplicationRecord
-    validates :user_id, :title, :start_date, :end_date, :location_lat, :location_lng, presence: true
+    validates  :trackpoints, :elevation_gain, :distance, presence: true
 
-    belongs_to :trip
-    belongs_to :user, through: :trip
+    belongs_to :trip, optional: true
+
 end
+

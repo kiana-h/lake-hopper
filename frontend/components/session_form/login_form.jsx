@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +13,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import theme from "../theme/theme";
 
 function Copyright() {
   return (
@@ -39,23 +41,32 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  bottomLink: {
+    marginTop: "20px",
+  },
 }));
 
-export default function SignIn({ errors, submit }) {
+function SignIn({ errors, submit }) {
   const classes = useStyles();
+  const history = useHistory();
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    submit(state);
+    try {
+      await submit(state);
+      history.push("/home");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChange = (e) => {
@@ -117,31 +128,31 @@ export default function SignIn({ errors, submit }) {
             value={state.password}
             onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={theme.palette.gradientPrimary}
             className={classes.root}
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item container justify="flex-end">
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+
+          <Grid container justify="flex-end" className={classes.bottomLink}>
+            <Grid item>
+              <Link href="#/signup" variant="body2">
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
+      {/* <Box mt={8}>
         <Copyright />
-      </Box>
+      </Box> */}
     </Container>
   );
 }
+
+export default SignIn;

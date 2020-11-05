@@ -1,7 +1,7 @@
-.flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@mixin lg {
+  @media (min-width: 865px) {
+    @content;
+  }
 }
 
 a {
@@ -9,14 +9,23 @@ a {
   margin-left: 30px;
 }
 
-nav {
-  margin: 15px 0;
+.nav-elements {
+  margin: 0 20px;
+  @include lg {
+    margin: 0px 100px;
+  }
+  height: 82px;
+  min-width: 750px;
+
+  // border-bottom: 1px solid lightgray;
 }
 
 .logo {
   font-size: 30px;
-  color: #f50157;
-  font-weight: bold;
+  display: flex;
+  width: 220px;
+  justify-content: space-between;
+  align-items: center;
   margin: 0;
 }
 .arrow {
@@ -29,12 +38,14 @@ nav {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
-.user-greeting {
-  margin-left: 30px;
+.user_greeting {
   padding-left: 5px;
-  border-left: 1px solid grey;
 }
 .username {
-  padding: 0 20px 0 20px;
-  color: #f50157;
+  padding-right: 30px;
+  padding-left: 30px;
+  border-left: 1px solid grey;
+}
+.mountain {
+  width: 30px;
 }

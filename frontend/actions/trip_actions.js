@@ -27,7 +27,9 @@ export const fetchTrips = (filters) => (dispatch) => {
 };
 
 export const fetchTrip = (id) => (dispatch) =>
-  ApiUtil.fetchTrip(id).then((trip) => dispatch(receiveTrip(trip)));
+  ApiUtil.fetchTrip(id).then((trip) => {
+    return dispatch(receiveTrip(trip));
+  });
 
 export const postTrip = (trip) => (dispatch) => {
   ApiUtil.postTrip(trip).then(

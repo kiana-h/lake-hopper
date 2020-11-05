@@ -1,4 +1,5 @@
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   context: __dirname,
@@ -20,12 +21,18 @@ module.exports = {
               [
                 "@babel/preset-env",
                 {
-                  useBuiltIns: "entry",
-                  targets: "defaults",
+                  useBuiltIns: "usage",
+                  targets: {
+                    chrome: "80",
+                  },
+                  corejs: 3,
                 },
               ],
             ],
-            plugins: ["@babel/plugin-proposal-export-default-from"],
+            plugins: [
+              "@babel/plugin-proposal-export-default-from",
+              "@babel/plugin-proposal-class-properties",
+            ],
           },
         },
       },
@@ -42,6 +49,7 @@ module.exports = {
             options: {
               modules: { localIdentName: "[name]_[local]-[hash:base64:3]" },
               importLoaders: 1,
+              url: false,
             },
           },
           "sass-loader",
@@ -53,4 +61,8 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", "*"],
   },
+  node: {
+    fs: "empty",
+  },
+  plugins: [new Dotenv()],
 };

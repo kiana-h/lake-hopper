@@ -10,6 +10,7 @@ const sessionReducer = (state = initSate, action) => {
     case RECEIVE_USER:
       return Object.assign({}, state, { id: action.user.id });
     case LOGOUT_USER:
+      debugger;
       return Object.assign({}, state, { id: null });
     default:
       return state;

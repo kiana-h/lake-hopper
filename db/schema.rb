@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_12_031026) do
+ActiveRecord::Schema.define(version: 2020_11_02_165237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,17 +37,12 @@ ActiveRecord::Schema.define(version: 2020_10_12_031026) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "time", null: false
-    t.string "type", null: false
-    t.text "description"
-    t.float "distance"
-    t.integer "duration"
-    t.binary "track_points"
+    t.binary "trackpoints", null: false
+    t.integer "elevation_gain", null: false
+    t.float "distance", null: false
     t.integer "calories"
-    t.integer "average_hr"
-    t.float "pace"
-    t.integer "elevation_gain"
+    t.integer "avg_hr"
+    t.integer "duration"
     t.integer "trip_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -64,6 +59,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_031026) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "complete", default: false, null: false
+    t.string "mapImageUrl"
     t.index ["user_id"], name: "index_trips_on_user_id"
   end
 
