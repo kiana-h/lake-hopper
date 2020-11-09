@@ -34,6 +34,7 @@ class TripCreator extends React.Component {
       photos: [],
       submitted: "f",
       mapImageUrl: "",
+      firstPoint: null,
     };
 
     this.initMapProps = {
@@ -62,7 +63,6 @@ class TripCreator extends React.Component {
       let start_date = routes[0]["activityId"].split("T")[0];
       let lastIndex = Object.keys(routes).reverse()[0];
       let end_date = routes[lastIndex]["activityId"].split("T")[0];
-
       this.setState({
         routes,
         distance,
@@ -109,14 +109,8 @@ class TripCreator extends React.Component {
     tripData.append("trip[start_date]", this.state.start_date);
     tripData.append("trip[end_date]", this.state.end_date);
     tripData.append("trip[mapImageUrl]", this.state.mapImageUrl);
-    tripData.append(
-      "trip[location_lat]",
-      this.state.routes[0].trackpoints[0][0].lat
-    );
-    tripData.append(
-      "trip[location_lng]",
-      this.state.routes[0].trackpoints[0][0].lng
-    );
+    tripData.append("trip[location_lat]", this.state.firstPoint[1]);
+    tripData.append("trip[location_lng]", this.state.firstPoint[0]);
     if (this.state.photos.length) {
       for (let photo of this.state.photos) {
         tripData.append("trip[photos][]", photo);
@@ -144,19 +138,17 @@ class TripCreator extends React.Component {
   };
 
   navigateToSearch = () => {
-    this.props.history.push("/");
+    this.props.history.push("/trips");
   };
 
   setMode = (mode) => {
     this.setState({ mode: mode });
   };
 
-  getFirstPoint = (lap) => {
-    for (let trackpoint of lap) {
-      if (trackpoint.lat && trackpoint.lng) {
-        return [trackpoint.lng, trackpoint.lat];
-      }
-    }
+  updateFirstPoint = (marker) => {
+    const lng = marker.getLngLat().lng.toFixed(6);
+    const lat = marker.getLngLat().lat.toFixed(6);
+    this.setState({ firstPoint: [lng, lat] });
   };
 
   reset = () => {
@@ -168,19 +160,24 @@ class TripCreator extends React.Component {
       routes: {},
       start_date: today(),
       end_date: today(),
+      photos: [],
+      submitted: "f",
+      mapImageUrl: "",
+      firstPoint: null,
     });
   };
 
   undo = () => {};
 
-  clear = () => {
-    this.setState({ distance: 0, elevation_gain: 0, routes: {} });
-  };
+  // clear = () => {
+  //   this.setState({ distance: 0, elevation_gain: 0, routes: {} });
+  // };
 
   render() {
     if (!this.props.mode) {
       return <CreateType reset={this.reset} />;
     }
+
     return (
       <div className="flex-top">
         <TripForm
@@ -207,8 +204,8 @@ class TripCreator extends React.Component {
           lng={this.initMapProps.lng}
           zoom={this.initMapProps.zoom}
           undo={this.undo}
-          clear={this.clear}
-          getFirstPoint={this.getFirstPoint}
+          clear={this.reset}
+          updateFirstPoint={this.updateFirstPoint}
           submitted={this.state.submitted}
           generateMapImageUrl={this.generateMapImageUrl}
         />

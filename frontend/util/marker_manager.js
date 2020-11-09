@@ -29,7 +29,11 @@ export default class MarkerManager {
 
   createMarkerFromTrip(trip) {
     const position = new mapboxgl.LngLat(trip.location_lng, trip.location_lat);
-    const marker = new mapboxgl.Marker().setLngLat(position).addTo(this.map);
+    const marker = new mapboxgl.Marker({
+      color: "#BC9CFF",
+    })
+      .setLngLat(position)
+      .addTo(this.map);
     this.markers[trip.id] = marker;
   }
 

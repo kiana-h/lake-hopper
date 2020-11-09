@@ -1,19 +1,20 @@
 import React from "react";
 import TripDetail from "./trip_detail";
 import TripMap from "../trip_map/trip_map";
+import ImageGridList from "./photo_array";
 import style from "./style.scss";
 
 class TripShow extends React.Component {
   constructor(props) {
     super(props);
     // this.state = {
-    //   trip: this.props.trip,
+    //   hoverId: null,
     // };
   }
   componentDidMount() {
     this.props.fetchTrip(this.props.tripId);
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (!this.props.trip) {
       this.props.fetchTrip(this.props.tripId);
     }
@@ -41,15 +42,24 @@ class TripShow extends React.Component {
     const { trip } = this.props;
 
     return (
-      <div className="flex-center">
-        <TripDetail trip={trip} />
-        <TripMap
-          lat={trip.location_lat}
-          lng={trip.location_lng}
-          zoom={12}
-          staticMap={true}
-          routes={trip.activities}
-          getFirstPoint={this.getFirstPoint}
+      <div>
+        <div className="flex-top">
+          <TripDetail trip={trip} className={style["trip-detail"]} />
+          <div className={style["map-offset"]}>
+            <TripMap
+              lat={trip.location_lat}
+              lng={trip.location_lng}
+              zoom={12}
+              staticMap={true}
+              routes={trip.activities}
+              getFirstPoint={this.getFirstPoint}
+            />
+          </div>
+        </div>
+        <ImageGridList
+          photoUrls={trip.photos_url}
+          title={trip.title}
+          mapImageUrl={trip.mapImageUrl}
         />
       </div>
     );

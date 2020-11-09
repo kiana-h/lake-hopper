@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  margin-top: 200px;
+  margin-top: 250px;
   align-items: center;
 }
 
@@ -11,7 +11,7 @@
   content: "";
   position: absolute;
   z-index: -1;
-  top: 82px;
+  // top: 82px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -51,4 +51,11 @@
 
 .photo-names {
   font-style: italic;
+}
+
+.map-top {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

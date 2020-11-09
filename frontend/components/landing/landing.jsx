@@ -7,14 +7,13 @@ import { withRouter } from "react-router-dom";
 const demoEmail = process.env.DEMO_EMAIL;
 const demoPassword = process.env.DEMO_PASSWORD;
 
-const Landing = ({ currentUser, login, history }) => {
+const Landing = ({ currentUser, login, history, background }) => {
   const demoLogin = () => {
     const user = {
       email: "demouser@example.com",
       password: "demopassword",
     };
     login(user);
-    debugger;
     history.push("/home");
   };
 
@@ -31,6 +30,7 @@ const Landing = ({ currentUser, login, history }) => {
           <br />
           {!currentUser && (
             <Button
+              variant="contained"
               style={theme.palette.gradientPrimary}
               className={style["demo-button"]}
               onClick={demoLogin}

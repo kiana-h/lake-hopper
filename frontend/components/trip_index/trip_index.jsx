@@ -21,14 +21,29 @@ const useStyles = makeStyles((theme) => ({
 export default function TripIndex({ trips, fetchTrips, updateFilter }) {
   const classes = useStyles();
 
+  const [hoverId, setHoverId] = useState(null);
+
   useEffect(() => {
     fetchTrips();
   }, []);
 
-  const trip_items = trips.map((trip, id) => (
-    <Grid item xs={12} key={id}>
-      <Paper className={classes.paper} key={id}>
-        <TripIndexItem key={id} trip={trip} />
+  const onMouseEnterHandler = (id) => {
+    setHoverId(id);
+  };
+  const onMouseLeaveHandler = () => {
+    setHoverId(null);
+  };
+
+  const trip_items = trips.map((trip) => (
+    <Grid item xs={12} key={trip.id}>
+      <Paper className={classes.paper} key={trip.id}>
+        <TripIndexItem
+          key={trip.id}
+          id={trip.id}
+          trip={trip}
+          onMouseEnterHandler={onMouseEnterHandler}
+          onMouseLeaveHandler={onMouseLeaveHandler}
+        />
       </Paper>
     </Grid>
   ));
@@ -50,7 +65,7 @@ export default function TripIndex({ trips, fetchTrips, updateFilter }) {
             <Grid
               container
               spacing={3}
-              style={{ maxHeight: 700, overflow: "auto" }}
+              style={{ maxHeight: 700, overflow: "auto", width: "400px" }}
             >
               {trip_items}
             </Grid>
@@ -59,7 +74,11 @@ export default function TripIndex({ trips, fetchTrips, updateFilter }) {
           <NoTrips />
         )}
 
-        <TripIndexMap trips={trips} updateFilter={updateFilter} />
+        <TripIndexMap
+          trips={trips}
+          updateFilter={updateFilter}
+          hoverId={hoverId}
+        />
       </div>
     </div>
   );

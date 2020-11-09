@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import UserMenu from "./user_menu";
 import style from "./style.scss";
 import theme from "../theme/theme";
 
@@ -8,13 +11,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMountain } from "@fortawesome/free-solid-svg-icons";
 
 const Greeting = ({ currentUser, logout }) => {
-  const capitalize = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
   const UserElements = () => {
     return currentUser ? <UserGreeting /> : <SessionsLinks />;
   };
+
   const AppBar = () => (
     <nav>
       <div className={`flex-center ${style["nav-elements"]}`}>
@@ -23,21 +23,17 @@ const Greeting = ({ currentUser, logout }) => {
           <h1>Lake Hopper</h1>
         </Link>
         <div className="menu flex-center">
-          <Link to="/home">Home</Link>
+          <Link to="/">Home</Link>
           <Link to="/">About</Link>
-          <Link to="/trips/new">
-            <Button variant="contained" style={theme.palette.gradientPrimary}>
-              Add Trip
-            </Button>
-          </Link>
-
+          <Link to="/trips">My Trips</Link>
           <UserElements />
         </div>
       </div>
     </nav>
   );
+
   const SessionsLinks = () => (
-    <div>
+    <div className={style["user-elements"]}>
       <Link to="/login">
         <Button
           variant="outlined"
@@ -53,18 +49,26 @@ const Greeting = ({ currentUser, logout }) => {
       </Link>
     </div>
   );
+
   const UserGreeting = () => (
-    <div className={`flex-center ${style.user_greeting}`}>
-      <Link className="flex-center" to="/home">
-        <p className="arrow down"></p>
-        <p className={`${style.username} secondary`}>
-          {capitalize(currentUser.username)}
-        </p>
+    // <div className={`flex-center ${style.user_greeting}`}>
+    //   <Link className="flex-center" to="/home">
+    //     <p className={`${style.username} secondary`}>
+    //       {capitalize(currentUser.username)}
+    //     </p>
+    //   </Link>
+
+    //   <Button variant="outlined" color="secondary" onClick={logout}>
+    //     Logout
+    //   </Button>
+    // </div>
+    <div className={"flex-center"}>
+      <UserMenu user={currentUser} logout={logout} />
+      <Link to="/trips/new">
+        <Button variant="contained" style={theme.palette.gradientSecondary}>
+          Add Trip
+        </Button>
       </Link>
-      <Button variant="outlined" color="secondary" onClick={logout}>
-        Logout
-      </Button>
-      {/* <button onClick={logout}>Logout</button> */}
     </div>
   );
 

@@ -83,13 +83,13 @@ class TripMap extends React.Component {
   };
 
   componentDidUpdate() {
-    this.MarkerManger.updateMarkers(this.props.trips);
+    this.MarkerManger.updateMarkers(this.props.trips, this.props.hoverId);
   }
-  updateBounds(bounds) {
+  updateBounds = (bounds) => {
     if (this.props.trips) {
       this.map.fitBounds(bounds, { padding: 100 });
     }
-  }
+  };
   // handleClick(coords) {
   //   this.props.history.push({
   //     pathname: "trips/new/",

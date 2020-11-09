@@ -1,7 +1,8 @@
 .mapContainer {
-  width: 600px;
+  width: 700px;
   height: 700px;
   margin: 0 auto;
+  margin-top: -24px;
 }
 .sidebarStyle {
   display: inline-block;
@@ -15,7 +16,14 @@
   padding: 6px;
   font-weight: bold;
 }
+.map {
+  height: 700px;
+}
+// .mapTop {
+//   height: 100px;
 
+//   margin-bottom: -40px;
+// }
 .coordinates {
   // background: rgba(255, 255, 255, 0.5);
   display: inline-block;
@@ -23,7 +31,7 @@
   z-index: 100;
   bottom: 80px;
   left: 5px;
-  color: #f50157;
+  color: #4051b5;
   padding: 5px 10px;
   margin: 0;
   font-size: 11px;
@@ -42,26 +50,28 @@
   justify-content: space-around;
   position: relative;
   z-index: 100;
-  top: 40px;
+  top: 15px;
   left: 10px;
-  width: 60px;
+  // width: 60px;
+  width: 29px;
   height: 29px;
   -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   // border-top: 1px solid #ddd;
 }
-.edit_button:last-of-type {
-  border-left: 1px solid #ddd;
-}
+// .edit_button:last-of-type {
+//   border-left: 1px solid #ddd;
+// }
 .edit_button {
   width: 29px;
   height: 29px;
+  padding: 0;
+  margin: 0;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #f50157;
 }
 .edit_button:hover {
   cursor: pointer;

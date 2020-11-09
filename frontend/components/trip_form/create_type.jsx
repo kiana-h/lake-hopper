@@ -27,9 +27,9 @@ class CreateType extends React.Component {
           <div className={style["mode-chooser"]}>
             <PublishIcon fontSize="large" />
             <p>
-              Upload a \'.tcx\' file from your smartwatch to load the map with
-              your route and automatically add hear rate, elevation gain,
-              distance, dates, etc.
+              Upload a '.tcx' file from your smartwatch to generate a map with
+              your routes and automatically calculate elevation gain, distance,
+              average heart rate, dates, etc.
             </p>
             <Button
               variant="contained"
@@ -45,8 +45,8 @@ class CreateType extends React.Component {
             <GestureIcon fontSize="large" />
             <p>
               Create a custom trip by drawing on an interactive map which
-              calculates distance and elevation gain. Or add information
-              manually.
+              calculates distance and elevation gain.
+              <br /> Or add information manually.
             </p>
             <Button
               variant="contained"

@@ -107,7 +107,14 @@ export default class MarkerDrawer {
   };
 
   getCleanCoords = (lap) => {
-    return lap.map((trackpoint) => [trackpoint.lng, trackpoint.lat]);
+    let cleanCoords = [];
+    lap.forEach((trackpoint) => {
+      if (trackpoint.lng && trackpoint.lat) {
+        cleanCoords.push([trackpoint.lng, trackpoint.lat]);
+      }
+    });
+
+    return cleanCoords;
   };
 
   adjustBounds = (boundingBox, coordinates) => {
@@ -132,127 +139,58 @@ export default class MarkerDrawer {
     markers.push([point.lng, point.lat]);
     return markers;
   };
+
+  zoomToPath = (routes, firstPoint, generateMapImageUrl) => {
+    if (!firstPoint) {
+      firstPoint = getFirstPoint[routes[0].trackpoints];
+    }
+
+    const firstPointCoords = [
+      firstPoint.getLngLat().lng,
+      firstPoint.getLngLat().lat,
+    ];
+
+    let boundingBox = new mapboxgl.LngLatBounds([
+      firstPointCoords,
+      firstPointCoords,
+    ]);
+
+    if (routes) {
+      // go through every lap of everyroute
+      for (let routeNum in routes) {
+        route = routes[routeNum];
+        for (let i = 0; i < route.trackpoints.length; i++) {
+          lap = route.trackpoints[i];
+          id = `route-${routeNum}-${i}`;
+          // combine all the coordinates for that lap
+          coordinates = this.getCleanCoords(lap);
+          // adjust the map view bounds to include that lap
+          this.adjustBounds(boundingBox, coordinates);
+          // draw the lap on the map
+          this.addPath(coordinates, id);
+        }
+      }
+    }
+
+    this.map.fitBounds(boundingBox, {
+      padding: routes ? 50 : 300,
+    });
+    this.map.on("moveend", () => {
+      let mapImageUrl = this.map.getCanvas().toDataURL();
+      this.props.generateMapImageUrl(mapImageUrl);
+    });
+  };
+
+  getFirstPoint = (lap) => {
+    for (let trackpoint of lap) {
+      if (trackpoint.lat && trackpoint.lng) {
+        return [trackpoint.lng, trackpoint.lat];
+      }
+    }
+  };
 }
 
-///////
-
-// export const addNavigationControl = (map) => {
-//   map.addControl(new mapboxgl.NavigationControl());
-// };
-
-// export const addGeoCoder = (map, token) => {
-//   const geocoder = new MapboxGeocoder({
-//     accessToken: token,
-//     marker: false,
-//     mapboxgl: mapboxgl,
-//   });
-//   map.addControl(geocoder);
-// };
-
-// export const addMarker = (coordinates, map, color) => {
-//   new mapboxgl.Marker({
-//     color: color,
-//   })
-//     .setLngLat(coordinates)
-//     .addTo(map);
-// };
-
-// //draw new path on the map
-// export const addPath = (coordinates, id, map) => {
-//   map.addSource(id, {
-//     type: "geojson",
-//     data: {
-//       type: "Feature",
-//       properties: {},
-//       geometry: {
-//         type: "LineString",
-//         coordinates: coordinates,
-//       },
-//     },
-//   });
-//   map.addLayer({
-//     id: id,
-//     type: "line",
-//     source: id,
-//     layout: {
-//       "line-join": "round",
-//       "line-cap": "round",
-//     },
-//     paint: {
-//       "line-color": "#fe9e9f",
-//       "line-width": 4,
-//     },
-//   });
-// };
-
-// //reset path on map based on new coordinates
-// export const resetPath = (coordinates, id, map) => {
-//   const geojson = {
-//     type: "Feature",
-//     properties: {},
-//     geometry: {
-//       type: "LineString",
-//       coordinates: coordinates,
-//     },
-//   };
-//   map.getSource(`route-${id - 1}`).setData(geojson);
-// };
-
-// export const drawUploadedRoutes = (routes, map) => {
-//   let route, coordinates, id, lap;
-
-//   const firstLap = routes[0].trackpoints[0];
-//   const firstPoint = [firstLap[0].lng, firstLap[0].lat];
-
-//   // start the map view bounds on the first point of the trip
-//   let boundingBox = new mapboxgl.LngLatBounds(firstPoint, firstPoint);
-
-//   // go through every lap of everyroute
-//   for (let routeNum in routes) {
-//     route = routes[routeNum];
-//     for (let i = 0; i < route.trackpoints.length; i++) {
-//       lap = route.trackpoints[i];
-//       id = `route-${routeNum}-${i}`;
-//       // combine all the coordinates for that lap
-//       coordinates = getCleanCoords(lap);
-//       // adjust the map view bounds to include that lap
-//       adjustBounds(boundingBox, coordinates, map);
-//       // draw the lap on the map
-//       addPath(coordinates, id, map);
-//     }
-//   }
-
-//   const markers = getMarkers(routes);
-//   let color;
-//   for (let i = 0; i < markers.length; i++) {
-//     (color = i === 0 ? color.head : color.tail),
-//       addMarker(markers[i], map, color);
-//   }
-// };
-
-// const getCleanCoords = (lap) => {
-//   return lap.map((trackpoint) => [trackpoint.lng, trackpoint.lat]);
-// };
-
-// const adjustBounds = (boundingBox, coordinates, map) => {
-//   boundingBox = coordinates.reduce((bounds, coord) => {
-//     return bounds.extend(coord);
-//   }, boundingBox);
-//   map.fitBounds(boundingBox, {
-//     padding: 50,
-//   });
-// };
-
-// const getMarkers = (routes) => {
-//   let markers = routes.map((activity) => {
-//     let point = activity.trackpoints[0][0];
-//     return [point.lng, point.lat];
-//   });
-//   let lastLap =
-//     routes[routes.length - 1].trackpoints[
-//       routes[routes.length - 1].trackpoints.length - 1
-//     ];
-//   let point = lastLap[lastLap.length - 1];
-//   markers.push([point.lng, point.lat]);
-//   return markers;
-// };
+// boundingBox = this.state.markers.reduce((bounds, marker) => {
+//   let coord = [marker.getLngLat().lng, marker.getLngLat().lat];
+//   return bounds.extend(coord);
+// }, boundingBox);

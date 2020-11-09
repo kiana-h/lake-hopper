@@ -7,9 +7,9 @@ import MapDrawer from "../../util/map_drawer";
 import * as MapApiUtil from "../../util/map_api_util";
 import style from "./style.scss";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUndo } from "@fortawesome/free-solid-svg-icons";
-// import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
 
@@ -98,7 +98,6 @@ class TripMap extends React.Component {
 
     // set drag listener for each marker
     this.registerMarkerListener(newMarker, this.state.markers.length);
-
     // add marker to state
     const count = this.state.markers.length;
     this.setState({
@@ -109,6 +108,7 @@ class TripMap extends React.Component {
     if (count > 0) {
       this.getRoute();
     }
+    this.props.updateFirstPoint(this.state.markers[0]);
   };
 
   registerMarkerListener = (marker, id) => {
@@ -149,6 +149,7 @@ class TripMap extends React.Component {
         id
       ).then((data) => this.handleRoute(data, id));
     }
+    this.props.updateFirstPoint(this.state.markers[0]);
   };
 
   getRoute = async () => {
@@ -201,48 +202,58 @@ class TripMap extends React.Component {
     this.props.updateRoutes(routes);
   };
 
+  clear = () => {
+    this.state.markers.forEach((marker) => marker.remove());
+    // this.map.getStyle().sources.forEach((source) => source.remove());
+    this.map.getStyle().layers.forEach((layer) => layer.remove());
+
+    this.MapDrawer = new MapDrawer(this.map, mapboxgl.accessToken);
+
+    this.setState({
+      markers: [],
+      drawComplete: false,
+    });
+
+    this.props.clear();
+  };
+
   render() {
     const firstPoint = this.state.markers[0];
 
     if (this.props.submitted === "t") {
-      const firstPointCoords = [
-        firstPoint.getLngLat().lng,
-        firstPoint.getLngLat().lat,
-      ];
-
-      let boundingBox = new mapboxgl.LngLatBounds([
-        firstPointCoords,
-        firstPointCoords,
-      ]);
-      boundingBox = this.state.markers.reduce((bounds, marker) => {
-        let coord = [marker.getLngLat().lng, marker.getLngLat().lat];
-        return bounds.extend(coord);
-      }, boundingBox);
-      this.map.fitBounds(boundingBox, {
-        padding: 50,
-      });
-      this.map.on("moveend", () => {
-        let mapImageUrl = this.map.getCanvas().toDataURL();
-        this.props.generateMapImageUrl(mapImageUrl);
-      });
+      debugger;
+      this.MapDrawer.zoomToPath(
+        this.props.routes,
+        firstPoint,
+        this.props.generateMapImageUrl
+      );
     }
 
+    let hoverMarker = this.props.hoverId ? "" : "";
+
     return (
-      <div>
-        {/* {!this.props.staticMap && (
+      <div className={style.map}>
+        <div className={style.mapTop}></div>
+        {!this.props.staticMap && (
           <div id="coordinates" className={style.edit_buttons}>
-            <div className={style.edit_button} onClick={this.undo}>
+            {/* <div className={style.edit_button} onClick={this.undo}>
               <FontAwesomeIcon icon={faUndo} />
-            </div>
-            <div className={style.edit_button} onClick={this.clear}>
+            </div> */}
+            <div
+              className={`secondary ${style.edit_button}`}
+              onClick={this.clear}
+              title="Reset Map"
+            >
               <FontAwesomeIcon icon={faTimes} />
             </div>
           </div>
-        )} */}
+        )}
+
         <div
           ref={(el) => (this.mapContainer = el)}
           className={style.mapContainer}
         />
+
         {firstPoint && (
           <p id="coordinates" className={style.coordinates}>
             Longitude: {firstPoint.getLngLat().lng.toFixed(6)}

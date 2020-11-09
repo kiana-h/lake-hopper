@@ -18,11 +18,22 @@ const Theme = createMuiTheme({
     },
     gradientSecondaryOutline: {
       borderColor: "#BC9CFF",
+      background: "rgba(250,250,250,.5)",
       color: "#BC9CFF",
+      // padding: "5px 10px",
     },
     gradientPrimaryOutline: {
       borderColor: "#6FCF97",
       color: "#6FCF97",
+      // padding: "5px 10px",
+    },
+    whiteBg: {
+      borderColor: "#fafafa",
+      backgroundOpacity: "0.1",
+      color: "#BC9CFF",
+    },
+    noPadding: {
+      padding: 0,
     },
   },
 });

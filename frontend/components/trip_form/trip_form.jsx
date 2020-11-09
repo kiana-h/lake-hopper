@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import style from "./style.scss";
+import theme from "../theme/theme";
 
 import parseFile from "../../util/tcx-parser";
 
@@ -28,15 +29,19 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   avatar: {
-    margin: theme.spacing(0),
+    margin: "0 auto",
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    width: "400px", // Fix IE 11 issue.
+    height: "600px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "spaceEvenly",
+    // marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 1),
   },
   number: { marginTop: theme.spacing(3) },
   adornment: {
@@ -137,35 +142,16 @@ export default function TripForm({
     <div>
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <ExploreIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Create New Trip
-        </Typography>
+        <div className={style.mapTop}>
+          <Avatar className={classes.avatar}>
+            <ExploreIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Create New Trip
+          </Typography>
+        </div>
         {/* {renderErrors()} */}
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            disabled
-            fullWidth
-            id="lat"
-            label="Latitude"
-            name="location_lat"
-            value={state.location_lat}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            disabled
-            fullWidth
-            id="lng"
-            label="Longitude"
-            name="location_lng"
-            autoFocus
-            value={state.location_lng}
-          /> */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -195,9 +181,10 @@ export default function TripForm({
           {showUploadButton && (
             <Button
               variant="contained"
+              style={theme.palette.gradientPrimary}
               component="label"
-              color="primary"
               fullWidth
+              className={classes.submit}
             >
               Upload File
               <input
@@ -288,7 +275,7 @@ export default function TripForm({
                 component="label"
                 color="primary"
                 fullWidth
-                className={classes.button}
+                className={classes.submit}
               >
                 Upload Photos
                 <input
@@ -303,10 +290,10 @@ export default function TripForm({
               <br />
               <Button
                 type="submit"
-                fullWidth
                 variant="contained"
-                color="primary"
-                className={classes.button}
+                fullWidth
+                style={theme.palette.gradientPrimary}
+                className={classes.submit}
               >
                 Submit
               </Button>

@@ -3,7 +3,10 @@ import Landing from "./landing";
 import { login } from "../../actions/session_actions";
 
 const mapStateToProps = (state) => {
-  return { currentUser: state.entities.users[state.session.id] };
+  return {
+    currentUser: state.entities.users[state.session.id],
+    background: true,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

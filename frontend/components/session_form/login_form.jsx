@@ -44,10 +44,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(0, 0, 2),
   },
   bottomLink: {
     marginTop: "20px",
+  },
+  demo: {
+    margin: theme.spacing(4, 0, 2),
   },
 }));
 
@@ -75,6 +78,15 @@ function SignIn({ errors, submit }) {
       ...prevState,
       [id]: value,
     }));
+  };
+
+  const demoLogin = () => {
+    const user = {
+      email: "demouser@example.com",
+      password: "demopassword",
+    };
+    login(user);
+    history.push("/home");
   };
 
   const renderErrors = () => {
@@ -130,13 +142,24 @@ function SignIn({ errors, submit }) {
           />
 
           <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={demoLogin}
+            className={classes.demo}
+          >
+            Demo User Login
+          </Button>
+
+          <Button
             type="submit"
             fullWidth
             variant="contained"
             style={theme.palette.gradientPrimary}
-            className={classes.root}
+            className={classes.submit}
+            color="secondary"
           >
-            Sign In
+            Log In
           </Button>
 
           <Grid container justify="flex-end" className={classes.bottomLink}>

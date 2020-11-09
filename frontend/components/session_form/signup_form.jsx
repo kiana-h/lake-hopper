@@ -42,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(0, 0, 2),
+  },
+  demo: {
+    margin: theme.spacing(5, 0, 2),
   },
 }));
 
@@ -72,6 +75,15 @@ export default function SignUp({ errors, submit }) {
       ...prevState,
       [id]: value,
     }));
+  };
+
+  const demoLogin = () => {
+    const user = {
+      email: "demouser@example.com",
+      password: "demopassword",
+    };
+    login(user);
+    history.push("/home");
   };
 
   const renderErrors = () => {
@@ -143,6 +155,15 @@ export default function SignUp({ errors, submit }) {
             </Grid>
           </Grid>
           <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={demoLogin}
+            className={classes.demo}
+          >
+            Demo User Login
+          </Button>
+          <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -155,7 +176,7 @@ export default function SignUp({ errors, submit }) {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#/login" variant="body2">
-                Already have an account? Sign in
+                Already have an account? Log in
               </Link>
             </Grid>
           </Grid>

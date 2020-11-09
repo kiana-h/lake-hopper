@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    width: "400px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -31,22 +31,24 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  description: {
+    margin: theme.spacing(2, 0, 0),
+  },
 }));
 
 export default function TripDetail({ trip }) {
   const classes = useStyles();
-  const tripImages = () => {
-    const photos = trip.photos_url.map((photoUrl, id) => (
-      <img
-        key={id}
-        className={"index-thumbnail"}
-        src={photoUrl}
-        alt="Trip Photo"
-      ></img>
-    ));
-    return photos;
-  };
-
+  let distance, elevationGain;
+  if (trip.activities) {
+    distance = trip.activities
+      .reduce((sum, activity) => {
+        return activity.distance + sum;
+      }, 0)
+      .toFixed(2);
+    elevationGain = trip.activities.reduce((sum, activity) => {
+      return activity.elevation_gain + sum;
+    }, 0);
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -54,14 +56,22 @@ export default function TripDetail({ trip }) {
         <Avatar className={classes.avatar}>
           <MapIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          {trip.title}
-        </Typography>
-        <Typography component="h2" variant="h5">
+        <Typography variant="h5">{trip.title}</Typography>
+        <Typography variant="body1" className={classes.description}>
           {trip.description}
         </Typography>
-        {trip.photos_url && tripImages()}
-        <img src={trip.mapImageUrl}></img>
+        <div>
+          <Typography variant="h6" className={classes.description}>
+            Distance:
+          </Typography>
+          <Typography variant="body1">{distance}</Typography>
+        </div>
+        <div>
+          <Typography variant="h6" className={classes.description}>
+            Elevation Gain:
+          </Typography>
+          <Typography variant="body1">{elevationGain}</Typography>
+        </div>
       </div>
     </Container>
   );
