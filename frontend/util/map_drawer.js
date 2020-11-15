@@ -7,8 +7,8 @@ export default class MarkerDrawer {
     this.map = map;
     this.token = token;
     this.color = {
-      head: "#4051b5",
-      tail: "#BC9CFF",
+      head: "#BC9CFF",
+      tail: "#4051b5",
       line: "#4051b5",
     };
   }
@@ -100,9 +100,15 @@ export default class MarkerDrawer {
 
     const markers = this.getMarkers(routes);
     let color;
+
     for (let i = 0; i < markers.length; i++) {
-      (color = i === 0 ? this.color.head : this.color.tail),
-        this.addMarker(markers[i], color);
+      if (i === 0) {
+        color = this.color.head;
+      } else {
+        color = this.color.tail;
+      }
+
+      this.addMarker(markers[i], color);
     }
   };
 
@@ -141,21 +147,22 @@ export default class MarkerDrawer {
   };
 
   zoomToPath = (routes, firstPoint, generateMapImageUrl) => {
+    let firstPointCoords;
     if (!firstPoint) {
-      firstPoint = getFirstPoint[routes[0].trackpoints];
+      firstPoint = this.getFirstPoint(routes[0].trackpoints[0]);
+      firstPointCoords = [firstPoint[0], firstPoint[1]];
+    } else {
+      firstPointCoords = [
+        firstPoint.getLngLat().lng,
+        firstPoint.getLngLat().lat,
+      ];
     }
-
-    const firstPointCoords = [
-      firstPoint.getLngLat().lng,
-      firstPoint.getLngLat().lat,
-    ];
-
-    let boundingBox = new mapboxgl.LngLatBounds([
-      firstPointCoords,
-      firstPointCoords,
-    ]);
-
-    if (routes) {
+    if (routes[0]) {
+      let boundingBox = new mapboxgl.LngLatBounds([
+        firstPointCoords,
+        firstPointCoords,
+      ]);
+      let route, lap, id, coordinates;
       // go through every lap of everyroute
       for (let routeNum in routes) {
         route = routes[routeNum];
@@ -166,18 +173,18 @@ export default class MarkerDrawer {
           coordinates = this.getCleanCoords(lap);
           // adjust the map view bounds to include that lap
           this.adjustBounds(boundingBox, coordinates);
-          // draw the lap on the map
-          this.addPath(coordinates, id);
         }
       }
+    } else {
+      this.map.flyTo({
+        center: [firstPointCoords[0], firstPointCoords[1]],
+        zoom: 9,
+      });
     }
 
-    this.map.fitBounds(boundingBox, {
-      padding: routes ? 50 : 300,
-    });
     this.map.on("moveend", () => {
-      let mapImageUrl = this.map.getCanvas().toDataURL();
-      this.props.generateMapImageUrl(mapImageUrl);
+      const mapImageUrl = this.map.getCanvas().toDataURL();
+      generateMapImageUrl(mapImageUrl);
     });
   };
 

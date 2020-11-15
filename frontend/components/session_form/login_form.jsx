@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn({ errors, submit }) {
+function SignIn({ errors, login }) {
   const classes = useStyles();
   const history = useHistory();
   const [state, setState] = useState({
@@ -65,8 +65,8 @@ function SignIn({ errors, submit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await submit(state);
-      history.push("/home");
+      await login(state);
+      history.push("/trips");
     } catch (e) {
       console.log(e);
     }
@@ -86,7 +86,7 @@ function SignIn({ errors, submit }) {
       password: "demopassword",
     };
     login(user);
-    history.push("/home");
+    history.push("/trips");
   };
 
   const renderErrors = () => {

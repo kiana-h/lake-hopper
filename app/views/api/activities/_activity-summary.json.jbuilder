@@ -1,0 +1,1 @@
+json.extract! activity, :id , :elevation_gain, :distance, :avg_hr, :calories, :duration

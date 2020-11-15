@@ -1,9 +1,17 @@
-.mapContainer {
+.mapContainer-700 {
   width: 700px;
   height: 700px;
   margin: 0 auto;
   margin-top: -24px;
 }
+
+.mapContainer-500 {
+  width: 700px;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: -24px;
+}
+
 .sidebarStyle {
   display: inline-block;
   position: relative;
@@ -16,8 +24,11 @@
   padding: 6px;
   font-weight: bold;
 }
-.map {
+.map-700 {
   height: 700px;
+}
+.map-500 {
+  height: 500px;
 }
 // .mapTop {
 //   height: 100px;

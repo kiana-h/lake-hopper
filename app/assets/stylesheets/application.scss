@@ -215,13 +215,22 @@ nav {
   z-index: 500;
 }
 
+.mapboxgl-popup {
+  max-width: 100px;
+  text-align: center;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
 .menu > a:last-of-type {
   margin-right: 30px;
 }
 .nav-landing {
   background-color: none;
 }
-
+// ::-webkit-scrollbar {
+//   width: 0px;
+//   background: transparent; /* make scrollbar transparent */
+// }
 .dark-shade-100 {
   color: $dark-shade-100;
 }

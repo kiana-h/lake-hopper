@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TripIndexMap from "../trip_map/trip_index_map";
 import TripIndexItem from "./trip_index_item";
+import PuffLoader from "react-spinners/PuffLoader";
 import style from "./style.scss";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,25 +19,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TripIndex({ trips, fetchTrips, updateFilter }) {
+export default function TripIndex({
+  trips,
+  loading,
+  fetchTrips,
+  updateFilter,
+}) {
   const classes = useStyles();
 
-  const [hoverId, setHoverId] = useState(null);
+  const [hoverId, setHoverId] = useState({ id: null, lng: null, lat: null });
 
   useEffect(() => {
     fetchTrips();
   }, []);
 
-  const onMouseEnterHandler = (id) => {
-    setHoverId(id);
+  const onMouseEnterHandler = (id, lng, lat) => {
+    setHoverId({ id, lng, lat });
   };
   const onMouseLeaveHandler = () => {
-    setHoverId(null);
+    setHoverId({ id: null, lng: null, lat: null });
   };
 
   const trip_items = trips.map((trip) => (
-    <Grid item xs={12} key={trip.id}>
-      <Paper className={classes.paper} key={trip.id}>
+    <Grid item xs={12} key={trip.id} className={style["grid-item"]}>
+      {/* <Paper className={classes.paper} key={trip.id}> */}
+      <div>
         <TripIndexItem
           key={trip.id}
           id={trip.id}
@@ -44,41 +51,75 @@ export default function TripIndex({ trips, fetchTrips, updateFilter }) {
           onMouseEnterHandler={onMouseEnterHandler}
           onMouseLeaveHandler={onMouseLeaveHandler}
         />
-      </Paper>
+        {/* </Paper> */}
+      </div>
     </Grid>
   ));
 
   const NoTrips = () => {
-    return (
+    return !loading && !trips.length ? (
       <div className={style["no-trip"]}>
         <p>You have no trips :(</p>
-        <p>Select 'Add Trips' on the menu to get started!</p>
+        <p>Select 'Add Trips' on the menu or login to get started!</p>
       </div>
+    ) : (
+      ""
     );
+  };
+
+  const Index = () => {
+    if (loading) {
+      return (
+        <div className={style["index-load"]}>
+          <PuffLoader size={50} color={"#6FCF97"} loading={loading} />
+        </div>
+      );
+    } else if (!trips.length) {
+      return <NoTrips />;
+    } else {
+      return (
+        <div className={style.grid_list}>
+          <Grid
+            container
+            spacing={3}
+            style={{
+              maxHeight: 700,
+              overflow: "auto",
+              width: "400px",
+            }}
+          >
+            {trip_items}
+          </Grid>
+        </div>
+      );
+    }
   };
 
   return (
     <div className={classes.root}>
-      <div className={`flex-center ${style.index_container}`}>
-        {trips.length ? (
-          <div className={style.grid_list}>
-            <Grid
-              container
-              spacing={3}
-              style={{ maxHeight: 700, overflow: "auto", width: "400px" }}
-            >
-              {trip_items}
-            </Grid>
-          </div>
-        ) : (
-          <NoTrips />
-        )}
+      <div className={`flex-top ${style.index_container}`}>
+        {Index()}
+        {/* <div className={style["index-load"]}>
+          <PuffLoader size={50} color={"#6FCF97"} loading={loading} />
+        </div>
+        <NoTrips />
+        <div className={style.grid_list}>
+          <Grid
+            container
+            spacing={3}
+            style={{ maxHeight: 700, overflow: "auto", width: "400px" }}
+          >
+            {trip_items}
+          </Grid>
+        </div> */}
 
-        <TripIndexMap
-          trips={trips}
-          updateFilter={updateFilter}
-          hoverId={hoverId}
-        />
+        <div className={style["map-offset"]}>
+          <TripIndexMap
+            trips={trips}
+            updateFilter={updateFilter}
+            hoverId={hoverId}
+          />
+        </div>
       </div>
     </div>
   );

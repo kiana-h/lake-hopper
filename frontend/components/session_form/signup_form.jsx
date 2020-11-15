@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({ errors, submit }) {
+export default function SignUp({ errors, signup, login }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -62,8 +62,8 @@ export default function SignUp({ errors, submit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await submit(state);
-      history.push("/home");
+      await signup(state);
+      history.push("/trips");
     } catch (e) {
       console.log(e);
     }

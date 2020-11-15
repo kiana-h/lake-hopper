@@ -14,7 +14,7 @@ const Landing = ({ currentUser, login, history, background }) => {
       password: "demopassword",
     };
     login(user);
-    history.push("/home");
+    history.push("/trips");
   };
 
   return (

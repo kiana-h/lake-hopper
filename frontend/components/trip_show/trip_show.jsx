@@ -1,6 +1,6 @@
 import React from "react";
 import TripDetail from "./trip_detail";
-import TripMap from "../trip_map/trip_map";
+import TripMap from "../trip_map/trip_static_map";
 import ImageGridList from "./photo_array";
 import style from "./style.scss";
 
@@ -15,6 +15,7 @@ class TripShow extends React.Component {
     this.props.fetchTrip(this.props.tripId);
   }
   componentDidUpdate() {
+    console.log("show updated");
     if (!this.props.trip) {
       this.props.fetchTrip(this.props.tripId);
     }
@@ -50,17 +51,12 @@ class TripShow extends React.Component {
               lat={trip.location_lat}
               lng={trip.location_lng}
               zoom={12}
-              staticMap={true}
               routes={trip.activities}
               getFirstPoint={this.getFirstPoint}
             />
           </div>
         </div>
-        <ImageGridList
-          photoUrls={trip.photos_url}
-          title={trip.title}
-          mapImageUrl={trip.mapImageUrl}
-        />
+        <ImageGridList photoUrls={trip.photos_url} title={trip.title} />
       </div>
     );
   }

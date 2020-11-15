@@ -14,14 +14,7 @@ class Parser {
     let activities = tcdb["Activities"];
     let activity = activities["Activity"];
     this.activity.activityId = activity["Id"];
-    // try {
-    //   let activityDollar = activity["$"];
-    //   this.activity.sport = activityDollar["Sport"];
-    // } catch (e) {
-    //   console.log(e);
-    // }
     let grossHr = 0;
-    // get the first valid point in the activity
     const getFirstElevation = (activity) => {
       let firstLap = activity["Lap"][0];
       for (let trackpoint of firstLap["Track"]["Trackpoint"]) {
@@ -47,16 +40,18 @@ class Parser {
       }
       let lap = [];
       for (let trackpoint of rawLap["Track"]["Trackpoint"]) {
-        let newTrackPoint = new Trackpoint(trackpoint);
-        if (trackpoint["AltitudeMeters"]) {
-          elevationChange =
-            Number(trackpoint["AltitudeMeters"]) - currentElevation;
-          if (elevationChange > 0) {
-            elevationGain += elevationChange;
-            currentElevation = Number(trackpoint["AltitudeMeters"]);
+        if (trackpoint["Position"]) {
+          let newTrackPoint = new Trackpoint(trackpoint);
+          if (trackpoint["AltitudeMeters"]) {
+            elevationChange =
+              Number(trackpoint["AltitudeMeters"]) - currentElevation;
+            if (elevationChange > 0) {
+              elevationGain += elevationChange;
+              currentElevation = Number(trackpoint["AltitudeMeters"]);
+            }
           }
+          lap.push(newTrackPoint);
         }
-        lap.push(newTrackPoint);
       }
       this.activity.trackpoints.push(lap);
     }

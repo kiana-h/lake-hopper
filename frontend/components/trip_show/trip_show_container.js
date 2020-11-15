@@ -6,9 +6,11 @@ import { fetchTrip } from "../../actions/trip_actions";
 const mapStateToProps = (state, { match }) => {
   const tripId = parseInt(match.params.tripId);
   const trip = selectTrip(state, tripId);
+  const loading = state.ui.loading.detailLoading;
   return {
-    tripId: tripId,
-    trip: trip,
+    tripId,
+    trip,
+    loading,
   };
 };
 

@@ -6,6 +6,7 @@ import { updateFilter } from "../../actions/filter_actions";
 
 const mapStateToProps = (state) => ({
   trips: selectTrips(state),
+  loading: state.ui.loading.indexLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

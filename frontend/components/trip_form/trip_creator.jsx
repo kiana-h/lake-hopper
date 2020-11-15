@@ -4,6 +4,8 @@ import { Switch, withRouter } from "react-router-dom";
 
 import TripForm from "./trip_form";
 import TripMap from "../trip_map/trip_map";
+import TripUploadMap from "../trip_map/trip_upload_map";
+import TripDrawMap from "../trip_map/trip_draw_map";
 import CreateType from "./create_type";
 import { ProtectedRoute } from "../../util/route_util";
 
@@ -63,12 +65,14 @@ class TripCreator extends React.Component {
       let start_date = routes[0]["activityId"].split("T")[0];
       let lastIndex = Object.keys(routes).reverse()[0];
       let end_date = routes[lastIndex]["activityId"].split("T")[0];
+      let firstPoint = this.getFirstPoint(routes[0].trackpoints[0]);
       this.setState({
         routes,
         distance,
         elevation_gain,
         start_date,
         end_date,
+        firstPoint,
       });
     }
     // if the route was drawn
@@ -93,8 +97,7 @@ class TripCreator extends React.Component {
     this.setState({ [id]: value });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  submit = () => {
     this.setState({ submitted: "t" });
   };
 
@@ -102,7 +105,7 @@ class TripCreator extends React.Component {
     this.setState({ mapImageUrl }, this.compileTrip);
   };
 
-  compileTrip = () => {
+  compileTrip = async () => {
     const tripData = new FormData();
     tripData.append("trip[title]", this.state.title);
     tripData.append("trip[description]", this.state.description);
@@ -145,6 +148,14 @@ class TripCreator extends React.Component {
     this.setState({ mode: mode });
   };
 
+  getFirstPoint = (lap) => {
+    for (let trackpoint of lap) {
+      if (trackpoint.lat && trackpoint.lng) {
+        return [trackpoint.lng, trackpoint.lat];
+      }
+    }
+  };
+
   updateFirstPoint = (marker) => {
     const lng = marker.getLngLat().lng.toFixed(6);
     const lat = marker.getLngLat().lat.toFixed(6);
@@ -172,6 +183,44 @@ class TripCreator extends React.Component {
   // clear = () => {
   //   this.setState({ distance: 0, elevation_gain: 0, routes: {} });
   // };
+  tripMap = ({
+    updateRoutes,
+    routes,
+    lat,
+    lng,
+    zoom,
+    clear,
+    updateFirstPoint,
+    submitted,
+    generateMapImageUrl,
+  }) => {
+    const map =
+      this.props.mode === "upload" ? (
+        <TripUploadMap
+          updateRoutes={updateRoutes}
+          routes={routes}
+          lat={lat}
+          lng={lng}
+          zoom={zoom}
+          clear={clear}
+          submitted={submitted}
+          generateMapImageUrl={generateMapImageUrl}
+        />
+      ) : (
+        <TripDrawMap
+          updateRoutes={updateRoutes}
+          routes={routes}
+          lat={lat}
+          lng={lng}
+          zoom={zoom}
+          clear={clear}
+          submitted={submitted}
+          updateFirstPoint={updateFirstPoint}
+          generateMapImageUrl={generateMapImageUrl}
+        />
+      );
+    return map;
+  };
 
   render() {
     if (!this.props.mode) {
@@ -181,7 +230,7 @@ class TripCreator extends React.Component {
     return (
       <div className="flex-top">
         <TripForm
-          handleSubmit={this.handleSubmit}
+          submit={this.submit}
           mode={this.props.mode}
           distance={this.state.distance}
           elevation_gain={this.state.elevation_gain}
@@ -195,7 +244,18 @@ class TripCreator extends React.Component {
           photos={this.state.photos}
           addPhotos={this.addPhotos}
         />
-        <TripMap
+        {this.tripMap({
+          updateRoutes: this.updateRoutes,
+          routes: this.state.routes,
+          lat: this.initMapProps.lat,
+          lng: this.initMapProps.lng,
+          zoom: this.initMapProps.zoom,
+          clear: this.reset,
+          updateFirstPoint: this.updateFirstPoint,
+          submitted: this.state.submitted,
+          generateMapImageUrl: this.generateMapImageUrl,
+        })}
+        {/* <TripMap
           updateRoutes={this.updateRoutes}
           staticMap={false}
           routes={this.state.routes}
@@ -208,7 +268,7 @@ class TripCreator extends React.Component {
           updateFirstPoint={this.updateFirstPoint}
           submitted={this.state.submitted}
           generateMapImageUrl={this.generateMapImageUrl}
-        />
+        /> */}
       </div>
     );
   }

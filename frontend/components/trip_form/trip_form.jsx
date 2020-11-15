@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { formatNumberComma } from "../../util/trip_formatter";
 import style from "./style.scss";
 import theme from "../theme/theme";
 
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TripForm({
   errors,
-  handleSubmit,
+  submit,
   mode,
   distance,
   title,
@@ -70,21 +71,15 @@ export default function TripForm({
   photos,
 }) {
   const classes = useStyles();
-  // const [state, setState] = useState({
-
-  // title: "",
-  // description: "",
-  // start_date: start_date,
-  // end_date: end_date,
-  // distance: distance,
-  // elevation_gain: elevation_gain,
-  // });
+  const [state, setState] = useState({
+    uploadingFile: false,
+    submittingTrip: false,
+  });
   // const [open, setOpen] = React.useState(false);
 
   // Upload mode: hide inputs before receiving file
   let showInputs = mode === "draw" || activities[0];
   let showUploadButton = mode === "upload" && !activities[0];
-  let routeDisabled = activities[0] == true;
   // let dateDisabled =
 
   //   const renderErrors = () => {
@@ -105,22 +100,38 @@ export default function TripForm({
   const handleChange = (e) => {
     const { id, value } = e.currentTarget;
     updateProp(id, value);
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   [id]: value,
-    // }));
   };
 
-  // Upload mode methods
-
-  const handleFiles = async (e) => {
+  const handleFiles = (e) => {
+    setState((prevState) => ({
+      ...prevState,
+      uploadingFile: true,
+    }));
     const files = e.currentTarget.files;
+    processFiles(files);
+  };
+
+  const processFiles = async (files) => {
     const routes = {};
     for (let i = 0; i < files.length; i++) {
       const parsedFile = await parseFile(files[i]);
       routes[i] = parsedFile;
     }
     updateRoutes(routes);
+
+    setState((prevState) => ({
+      ...prevState,
+      uploadingFile: false,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      submittingTrip: true,
+    }));
+    submit();
   };
 
   const handlePhotos = (e) => {
@@ -186,7 +197,7 @@ export default function TripForm({
               fullWidth
               className={classes.submit}
             >
-              Upload File
+              {state.uploadingFile ? "Processing Files..." : "Upload File"}
               <input
                 id="activities"
                 type="file"
@@ -248,7 +259,7 @@ export default function TripForm({
                   label="Elevation Gain"
                   type="float"
                   className={`${classes.textField} ${classes.number}`}
-                  value={elevation_gain}
+                  value={formatNumberComma(elevation_gain)}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
@@ -295,18 +306,10 @@ export default function TripForm({
                 style={theme.palette.gradientPrimary}
                 className={classes.submit}
               >
-                Submit
+                {state.submittingTrip ? "Submitting Trip..." : "Submit"}
               </Button>
             </div>
           )}
-
-          {/* <Grid container>
-            <Grid item container justify="flex-end">
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid> */}
         </form>
       </div>
     </div>

@@ -4,6 +4,17 @@
 }
 .grid_list {
   width: 400px;
+  // direction: rtl;
+}
+// .grid_list-item {
+//   direction: ltr;
+// }
+
+.grid-item {
+  border-bottom: 1px solid rgba(31, 32, 65, 0.25);
+}
+.grid-item:hover {
+  background-color: rgba(31, 32, 65, 0.05);
 }
 
 .trip-item {
@@ -23,13 +34,28 @@
 
 .trip-item-text {
   margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90px;
 }
 
-.trip-item-text > h1 {
+.trip-item-text h1 {
   font-size: 16px;
   font-weight: 700;
 }
 
 .no-trip {
   padding-top: 200px;
+}
+
+.map-offset {
+  position: relative;
+  top: 20px;
+}
+
+.index-load {
+  position: relative;
+  top: 250px;
+  left: 200px;
 }

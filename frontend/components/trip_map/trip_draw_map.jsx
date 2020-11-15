@@ -13,13 +13,12 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
 
-class TripMap extends React.Component {
+class TripDrawMap extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       markers: [],
-      drawComplete: false,
     };
 
     this.color = {
@@ -43,59 +42,21 @@ class TripMap extends React.Component {
 
     // handle the non-interactive display mode
     this.map.on("load", () => {
-      if (this.props.staticMap) {
-        // this.handleStaticShow();
-      }
-      // only add search function for non-static mode (draw or upload)
-      else {
-        this.MapDrawer.addGeoCoder();
-      }
+      this.MapDrawer.addGeoCoder();
 
       // add navigation control
       this.MapDrawer.addNavigationControl();
 
-      // add listeners for draw mode
-      if (this.props.mode === "draw") {
-        this.registerDrawListeners();
-      }
+      // add listeners for drawing
+      this.registerListeners();
     });
-  }
-
-  handleStaticShow = (prevProps) => {
-    this.map.on("load", () => {
-      // only add a marker for trip start if there are no trackpoints
-      if (!this.props.routes[0]) {
-        const coords = [this.props.lng, this.props.lat];
-        this.MapDrawer.addMarker(coords, this.color.head);
-      }
-      // if there are routes present in props, draw them
-      else if (
-        this.props.routes[0].trackpoints &&
-        prevProps.routes[0].trackpoints !== this.props.routes[0].trackpoints
-      ) {
-        this.MapDrawer.drawUploadedRoutes(this.props.routes);
-      }
-    });
-  };
-
-  componentDidUpdate(prevProps) {
-    if (this.props.staticMap) {
-      this.handleStaticShow(prevProps);
-    }
-    if (this.state.drawComplete) {
-      return;
-    }
-    if (this.props.mode === "upload" && this.props.routes[0]) {
-      this.MapDrawer.drawUploadedRoutes(Object.values(this.props.routes));
-      this.setState({ drawComplete: true });
-    }
   }
 
   componentWillUnmount() {
     this.map.remove();
   }
 
-  registerDrawListeners = () => {
+  registerListeners = () => {
     this.map.on("click", (e) => {
       const coords = e.lngLat;
       this.handleClick(coords);
@@ -241,35 +202,25 @@ class TripMap extends React.Component {
       );
     }
 
-    let hoverMarker = this.props.hoverId ? "" : "";
-
     return (
-      <div
-        className={this.props.staticMap ? style["map-500"] : style["map-700"]}
-      >
+      <div className={style["map-700"]}>
         <div className={style.mapTop}></div>
-        {!this.props.staticMap && (
-          <div id="coordinates" className={style.edit_buttons}>
-            {/* <div className={style.edit_button} onClick={this.undo}>
+        <div id="coordinates" className={style.edit_buttons}>
+          {/* <div className={style.edit_button} onClick={this.undo}>
               <FontAwesomeIcon icon={faUndo} />
             </div> */}
-            <div
-              className={`secondary ${style.edit_button}`}
-              onClick={this.clear}
-              title="Reset Map"
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </div>
+          <div
+            className={`secondary ${style.edit_button}`}
+            onClick={this.clear}
+            title="Reset Map"
+          >
+            <FontAwesomeIcon icon={faTimes} />
           </div>
-        )}
+        </div>
 
         <div
           ref={(el) => (this.mapContainer = el)}
-          className={
-            this.props.staticMap
-              ? style["mapContainer-500"]
-              : style["mapContainer-700"]
-          }
+          className={style["mapContainer-700"]}
         />
 
         {firstPoint && (
@@ -284,4 +235,4 @@ class TripMap extends React.Component {
   }
 }
 
-export default withRouter(TripMap);
+export default withRouter(TripDrawMap);

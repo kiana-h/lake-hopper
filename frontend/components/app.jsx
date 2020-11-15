@@ -16,9 +16,9 @@ const App = () => {
         <Greeting />
         <Route exact path="/" component={Landing} />
       </header>
-      <div className="head"></div>
       <div className="app-container">
         <Switch>
+          {/* <div className="head"></div> */}
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/signup" component={Signup} />
           <ProtectedRoute path="/trips/new" component={TripCreator} />
