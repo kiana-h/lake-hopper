@@ -187,6 +187,9 @@ a {
   text-decoration: none;
   color: $dark-shade-100;
 }
+a:hover {
+  cursor: pointer;
+}
 
 .app-container {
   width: 1200px;
@@ -262,4 +265,7 @@ nav {
 }
 .secondary {
   color: $secondary;
+}
+.mapboxgl-ctrl-attrib-button {
+  display: none;
 }
