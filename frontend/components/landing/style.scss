@@ -1,5 +1,6 @@
 .splash {
-  background-image: url("/assets/landing.jpg");
+  // background-image: url("/assets/landing.jpg");
+  background-image: asset-url("landing.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

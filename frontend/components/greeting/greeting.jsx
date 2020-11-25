@@ -16,7 +16,7 @@ const Greeting = ({ currentUser, logout }) => {
     <nav>
       <div className={`flex-center ${style["nav-elements"]}`}>
         <Link to="/" className={`dark-shade-100 ${style.logo}`}>
-          <img className={style.mountain} src="/assets/logo-p.svg"></img>
+          <img className={style.mountain} src={window.logo_purple}></img>
           <h1>Lake Hopper</h1>
         </Link>
         <div className="menu flex-center">
