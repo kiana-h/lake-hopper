@@ -4,14 +4,12 @@ import style from "./style.scss";
 import theme from "../theme/theme";
 import { withRouter } from "react-router-dom";
 
-const demoEmail = process.env.DEMO_EMAIL;
-const demoPassword = process.env.DEMO_PASSWORD;
-
 const Landing = ({ currentUser, login, history, background }) => {
   const demoLogin = () => {
+    debugger;
     const user = {
-      email: demoEmail,
-      password: demoPassword,
+      email: window.demo_email,
+      password: window.demo_password,
     };
     login(user);
     history.push("/trips");

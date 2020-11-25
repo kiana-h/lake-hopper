@@ -11,10 +11,17 @@
     <%= stylesheet_link_tag    :application  , media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <script type="text/javascript">
+      // assets
       window.landing = "<%= image_url('landing.jpg') %>";
       window.map_image = "<%= image_url('map-photo.jpg') %>";
       window.logo_green = "<%= image_url('logo-g.svg') %>";
       window.logo_purple = "<%= image_url('logo-p.svg') %>";
+    </script>
+    <script type="text/javascript">
+      //api keys
+      window.mapbox_token = "<%= Rails.application.credentials.mapbox[:token] %>"
+      window.demo_email = "<%= Rails.application.credentials.demo[:email] %>"
+      window.demo_password = "<%= Rails.application.credentials.demo[:password] %>"
     </script>
   </head>
 

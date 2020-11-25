@@ -9,8 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
-
 class TripMap extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +20,7 @@ class TripMap extends React.Component {
 
   componentDidMount() {
     // create map
+    mapboxgl.accessToken = window.mapbox_token;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/kioola/ckg6zmzuv16uh19o2sr07x5gj",

@@ -43,8 +43,8 @@ export default function SignUp({ errors, signup, login }) {
 
   const demoLogin = () => {
     const user = {
-      email: "demouser@example.com",
-      password: "demopassword",
+      email: window.demo_email,
+      password: window.demo_password,
     };
     login(user);
     history.push("/home");

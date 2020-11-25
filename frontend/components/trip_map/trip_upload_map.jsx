@@ -2,14 +2,11 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import MapDrawer from "../../util/map_drawer";
-import * as MapApiUtil from "../../util/map_api_util";
 import style from "./style.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
 
 class TripUploadMap extends React.Component {
   constructor(props) {
@@ -30,6 +27,7 @@ class TripUploadMap extends React.Component {
 
   componentDidMount() {
     // create map
+    mapboxgl.accessToken = window.mapbox_token;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/kioola/ckg6zmzuv16uh19o2sr07x5gj",

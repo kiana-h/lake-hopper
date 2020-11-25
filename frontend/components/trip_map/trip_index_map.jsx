@@ -7,8 +7,6 @@ import MarkerManger from "../../util/marker_manager";
 import MapDrawer from "../../util/map_drawer";
 import style from "./style.scss";
 
-mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
-
 class TripMap extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +16,11 @@ class TripMap extends React.Component {
       zoom: 3,
       hoverMarker: null,
     };
+    debugger;
   }
 
   componentDidMount() {
+    mapboxgl.accessToken = window.mapbox_token;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/kioola/ckg6zmzuv16uh19o2sr07x5gj",
