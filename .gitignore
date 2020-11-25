@@ -31,3 +31,4 @@ bundle.js.map
 playground
 
 .env
+.DS_Store

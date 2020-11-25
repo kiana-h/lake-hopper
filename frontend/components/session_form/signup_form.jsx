@@ -6,12 +6,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { List, ListItem } from "@material-ui/core";
 import theme from "../theme/theme";
+import useStyles from "./form-style";
 
 function Copyright() {
   return (
@@ -25,29 +25,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(0, 0, 2),
-  },
-  demo: {
-    margin: theme.spacing(5, 0, 2),
-  },
-}));
 
 export default function SignUp({ errors, signup, login }) {
   const classes = useStyles();
@@ -90,13 +67,11 @@ export default function SignUp({ errors, signup, login }) {
     if (!errors) {
       return;
     }
-    return (
-      <ul>
-        {errors.map((error, i) => (
-          <li key={`error-${i}`}>{error}</li>
-        ))}
-      </ul>
-    );
+    return errors.map((error, i) => (
+      <ListItem className={classes.errorItem} key={`error-${i}`}>
+        {error}
+      </ListItem>
+    ));
   };
 
   return (
@@ -109,7 +84,7 @@ export default function SignUp({ errors, signup, login }) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        {renderErrors()}
+        <List className={classes.errorList}>{renderErrors()}</List>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>

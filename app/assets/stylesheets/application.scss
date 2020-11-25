@@ -227,10 +227,11 @@ nav {
 .nav-landing {
   background-color: none;
 }
-// ::-webkit-scrollbar {
-//   width: 0px;
-//   background: transparent; /* make scrollbar transparent */
-// }
+
+.error {
+  color: #f50157;
+}
+
 .dark-shade-100 {
   color: $dark-shade-100;
 }

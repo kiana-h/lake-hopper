@@ -19,7 +19,9 @@ export const selectTrips = (state) => {
 
 export const selectTrip = (state, tripId) => {
   let trip = state.entities.trips[tripId];
+  debugger;
   if (trip && trip.activities.length && trip.activities[0].trackpoints) {
+    debugger;
     let parsedTrackpoints;
     console.log(trip.activities[0].trackpoints);
     let activities = trip.activities.map((activity) => {

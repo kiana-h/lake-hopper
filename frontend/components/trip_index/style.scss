@@ -13,6 +13,9 @@
 .grid-item {
   border-bottom: 1px solid rgba(31, 32, 65, 0.25);
 }
+.grid-item:last-of-type {
+  border-bottom: none;
+}
 .grid-item:hover {
   background-color: rgba(31, 32, 65, 0.05);
 }

@@ -27,9 +27,9 @@ class CreateType extends React.Component {
           <div className={style["mode-chooser"]}>
             <PublishIcon fontSize="large" />
             <p>
-              Upload a '.tcx' file from your smartwatch to generate a map with
+              Upload '.tcx' files from your smartwatch to generate a map with
               your routes and automatically calculate elevation gain, distance,
-              average heart rate, dates, etc.
+              average heart rate, calories, and more!
             </p>
             <Button
               variant="contained"
@@ -38,7 +38,7 @@ class CreateType extends React.Component {
               fullWidth
               onClick={this.setUploadMode}
             >
-              Upload File
+              Upload File(s)
             </Button>
           </div>
           <div className={style["mode-chooser"]}>

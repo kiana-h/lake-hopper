@@ -15,7 +15,6 @@ class TripShow extends React.Component {
     this.props.fetchTrip(this.props.tripId);
   }
   componentDidUpdate() {
-    console.log("show updated");
     if (!this.props.trip) {
       this.props.fetchTrip(this.props.tripId);
     }

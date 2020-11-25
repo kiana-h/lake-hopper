@@ -26,6 +26,8 @@ class TripUploadMap extends React.Component {
       tail: "#4051b5",
     };
     this.mapImageUrl = "";
+
+    this.registerListeners();
   }
 
   componentDidMount() {
@@ -55,7 +57,7 @@ class TripUploadMap extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.props.submitted &&
+      this.props.submitted === "t" &&
       !this.state.mapGenerateComplete &&
       !this.props.posting
     ) {

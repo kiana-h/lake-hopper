@@ -3,56 +3,17 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import ExploreIcon from "@material-ui/icons/Explore";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { List, ListItem } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { formatNumberComma } from "../../util/trip_formatter";
 import style from "./style.scss";
 import theme from "../theme/theme";
+import useStyles from "./form-style";
 
 import parseFile from "../../util/tcx-parser";
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    marginTop: "30px",
-  },
-  paper: {
-    // marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: "0 auto",
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "400px", // Fix IE 11 issue.
-    height: "600px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "spaceEvenly",
-    // marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 1),
-  },
-  number: { marginTop: theme.spacing(3) },
-  adornment: {
-    color: "grey",
-    fontSize: ".8em",
-  },
-  textField: {
-    width: "180px",
-  },
-}));
 
 export default function TripForm({
   errors,
@@ -69,32 +30,39 @@ export default function TripForm({
   end_date,
   addPhotos,
   photos,
+  routesDrawn,
+  calculating,
+  submitted,
 }) {
   const classes = useStyles();
   const [state, setState] = useState({
     uploadingFile: false,
-    submittingTrip: false,
   });
-  // const [open, setOpen] = React.useState(false);
 
-  // Upload mode: hide inputs before receiving file
+  // Set up visible/disabled inputs based on state and props
+
   let showInputs = mode === "draw" || activities[0];
   let showUploadButton = mode === "upload" && !activities[0];
-  // let dateDisabled =
 
-  //   const renderErrors = () => {
-  //     if (!errors) {
-  //       return;
-  //     }
-  //     return (
-  //       <ul>
-  //         {errors.map((error, i) => (
-  //           <li key={`error-${i}`}>{error}</li>
-  //         ))}
-  //       </ul>
-  //     );
-  //   };
+  let disableForm = state.uploadingFile || submitted || calculating;
+  let disableDistanceElevation =
+    mode === "upload" || routesDrawn || calculating;
+  let disableDate = mode === "upload";
 
+  const renderErrors = () => {
+    if (!errors.length) {
+      return;
+    }
+    return (
+      <List style={theme.palette.errorList}>
+        {errors.map((error, i) => (
+          <ListItem style={theme.palette.errorItem} key={`error-${i}`}>
+            {error}
+          </ListItem>
+        ))}
+      </List>
+    );
+  };
   // Draw mode methods
 
   const handleChange = (e) => {
@@ -127,10 +95,6 @@ export default function TripForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      submittingTrip: true,
-    }));
     submit();
   };
 
@@ -161,7 +125,7 @@ export default function TripForm({
             Create New Trip
           </Typography>
         </div>
-        {/* {renderErrors()} */}
+        {renderErrors()}
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
@@ -174,6 +138,7 @@ export default function TripForm({
             autoFocus
             value={title}
             onChange={handleChange}
+            disabled={disableForm}
           />
           <TextField
             variant="outlined"
@@ -187,6 +152,7 @@ export default function TripForm({
             autoFocus
             value={description}
             onChange={handleChange}
+            disabled={disableForm}
           />
 
           {showUploadButton && (
@@ -197,7 +163,7 @@ export default function TripForm({
               fullWidth
               className={classes.submit}
             >
-              {state.uploadingFile ? "Processing Files..." : "Upload File"}
+              {state.uploadingFile ? "Processing Files..." : "Upload File(s)"}
               <input
                 id="activities"
                 type="file"
@@ -218,6 +184,7 @@ export default function TripForm({
                   type="date"
                   className={classes.textField}
                   value={start_date}
+                  disabled={disableDate}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
@@ -229,6 +196,7 @@ export default function TripForm({
                   type="date"
                   className={classes.textField}
                   value={end_date}
+                  disabled={disableDate}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
@@ -241,7 +209,8 @@ export default function TripForm({
                   label="Distance"
                   type="float"
                   className={`${classes.textField} ${classes.number}`}
-                  value={distance}
+                  value={calculating ? "calculating..." : distance}
+                  disabled={disableDistanceElevation}
                   onChange={handleChange}
                   InputLabelProps={{
                     shrink: true,
@@ -259,8 +228,13 @@ export default function TripForm({
                   label="Elevation Gain"
                   type="float"
                   className={`${classes.textField} ${classes.number}`}
-                  value={formatNumberComma(elevation_gain)}
+                  value={
+                    calculating
+                      ? "calculating..."
+                      : formatNumberComma(elevation_gain)
+                  }
                   onChange={handleChange}
+                  disabled={disableDistanceElevation}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -305,8 +279,9 @@ export default function TripForm({
                 fullWidth
                 style={theme.palette.gradientPrimary}
                 className={classes.submit}
+                disabled={disableForm}
               >
-                {state.submittingTrip ? "Submitting Trip..." : "Submit"}
+                {submitted ? "Submitting Trip..." : "Submit"}
               </Button>
             </div>
           )}

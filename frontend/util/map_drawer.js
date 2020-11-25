@@ -99,17 +99,19 @@ export default class MarkerDrawer {
     }
 
     const markers = this.getMarkers(routes);
+    const markerObjects = [];
     let color;
 
-    for (let i = 0; i < markers.length; i++) {
+    for (let i = markers.length - 1; i >= 0; i--) {
       if (i === 0) {
         color = this.color.head;
       } else {
         color = this.color.tail;
       }
 
-      this.addMarker(markers[i], color);
+      markerObjects.push(this.addMarker(markers[i], color));
     }
+    return markerObjects;
   };
 
   getCleanCoords = (lap) => {
@@ -162,13 +164,12 @@ export default class MarkerDrawer {
         firstPointCoords,
         firstPointCoords,
       ]);
-      let route, lap, id, coordinates;
+      let route, lap, coordinates;
       // go through every lap of everyroute
       for (let routeNum in routes) {
         route = routes[routeNum];
         for (let i = 0; i < route.trackpoints.length; i++) {
           lap = route.trackpoints[i];
-          id = `route-${routeNum}-${i}`;
           // combine all the coordinates for that lap
           coordinates = this.getCleanCoords(lap);
           // adjust the map view bounds to include that lap

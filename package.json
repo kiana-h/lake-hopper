@@ -2,7 +2,6 @@
   "name": "lake-hopper",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "latest",
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
@@ -15,7 +14,6 @@
     "@mapbox/mapbox-gl-geocoder": "^4.7.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "antd": "4.7.3",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.3.0",
     "dotenv": "^8.2.0",

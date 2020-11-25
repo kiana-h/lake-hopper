@@ -1,24 +1,24 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import { Switch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import TripForm from "./trip_form";
 import TripMap from "../trip_map/trip_map";
-import TripUploadMap from "../trip_map/trip_upload_map";
-import TripDrawMap from "../trip_map/trip_draw_map";
 import CreateType from "./create_type";
-import { ProtectedRoute } from "../../util/route_util";
+import { today } from "../../util/trip_formatter";
 
-const today = () => {
-  const d = new Date();
-  let month = "" + (d.getMonth() + 1);
-  let day = "" + d.getDate();
-  let year = d.getFullYear();
-
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [year, month, day].join("-");
+const initialState = {
+  title: "",
+  description: "",
+  distance: 0,
+  elevation_gain: 0,
+  routes: {},
+  start_date: today(),
+  end_date: today(),
+  photos: [],
+  submitted: false,
+  mapImageUrl: "",
+  firstPoint: null,
+  calculating: false,
 };
 
 class TripCreator extends React.Component {
@@ -26,17 +26,7 @@ class TripCreator extends React.Component {
     super(props);
 
     this.state = {
-      title: "",
-      description: "",
-      distance: 0,
-      elevation_gain: 0,
-      routes: {},
-      start_date: today(),
-      end_date: today(),
-      photos: [],
-      submitted: "f",
-      mapImageUrl: "",
-      firstPoint: null,
+      ...initialState,
     };
 
     this.initMapProps = {
@@ -98,14 +88,48 @@ class TripCreator extends React.Component {
   };
 
   submit = () => {
-    this.setState({ submitted: "t" });
+    if (!this.state.firstPoint && !this.state.routes[0]) {
+      this.noTripLocation();
+    } else if (!this.state.title) {
+      this.noTitle();
+    } else {
+      this.setState({ submitted: true });
+    }
+  };
+
+  noTripLocation = () => {
+    this.props.receiveErrors(
+      this.props.mode === "draw"
+        ? [
+            "Missing Trip Location Info:",
+            "  - Draw your route on the map, or",
+            "  - Specify the starting point by clicking on the map",
+          ]
+        : [
+            "Missing Trip Location Info:",
+            "  - Upload a .tcx file to get trip info",
+          ]
+    );
+  };
+  noTitle = () => {
+    this.props.receiveErrors(["Title can't be blank"]);
   };
 
   generateMapImageUrl = (mapImageUrl) => {
     this.setState({ mapImageUrl }, this.compileTrip);
   };
 
-  compileTrip = async () => {
+  componentDidUpdate(prevProps) {
+    if (this.state.submitted === true) {
+      if (prevProps.posting) {
+        if (!this.props.posting) {
+          this.navigateToSearch();
+        }
+      }
+    }
+  }
+
+  compileTrip = () => {
     const tripData = new FormData();
     tripData.append("trip[title]", this.state.title);
     tripData.append("trip[description]", this.state.description);
@@ -137,7 +161,6 @@ class TripCreator extends React.Component {
     }
     tripData.append("trip[activities]", JSON.stringify(activities));
     this.props.createTrip(tripData);
-    this.navigateToSearch();
   };
 
   navigateToSearch = () => {
@@ -162,64 +185,22 @@ class TripCreator extends React.Component {
     this.setState({ firstPoint: [lng, lat] });
   };
 
+  toggleCalc = () => {
+    const newState = !this.state.calculating;
+    this.setState({ calculating: newState });
+  };
+
   reset = () => {
     this.setState({
-      title: "",
-      description: "",
       distance: 0,
       elevation_gain: 0,
       routes: {},
-      start_date: today(),
-      end_date: today(),
       photos: [],
-      submitted: "f",
+      submitted: false,
       mapImageUrl: "",
       firstPoint: null,
+      calculating: false,
     });
-  };
-
-  undo = () => {};
-
-  // clear = () => {
-  //   this.setState({ distance: 0, elevation_gain: 0, routes: {} });
-  // };
-  tripMap = ({
-    updateRoutes,
-    routes,
-    lat,
-    lng,
-    zoom,
-    clear,
-    updateFirstPoint,
-    submitted,
-    generateMapImageUrl,
-  }) => {
-    const map =
-      this.props.mode === "upload" ? (
-        <TripUploadMap
-          updateRoutes={updateRoutes}
-          routes={routes}
-          lat={lat}
-          lng={lng}
-          zoom={zoom}
-          clear={clear}
-          submitted={submitted}
-          generateMapImageUrl={generateMapImageUrl}
-        />
-      ) : (
-        <TripDrawMap
-          updateRoutes={updateRoutes}
-          routes={routes}
-          lat={lat}
-          lng={lng}
-          zoom={zoom}
-          clear={clear}
-          submitted={submitted}
-          updateFirstPoint={updateFirstPoint}
-          generateMapImageUrl={generateMapImageUrl}
-        />
-      );
-    return map;
   };
 
   render() {
@@ -227,6 +208,20 @@ class TripCreator extends React.Component {
       return <CreateType reset={this.reset} />;
     }
 
+    const mapProps = {
+      updateRoutes: this.updateRoutes,
+      routes: this.state.routes,
+      lat: this.initMapProps.lat,
+      lng: this.initMapProps.lng,
+      zoom: this.initMapProps.zoom,
+      clear: this.reset,
+      updateFirstPoint: this.updateFirstPoint,
+      submitted: this.state.submitted,
+      posting: this.props.posting,
+      generateMapImageUrl: this.generateMapImageUrl,
+      toggleCalc: this.toggleCalc,
+      noTripLocation: this.noTripLocation,
+    };
     return (
       <div className="flex-top">
         <TripForm
@@ -243,32 +238,13 @@ class TripCreator extends React.Component {
           description={this.state.description}
           photos={this.state.photos}
           addPhotos={this.addPhotos}
-        />
-        {this.tripMap({
-          updateRoutes: this.updateRoutes,
-          routes: this.state.routes,
-          lat: this.initMapProps.lat,
-          lng: this.initMapProps.lng,
-          zoom: this.initMapProps.zoom,
-          clear: this.reset,
-          updateFirstPoint: this.updateFirstPoint,
-          submitted: this.state.submitted,
-          generateMapImageUrl: this.generateMapImageUrl,
-        })}
-        {/* <TripMap
-          updateRoutes={this.updateRoutes}
-          staticMap={false}
-          routes={this.state.routes}
-          mode={this.props.mode}
-          lat={this.initMapProps.lat}
-          lng={this.initMapProps.lng}
-          zoom={this.initMapProps.zoom}
-          undo={this.undo}
-          clear={this.reset}
-          updateFirstPoint={this.updateFirstPoint}
+          routesDrawn={this.state.routes[0] == true}
+          calculating={this.state.calculating}
+          errors={this.props.errors}
+          posting={this.props.posting}
           submitted={this.state.submitted}
-          generateMapImageUrl={this.generateMapImageUrl}
-        /> */}
+        />
+        <TripMap {...mapProps} mode={this.props.mode} />
       </div>
     );
   }

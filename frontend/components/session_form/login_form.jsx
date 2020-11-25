@@ -4,16 +4,15 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { List, ListItem } from "@material-ui/core";
 import theme from "../theme/theme";
+import style from "./style.scss";
+import useStyles from "./form-style";
 
 function Copyright() {
   return (
@@ -27,32 +26,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(0, 0, 2),
-  },
-  bottomLink: {
-    marginTop: "20px",
-  },
-  demo: {
-    margin: theme.spacing(4, 0, 2),
-  },
-}));
 
 function SignIn({ errors, login }) {
   const classes = useStyles();
@@ -93,13 +66,11 @@ function SignIn({ errors, login }) {
     if (!errors) {
       return;
     }
-    return (
-      <ul>
-        {errors.map((error, i) => (
-          <li key={`error-${i}`}>{error}</li>
-        ))}
-      </ul>
-    );
+    return errors.map((error, i) => (
+      <ListItem className={classes.errorItem} key={`error-${i}`}>
+        {error}
+      </ListItem>
+    ));
   };
 
   return (
@@ -112,7 +83,7 @@ function SignIn({ errors, login }) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        {renderErrors()}
+        <List className={classes.errorList}>{renderErrors()}</List>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"

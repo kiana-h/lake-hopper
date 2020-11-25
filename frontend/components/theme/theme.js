@@ -20,12 +20,10 @@ const Theme = createMuiTheme({
       borderColor: "#BC9CFF",
       background: "rgba(250,250,250,.5)",
       color: "#BC9CFF",
-      // padding: "5px 10px",
     },
     gradientPrimaryOutline: {
       borderColor: "#6FCF97",
       color: "#6FCF97",
-      // padding: "5px 10px",
     },
     whiteBg: {
       borderColor: "#fafafa",
@@ -34,6 +32,22 @@ const Theme = createMuiTheme({
     },
     noPadding: {
       padding: 0,
+    },
+    errorList: {
+      display: "flex",
+      width: "100%",
+      flexDirection: "column",
+      alignItems: "center",
+      textAlign: "center",
+      border: "1px solid #BC9CFF",
+      borderRadius: "4px",
+      color: "#BC9CFF",
+      padding: "5px 15px",
+      marginTop: "20px",
+    },
+    errorItem: {
+      textAlign: "center",
+      padding: "0",
     },
   },
 });

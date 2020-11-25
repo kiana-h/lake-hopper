@@ -8,16 +8,18 @@ import * as MapApiUtil from "../../util/map_api_util";
 import style from "./style.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
 
-class TripDrawMap extends React.Component {
+class TripMap extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       markers: [],
+      drawComplete: false,
       mapGenerateComplete: false,
     };
 
@@ -42,27 +44,59 @@ class TripDrawMap extends React.Component {
 
     // handle the non-interactive display mode
     this.map.on("load", () => {
-      this.MapDrawer.addGeoCoder();
+      if (this.props.staticMap) {
+        // this.handleStaticShow();
+      }
+      // only add search function for non-static mode (draw or upload)
+      else {
+        this.MapDrawer.addGeoCoder();
+      }
 
       // add navigation control
       this.MapDrawer.addNavigationControl();
 
-      // add listeners for drawing
-      this.registerListeners();
+      // add listeners for draw mode
+      if (this.props.mode === "draw") {
+        this.registerDrawListeners();
+      }
     });
   }
 
-  componentWillUnmount() {
-    this.map.remove();
-  }
+  handleStaticShow = (prevProps) => {
+    this.map.on("load", () => {
+      // only add a marker for trip start if there are no trackpoints
+      if (!this.props.routes[0]) {
+        const coords = [this.props.lng, this.props.lat];
+        this.MapDrawer.addMarker(coords, this.color.head);
+      }
+      // if there are routes present in props, draw them
+      else if (
+        this.props.routes[0].trackpoints &&
+        prevProps.routes[0].trackpoints !== this.props.routes[0].trackpoints
+      ) {
+        this.MapDrawer.drawUploadedRoutes(this.props.routes);
+      }
+    });
+  };
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    debugger;
+    if (this.props.staticMap) {
+      this.handleStaticShow(prevProps);
+    }
+    if (this.state.drawComplete) {
+      return;
+    }
+    if (this.props.mode === "upload" && this.props.routes[0]) {
+      this.MapDrawer.drawUploadedRoutes(Object.values(this.props.routes));
+      this.setState({ drawComplete: true });
+    }
     if (
-      this.props.submitted &&
+      this.props.submitted === "t" &&
       !this.state.mapGenerateComplete &&
       !this.props.posting
     ) {
-      const firstPoint = this.state.markers[0];
+      debugger;
       this.setState({ mapGenerateComplete: true });
       this.MapDrawer.zoomToPath(
         this.props.routes,
@@ -72,7 +106,11 @@ class TripDrawMap extends React.Component {
     }
   }
 
-  registerListeners = () => {
+  componentWillUnmount() {
+    this.map.remove();
+  }
+
+  registerDrawListeners = () => {
     this.map.on("click", (e) => {
       const coords = e.lngLat;
       this.handleClick(coords);
@@ -105,7 +143,6 @@ class TripDrawMap extends React.Component {
   };
 
   handleMarkerDrag = (e) => {
-    this.props.toggleCalc();
     const marker = e.target;
     const id = marker.id;
     const { markers } = this.state;
@@ -139,6 +176,7 @@ class TripDrawMap extends React.Component {
       ).then((data) => this.handleRoute(data, id));
     }
     this.props.updateFirstPoint(this.state.markers[0]);
+    this.props.toggleCalc();
   };
 
   getRoute = async () => {
@@ -190,7 +228,6 @@ class TripDrawMap extends React.Component {
       elevation_gain: elevation_gain,
     };
     this.props.updateRoutes(routes);
-    this.props.toggleCalc();
   };
 
   clear = () => {
@@ -205,7 +242,7 @@ class TripDrawMap extends React.Component {
 
     this.setState({
       markers: [],
-      mapGenerateComplete: false,
+      drawComplete: false,
     });
 
     this.props.clear();
@@ -214,26 +251,35 @@ class TripDrawMap extends React.Component {
   render() {
     const firstPoint = this.state.markers[0];
 
+    let hoverMarker = this.props.hoverId ? "" : "";
+
     return (
-      <div className={style["map-700"]}>
+      <div
+        className={this.props.staticMap ? style["map-500"] : style["map-700"]}
+      >
         <div className={style.mapTop}></div>
-        <div key={this.props.submitted}></div>
-        <div id="coordinates" className={style.edit_buttons}>
-          {/* <div className={style.edit_button} onClick={this.undo}>
+        {!this.props.staticMap && (
+          <div id="coordinates" className={style.edit_buttons}>
+            {/* <div className={style.edit_button} onClick={this.undo}>
               <FontAwesomeIcon icon={faUndo} />
             </div> */}
-          <div
-            className={`secondary ${style.edit_button}`}
-            onClick={this.clear}
-            title="Reset Map"
-          >
-            <FontAwesomeIcon icon={faTimes} />
+            <div
+              className={`secondary ${style.edit_button}`}
+              onClick={this.clear}
+              title="Reset Map"
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </div>
           </div>
-        </div>
+        )}
 
         <div
           ref={(el) => (this.mapContainer = el)}
-          className={style["mapContainer-700"]}
+          className={
+            this.props.staticMap
+              ? style["mapContainer-500"]
+              : style["mapContainer-700"]
+          }
         />
 
         {firstPoint && (
@@ -248,4 +294,51 @@ class TripDrawMap extends React.Component {
   }
 }
 
-export default withRouter(TripDrawMap);
+export default withRouter(TripMap);
+
+// tripMap = ({
+//   updateRoutes,
+//   routes,
+//   lat,
+//   lng,
+//   zoom,
+//   clear,
+//   updateFirstPoint,
+//   submitted,
+//   posting,
+//   generateMapImageUrl,
+//   toggleCalc,
+//   noTripLocation
+// }) => {
+//   const map =
+//     this.props.mode === "upload" ? (
+//       <TripUploadMap
+//         updateRoutes={updateRoutes}
+//         routes={routes}
+//         lat={lat}
+//         lng={lng}
+//         zoom={zoom}
+//         clear={clear}
+//         submitted={submitted}
+//         posting={posting}
+//         generateMapImageUrl={generateMapImageUrl}
+//         noTripLocation={noTripLocation}
+//       />
+//     ) : (
+//       <TripDrawMap
+//         updateRoutes={updateRoutes}
+//         routes={routes}
+//         lat={lat}
+//         lng={lng}
+//         zoom={zoom}
+//         clear={clear}
+//         submitted={submitted}
+//         posting={posting}
+//         updateFirstPoint={updateFirstPoint}
+//         generateMapImageUrl={generateMapImageUrl}
+//         toggleCalc={toggleCalc}
+//         noTripLocation={noTripLocation}
+//       />
+//     );
+//   return map;
+// };
