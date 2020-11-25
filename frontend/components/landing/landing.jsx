@@ -10,8 +10,8 @@ const demoPassword = process.env.DEMO_PASSWORD;
 const Landing = ({ currentUser, login, history, background }) => {
   const demoLogin = () => {
     const user = {
-      email: "demouser@example.com",
-      password: "demopassword",
+      email: demoEmail,
+      password: demoPassword,
     };
     login(user);
     history.push("/trips");
