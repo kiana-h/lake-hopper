@@ -57,5 +57,5 @@ export const getElevationSum = (activities) => {
   for (let activity of activities) {
     elevationGain += activity.elevation_gain;
   }
-  return (distance * 3.28084).toFixed();
+  return (elevationGain * 3.28084).toFixed();
 };
