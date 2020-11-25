@@ -11,21 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { List, ListItem } from "@material-ui/core";
 import theme from "../theme/theme";
-import style from "./style.scss";
 import useStyles from "./form-style";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Lake Hopper
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 function SignIn({ errors, login }) {
   const classes = useStyles();

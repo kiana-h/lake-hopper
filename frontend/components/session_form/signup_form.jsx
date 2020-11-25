@@ -13,19 +13,6 @@ import { List, ListItem } from "@material-ui/core";
 import theme from "../theme/theme";
 import useStyles from "./form-style";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Lake Hopper
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function SignUp({ errors, signup, login }) {
   const classes = useStyles();
   const history = useHistory();
@@ -157,9 +144,6 @@ export default function SignUp({ errors, signup, login }) {
           </Grid>
         </form>
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
     </Container>
   );
 }

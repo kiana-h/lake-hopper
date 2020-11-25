@@ -7,9 +7,6 @@ import UserMenu from "./user_menu";
 import style from "./style.scss";
 import theme from "../theme/theme";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMountain } from "@fortawesome/free-solid-svg-icons";
-
 const Greeting = ({ currentUser, logout }) => {
   const UserElements = () => {
     return currentUser ? <UserGreeting /> : <SessionsLinks />;
@@ -51,17 +48,6 @@ const Greeting = ({ currentUser, logout }) => {
   );
 
   const UserGreeting = () => (
-    // <div className={`flex-center ${style.user_greeting}`}>
-    //   <Link className="flex-center" to="/home">
-    //     <p className={`${style.username} secondary`}>
-    //       {capitalize(currentUser.username)}
-    //     </p>
-    //   </Link>
-
-    //   <Button variant="outlined" color="secondary" onClick={logout}>
-    //     Logout
-    //   </Button>
-    // </div>
     <div className={"flex-center"}>
       <UserMenu user={currentUser} logout={logout} />
       <Link to="/trips/new">
@@ -72,7 +58,6 @@ const Greeting = ({ currentUser, logout }) => {
     </div>
   );
 
-  // return currentUser ? <UserGreeting /> : <SessionsLinks />;
   return <AppBar />;
 };
 
