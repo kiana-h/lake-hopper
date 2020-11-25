@@ -18,28 +18,25 @@ const Landing = ({ currentUser, login, history, background }) => {
   };
 
   return (
-    <div>
-      <div className={`dark-shade-100 ${style.splash}`}>
-        <div className={style["landing-blurb"]}>
-          <h1 className={` ${style["landing-title"]}`}>
-            A Backpacker's Journal
-          </h1>
-          <p>All of your trips, maps, photos, and notes in one place</p>
-          <p></p>
-          <br />
-          <br />
-          {!currentUser && (
-            <Button
-              variant="contained"
-              style={theme.palette.gradientPrimary}
-              className={style["demo-button"]}
-              onClick={demoLogin}
-            >
-              Demo User Login
-            </Button>
-          )}
-        </div>
+    <div className={`dark-shade-100`}>
+      <div className={style["landing-blurb"]}>
+        <h1 className={` ${style["landing-title"]}`}>A Backpacker's Journal</h1>
+        <p>All of your trips, maps, photos, and notes in one place</p>
+        <p></p>
+        <br />
+        <br />
+        {!currentUser && (
+          <Button
+            variant="contained"
+            style={theme.palette.gradientPrimary}
+            className={style["demo-button"]}
+            onClick={demoLogin}
+          >
+            Demo User Login
+          </Button>
+        )}
       </div>
+      <img src={window.landing} className="splash" />
     </div>
   );
 };

@@ -215,6 +215,18 @@ nav {
   z-index: 500;
 }
 
+.splash {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: auto;
+  overflow: hidden;
+  z-index: -1000;
+}
+
 .mapboxgl-popup {
   max-width: 100px;
   text-align: center;

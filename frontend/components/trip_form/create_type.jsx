@@ -59,6 +59,7 @@ class CreateType extends React.Component {
             </Button>
           </div>
         </div>
+        <img src={window.map_image} className={`splash ${style.bg}`} />
       </div>
     );
   }
