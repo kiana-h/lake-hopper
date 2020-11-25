@@ -4,7 +4,11 @@ import { withRouter } from "react-router-dom";
 import TripForm from "./trip_form";
 import TripMap from "../trip_map/trip_map";
 import CreateType from "./create_type";
-import { today } from "../../util/trip_formatter";
+import {
+  today,
+  getDistanceSum,
+  getElevationSum,
+} from "../../util/trip_formatter";
 
 const initialState = {
   title: "",
@@ -37,18 +41,10 @@ class TripCreator extends React.Component {
   }
 
   updateRoutes = (routes) => {
-    let distance = parseFloat(
-      (
-        Object.values(routes).reduce((sum, route) => {
-          return sum + route.distance;
-        }, 0) * 0.000621371
-      ).toFixed(2)
-    );
-    let elevation_gain = parseInt(
-      Object.values(routes).reduce((sum, route) => {
-        return sum + route.elevation_gain;
-      }, 0) * 3.28084
-    );
+    const activities = Object.values(routes);
+    let distance = parseFloat(getDistanceSum(activities));
+    let elevation_gain = parseFloat(getElevationSum(activities));
+
     // if the route was uploaded
     if (routes[0] && routes[0]["activityId"]) {
       // extract start & end dates

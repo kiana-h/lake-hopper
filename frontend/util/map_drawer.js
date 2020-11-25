@@ -126,9 +126,9 @@ export default class MarkerDrawer {
   };
 
   adjustBounds = (boundingBox, coordinates) => {
-    boundingBox = coordinates.reduce((bounds, coord) => {
-      return bounds.extend(coord);
-    }, boundingBox);
+    for (let coord of coordinates) {
+      boundingBox.extend(coord);
+    }
     this.map.fitBounds(boundingBox, {
       padding: 50,
     });
@@ -197,8 +197,3 @@ export default class MarkerDrawer {
     }
   };
 }
-
-// boundingBox = this.state.markers.reduce((bounds, marker) => {
-//   let coord = [marker.getLngLat().lng, marker.getLngLat().lat];
-//   return bounds.extend(coord);
-// }, boundingBox);

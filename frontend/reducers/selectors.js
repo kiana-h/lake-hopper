@@ -1,17 +1,11 @@
+import { getDistanceSum, getElevationSum } from "../util/trip_formatter";
+
 export const selectTrips = (state) => {
   let trips = Object.values(state.entities.trips).reverse();
   for (let trip of trips) {
     if (trip && trip.activities) {
-      trip.distance = (
-        trip.activities.reduce((sum, activity) => {
-          return activity.distance + sum;
-        }, 0) * 0.000621371
-      ).toFixed(2);
-      trip.elevationGain = (
-        trip.activities.reduce((sum, activity) => {
-          return activity.elevation_gain + sum;
-        }, 0) * 3.28084
-      ).toFixed();
+      trip.distance = getDistanceSum(trip.activities);
+      trip.elevationGain = getElevationSum(trip.activities);
     }
   }
   return trips;
@@ -30,16 +24,8 @@ export const selectTrip = (state, tripId) => {
       return activity;
     });
     trip.activities = activities;
-    trip.distance = (
-      trip.activities.reduce((sum, activity) => {
-        return activity.distance + sum;
-      }, 0) * 0.000621371
-    ).toFixed(2);
-    trip.elevationGain = (
-      trip.activities.reduce((sum, activity) => {
-        return activity.elevation_gain + sum;
-      }, 0) * 3.28084
-    ).toFixed();
+    trip.distance = getDistanceSum(activities);
+    trip.elevationGain = getElevationSum(activities);
   }
   return trip;
 };

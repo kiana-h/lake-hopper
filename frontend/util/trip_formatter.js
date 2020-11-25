@@ -43,3 +43,19 @@ export const today = () => {
 
   return [year, month, day].join("-");
 };
+
+export const getDistanceSum = (activities) => {
+  let distance = 0;
+  for (let activity of activities) {
+    distance += activity.distance;
+  }
+  return (distance * 0.000621371).toFixed(2);
+};
+
+export const getElevationSum = (activities) => {
+  let elevationGain = 0;
+  for (let activity of activities) {
+    elevationGain += activity.elevation_gain;
+  }
+  return (distance * 3.28084).toFixed();
+};
