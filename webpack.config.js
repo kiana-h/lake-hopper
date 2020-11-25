@@ -1,5 +1,7 @@
 const path = require("path");
-const Dotenv = require("dotenv-webpack");
+if (process.env.NODE_ENV !== "production") {
+  const Dotenv = require("dotenv-webpack").config();
+}
 
 module.exports = {
   context: __dirname,
@@ -64,5 +66,4 @@ module.exports = {
   node: {
     fs: "empty",
   },
-  plugins: [new Dotenv()],
 };
