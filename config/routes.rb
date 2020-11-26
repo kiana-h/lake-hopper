@@ -6,4 +6,7 @@ Rails.application.routes.draw do
       resources :activities, only: [:create]
     end
   root 'static_pages#root'
+  get '*path', to: 'static_pages#root', constraints: lambda { |req|
+  req.path.exclude? 'rails/active_storage'
+}
 end
