@@ -88,3 +88,12 @@
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.photo {
+  height: 500px;
+  width: 700px;
+  position: absolute;
+  top: -24px;
+  object-fit: cover;
+  z-index: 1000;
+}

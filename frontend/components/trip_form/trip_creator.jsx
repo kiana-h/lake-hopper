@@ -234,7 +234,7 @@ class TripCreator extends React.Component {
           description={this.state.description}
           photos={this.state.photos}
           addPhotos={this.addPhotos}
-          routesDrawn={this.state.routes[0] == true}
+          routesDrawn={Object.keys(this.state.routes).length > 0}
           calculating={this.state.calculating}
           errors={this.props.errors}
           posting={this.props.posting}

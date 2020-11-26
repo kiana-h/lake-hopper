@@ -25,7 +25,7 @@ class Api::TripsController < ApplicationController
     end
 
     def show
-        @trip = Trip.find(params[:id])
+        @trip = Trip.with_attached_photos.find(params[:id])
     end
 
     private

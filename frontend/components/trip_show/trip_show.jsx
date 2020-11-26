@@ -7,9 +7,9 @@ import style from "./style.scss";
 class TripShow extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   hoverId: null,
-    // };
+    this.state = {
+      photo: null,
+    };
   }
   componentDidMount() {
     this.props.fetchTrip(this.props.tripId);
@@ -35,6 +35,10 @@ class TripShow extends React.Component {
     }
   };
 
+  replaceMapWithPhoto = (photo) => {
+    this.setState({ photo });
+  };
+
   render() {
     if (!this.props.trip) {
       return <div></div>;
@@ -52,10 +56,17 @@ class TripShow extends React.Component {
               zoom={12}
               routes={trip.activities}
               getFirstPoint={this.getFirstPoint}
+              photo={this.state.photo}
             />
           </div>
         </div>
-        <ImageGridList photoUrls={trip.photos_url} title={trip.title} />
+        {trip.photos_url && (
+          <ImageGridList
+            photoUrls={trip.photos_url}
+            title={trip.title}
+            replaceMapWithPhoto={this.replaceMapWithPhoto}
+          />
+        )}
       </div>
     );
   }

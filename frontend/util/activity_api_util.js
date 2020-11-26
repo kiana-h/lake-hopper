@@ -16,7 +16,6 @@ export const fetchActivity = (id) => {
 };
 
 export const postActivities = (activities) => {
-  debugger;
   return $.ajax({
     method: "POST",
     url: "/api/activities",

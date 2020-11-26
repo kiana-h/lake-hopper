@@ -5,7 +5,7 @@ import MapIcon from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { formatDate, capitalize } from "../../util/trip_formatter";
+import { dateRange, capitalize } from "../../util/trip_formatter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,9 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TripDetail({ trip }) {
   const classes = useStyles();
   const dates = () => {
-    const start = formatDate(trip.start_date);
-    const end = formatDate(trip.end_date);
-    const dateString = start === end ? start : start + " - " + end;
+    const dateString = dateRange(trip);
     return (
       <Typography className={classes.date} variant="body2">
         {dateString}
@@ -77,36 +75,42 @@ export default function TripDetail({ trip }) {
           <div className={classes.infoRow}>
             <div className={classes.infoItem}>
               <Typography variant="body2">
-                <strong>Distance: </strong> {trip.distance} Miles
+                <strong>Distance: </strong>{" "}
+                {trip.distance ? `${trip.distance} Miles` : "n/a"}
               </Typography>
             </div>
             <div className={classes.infoItem}>
               <Typography variant="body2">
-                <strong>Elevation Gain: </strong> {trip.elevationGain} Feet
-              </Typography>
-            </div>
-          </div>
-          <div className={classes.infoRow}>
-            <div className={classes.infoItem}>
-              <Typography variant="body2">
-                <strong>Heart Rate: </strong> {trip.elevationGain} bpm
-              </Typography>
-            </div>
-            <div className={classes.infoItem}>
-              <Typography variant="body2">
-                <strong>Calories: </strong> {trip.elevationGain} kc
+                <strong>Elevation Gain: </strong>
+                {trip.elevationGain ? `${trip.elevationGain} Feet` : "n/a"}
               </Typography>
             </div>
           </div>
           <div className={classes.infoRow}>
             <div className={classes.infoItem}>
               <Typography variant="body2">
-                <strong>Trip Length: </strong> {trip.elevationGain} Days
+                <strong>Trip Length: </strong>{" "}
+                {trip.days ? `${trip.days} Days` : "n/a"}
               </Typography>
             </div>
             <div className={classes.infoItem}>
               <Typography variant="body2">
-                <strong>Active Time: </strong> {trip.elevationGain} Hours
+                <strong>Active Time: </strong>{" "}
+                {trip.activeTime ? `${trip.activeTime} Hours` : "n/a"}
+              </Typography>
+            </div>
+          </div>
+          <div className={classes.infoRow}>
+            <div className={classes.infoItem}>
+              <Typography variant="body2">
+                <strong>Heart Rate: </strong>{" "}
+                {trip.hr ? `${trip.hr} bpm` : "n/a"}
+              </Typography>
+            </div>
+            <div className={classes.infoItem}>
+              <Typography variant="body2">
+                <strong>Calories: </strong>{" "}
+                {trip.calories ? `${trip.calories} Kcal` : "n/a"}
               </Typography>
             </div>
           </div>

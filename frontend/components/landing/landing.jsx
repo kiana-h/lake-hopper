@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 
 const Landing = ({ currentUser, login, history, background }) => {
   const demoLogin = () => {
-    debugger;
     const user = {
       email: window.demo_email,
       password: window.demo_password,

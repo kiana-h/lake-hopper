@@ -16,6 +16,9 @@ class TripMap extends React.Component {
       head: "#BC9CFF",
       tail: "#4051b5",
     };
+    this.state = {
+      drawInitiated: false,
+    };
   }
 
   componentDidMount() {
@@ -34,12 +37,13 @@ class TripMap extends React.Component {
 
     // handle the non-interactive display mode
     this.map.on("load", () => {
-      if (!this.props.routes[0]) {
+      if (!this.props.routes) {
         const coords = [this.props.lng, this.props.lat];
         this.MapDrawer.addMarker(coords, this.color.head);
       }
       // if there are routes present in props, draw them
-      else if (this.props.routes[0].trackpoints) {
+      else if (this.props.routes && !this.state.drawInitiated) {
+        this.setState({ drawInitiated: true });
         this.MapDrawer.drawUploadedRoutes(this.props.routes);
       }
     });
@@ -49,13 +53,23 @@ class TripMap extends React.Component {
     this.MapDrawer.drawUploadedRoutes(this.props.routes);
   };
 
-  componentDidUpdate(prevProps) {
+  photo = () => {
+    return this.props.photo ? (
+      <img className={style.photo} src={this.props.photo} />
+    ) : (
+      ""
+    );
+  };
+
+  componentDidUpdate() {
     if (
-      prevProps.routes[0] &&
-      !prevProps.routes[0].trackpoints &&
-      this.props.routes[0].trackpoints
-    )
+      this.props.routes[0] &&
+      this.props.routes[0].trackpoints &&
+      !this.state.drawInitiated
+    ) {
+      this.setState({ drawInitiated: true });
       this.handleStaticShow();
+    }
   }
 
   componentWillUnmount() {
@@ -66,11 +80,11 @@ class TripMap extends React.Component {
     return (
       <div className={style["map-500"]}>
         <div className={style.mapTop}></div>
-
         <div
           ref={(el) => (this.mapContainer = el)}
           className={style["mapContainer-500"]}
         />
+        {this.photo()}
       </div>
     );
   }

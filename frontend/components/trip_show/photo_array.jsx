@@ -56,14 +56,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    overflow: "hidden",
     backgroundColor: "#fafafa",
     marginTop: "50px",
     border: "1px solid #eee",
+    width: "1200px",
   },
   gridList: {
     flexWrap: "nowrap",
     transform: "translateZ(0)",
+    overflowX: "scroll",
+    width: "1200px",
   },
   title: {
     color: theme.palette.primary.light,
@@ -74,25 +76,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageGridList({ photoUrls, title }) {
+export default function ImageGridList({
+  photoUrls,
+  title,
+  replaceMapWithPhoto,
+}) {
   const classes = useStyles();
 
   let tileData = [];
+  let imgObject;
+
   if (photoUrls) {
-    tileData = tileData.concat(
-      photoUrls.map((photoUrl, id) => ({
-        img: photoUrl,
-        title: `${title}-${id}`,
-      }))
-    );
+    let num = Math.max(5, photoUrls.length);
+    for (let i = 0; i < photoUrls.length; i++) {
+      imgObject = {
+        img: photoUrls[i],
+        title: `${title}-${i}`,
+      };
+      tileData.push(imgObject);
+    }
   }
+
+  const enlargePhoto = (e) => {
+    replaceMapWithPhoto(e.target.src);
+  };
+  const removePhoto = () => {
+    replaceMapWithPhoto(null);
+  };
 
   return (
     <div className={classes.root}>
       <GridList className={classes.gridList} cols={5}>
         {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+          <GridListTile
+            key={tile.title}
+            onMouseEnter={enlargePhoto}
+            onMouseLeave={removePhoto}
+          >
+            <img
+              src={tile.img}
+              alt={tile.title}
+              className={classes.image}
+              key={tile.title}
+            />
           </GridListTile>
         ))}
       </GridList>

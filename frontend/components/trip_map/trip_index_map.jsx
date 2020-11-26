@@ -15,7 +15,6 @@ class TripMap extends React.Component {
       zoom: 3,
       hoverMarker: null,
     };
-    debugger;
   }
 
   componentDidMount() {
