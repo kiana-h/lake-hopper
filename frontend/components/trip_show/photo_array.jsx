@@ -1,51 +1,3 @@
-// import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
-// import GridList from "@material-ui/core/GridList";
-// import GridListTile from "@material-ui/core/GridListTile";
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: "flex",
-//     flexDirection: "row",
-//     flexWrap: "no-wrap",
-//     // justifyContent: "flex-end",
-//     overflowX: "auto",
-//     backgroundColor: "#fafafa",
-//     marginTop: "100px",
-//     // width: "1200px",
-//   },
-//   gridList: {
-//     width: 1200,
-//     height: 450,
-//   },
-// }));
-
-// export default function ImageGridList({ photoUrls, title }) {
-//   const classes = useStyles();
-
-//   let tileData = [];
-//   if (photoUrls) {
-//     tileData = tileData.concat(
-//       photoUrls.map((photoUrl, id) => ({
-//         img: photoUrl,
-//         title: `${title}-${id}`,
-//       }))
-//     );
-//   }
-
-//   return (
-//     <div className={classes.root}>
-//       <GridList cellHeight={160} className={classes.gridList} cols={}>
-//         {tileData.map((tile) => (
-//           <GridListTile key={tile.img} cols={tile.cols || 1}>
-//             <img src={tile.img} alt={tile.title} />
-//           </GridListTile>
-//         ))}
-//       </GridList>
-//     </div>
-//   );
-// }
-
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
@@ -57,8 +9,9 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     backgroundColor: "#fafafa",
-    marginTop: "50px",
-    border: "1px solid #eee",
+    paddingTop: "25px",
+    marginTop: "25px",
+    borderTop: "1px solid rgba(31,32,65,.25)",
     width: "1200px",
   },
   gridList: {
