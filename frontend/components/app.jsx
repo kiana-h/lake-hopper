@@ -14,16 +14,15 @@ const App = () => {
     <div>
       <header>
         <Greeting />
-        <Route exact path="/" component={Landing} />
       </header>
       <div className="app-container">
         <Switch>
-          {/* <div className="head"></div> */}
           <AuthRoute exact path="/login" component={Login} />
           <AuthRoute exact path="/signup" component={Signup} />
           <ProtectedRoute path="/trips/new" component={TripCreator} />
           <Route path="/trips/:tripId" component={TripShow} />
           <Route path="/trips" component={TripIndex} />
+          <Route exact path="/" component={Landing} />
         </Switch>
       </div>
     </div>
