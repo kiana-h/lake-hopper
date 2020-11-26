@@ -63,6 +63,7 @@ class TripMap extends React.Component {
 
   componentDidUpdate() {
     if (
+      this.props.routes &&
       this.props.routes[0] &&
       this.props.routes[0].trackpoints &&
       !this.state.drawInitiated
