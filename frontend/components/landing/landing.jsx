@@ -33,7 +33,12 @@ const Landing = ({ currentUser, login, history, background }) => {
           </Button>
         )}
       </div>
-      <img src={window.landing} className="splash" />
+      <div
+        className="splash"
+        style={{
+          backgroundImage: `url(${window.landing})`,
+        }}
+      ></div>
     </div>
   );
 };

@@ -218,14 +218,27 @@ nav {
   z-index: 500;
 }
 
+// .splash {
+//   position: fixed;
+//   width: 100%;
+//   top: 0;
+//   bottom: 0;
+//   right: 0;
+//   left: 0;
+//   height: auto;
+//   overflow: hidden;
+//   z-index: -1000;
+// }
+
 .splash {
   position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   width: 100%;
   top: 0;
-  bottom: 0;
-  right: 0;
   left: 0;
-  height: auto;
+  height: 1200px;
   overflow: hidden;
   z-index: -1000;
 }
