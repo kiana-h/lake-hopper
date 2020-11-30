@@ -15,6 +15,6 @@ export const login = (user) => {
 };
 
 export const logout = () =>
-  fetch("api/session", {
+  fetch("/api/session", {
     method: "DELETE",
   });
