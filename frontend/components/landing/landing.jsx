@@ -5,13 +5,17 @@ import theme from "../theme/theme";
 import { withRouter } from "react-router-dom";
 
 const Landing = ({ currentUser, login, history, background }) => {
-  const demoLogin = () => {
+  const demoLogin = async () => {
     const user = {
       email: window.demo_email,
       password: window.demo_password,
     };
-    login(user);
-    history.push("/trips");
+    try {
+      await login(user);
+      history.push("/trips");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

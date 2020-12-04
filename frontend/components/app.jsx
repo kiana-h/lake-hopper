@@ -21,7 +21,7 @@ const App = () => {
           <AuthRoute exact path="/signup" component={Signup} />
           <ProtectedRoute path="/trips/new" component={TripCreator} />
           <ProtectedRoute path="/trips/:tripId" component={TripShow} />
-          <ProtectedRoute path="/trips" component={TripIndex} />
+          <Route path="/trips" component={TripIndex} />
           <Route exact path="/" component={Landing} />
         </Switch>
       </div>
