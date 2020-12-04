@@ -88,7 +88,7 @@ export default class MarkerManager {
 
     marker.getElement().addEventListener("click", (e) => {
       const tripId = e.currentTarget.id.split("-")[1];
-      window.location.href = `/#/trips/${tripId}`;
+      window.location.href = `/trips/${tripId}`;
     });
 
     marker.getElement().addEventListener("mouseenter", (e) => {
