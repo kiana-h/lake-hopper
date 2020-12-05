@@ -34,8 +34,8 @@ export const completePostingTrip = () => ({
   type: COMPLETE_POSTING_TRIP,
 });
 
-export const receiveErrors = (errors) => ({
-  type: RECEIVE_ERRORS,
+export const receiveTripErrors = (errors) => ({
+  type: RECEIVE_TRIP_ERRORS,
   errors,
 });
 
@@ -45,7 +45,7 @@ export const fetchTrips = (filters) => (dispatch) => {
     (trips) => {
       return dispatch(receiveTrips(trips));
     },
-    (err) => dispatch(receiveErrors(err))
+    (err) => dispatch(receiveTripErrors(err))
   );
 };
 
@@ -63,7 +63,7 @@ export const postTrip = (trip) => (dispatch) => {
       return dispatch(receiveTrip(trip));
     },
     (err) => {
-      dispatch(receiveErrors(err));
+      dispatch(receiveTripErrors(err));
       return err;
     }
   );
