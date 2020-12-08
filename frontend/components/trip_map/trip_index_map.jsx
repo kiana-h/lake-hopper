@@ -71,12 +71,6 @@ class TripMap extends React.Component {
     }
   };
 
-  handleMarkerClick(home) {
-    // if (!this.props.singleHome) {
-    //   this.props.history.push(`homes/${home.id}`);
-    // }
-  }
-
   render() {
     return (
       <div>
@@ -90,24 +84,3 @@ class TripMap extends React.Component {
 }
 
 export default withRouter(TripMap);
-
-// map.on("click", (e) => {
-//   var coords = `lat: ${e.lngLat.lat} <br> lng: ${e.lngLat.lng}`;
-
-//   // create the popup
-//   var popup = new mapboxgl.Popup().setText(coords);
-
-//   // create DOM element for the marker
-//   var el = document.createElement("div");
-//   el.id = "marker";
-
-//   // create the marker
-//   new mapboxgl.Marker(el).setLngLat(e.lngLat).setPopup(popup).addTo(map);
-// });
-
-//     <div className="sidebarStyle">
-//   <div>
-//     Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-//     {this.state.zoom}
-//   </div>
-// </div>
