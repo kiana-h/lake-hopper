@@ -55,7 +55,9 @@ class TripMap extends React.Component {
 
   photo = () => {
     return this.props.photo ? (
-      <img className={style.photo} src={this.props.photo} />
+      <div className={style.photoContainer}>
+        <img className={style.photo} src={this.props.photo} />
+      </div>
     ) : (
       ""
     );
