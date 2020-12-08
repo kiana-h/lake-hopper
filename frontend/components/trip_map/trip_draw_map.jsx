@@ -92,7 +92,7 @@ class TripDrawMap extends React.Component {
     // only run getRoute if there was at least one marker
     // in state before adding current marker
     if (count > 0) {
-      this.props.toggleCalc();
+      this.props.toggleCalc(true);
       this.getRoute();
     }
     this.props.updateFirstPoint(this.state.markers[0]);
@@ -104,7 +104,7 @@ class TripDrawMap extends React.Component {
   };
 
   handleMarkerDrag = (e) => {
-    this.props.toggleCalc();
+    this.props.toggleCalc(true);
     const marker = e.target;
     const id = marker.id;
     const { markers } = this.state;
@@ -172,7 +172,7 @@ class TripDrawMap extends React.Component {
       elevation_gain: elevation_gain,
     };
     this.props.updateRoutes(routes);
-    this.props.toggleCalc();
+    this.props.toggleCalc(false);
   };
 
   reDrawPath = async (rawCoordinates, distance, id) => {
@@ -189,7 +189,7 @@ class TripDrawMap extends React.Component {
       elevation_gain: elevation_gain,
     };
     this.props.updateRoutes(routes);
-    this.props.toggleCalc();
+    this.props.toggleCalc(false);
   };
 
   clear = () => {
