@@ -30,25 +30,6 @@ Stats
 Search using MapBox GL geocoding: 
 Handle click: 
 Handle drag:
-Calculation of distance and elevation gain:
-
-
-![Route creation utilities](https://github.com/kiana-h/lake-hopper/draw_route.gif)
-
-## Uploading Routes: Parser for uploading trips recorded on a smartwatch
-
-xml parser: extract and calculate relevant information
-Map Drawer
-
-
-## Creating new trips 
-Each trip is created from a combination of form and map data. The form contains the trip title, description, photos, etc. The map includes the start point and all the waypoints. The waypoints contain GPS coordinates, elevation, and (if taken from a smarwatch) heart rate, calories, speed, and more. The overall trip stats are calculated by aggregation of information from individual waypoints. 
-
-A main Trip Creator component is responsible for managing the state and communicating between the form and the map components while the user is inputting data. Once the trip is submitted, the trip component 
-
-![Creating new activities](https://github.com/kiana-h/new_activity.gif)
-
-
 ```js
   drawPath = async (rawCoordinates, distance) => {
     //generate id for mapbox layer based on path index
@@ -71,6 +52,25 @@ A main Trip Creator component is responsible for managing the state and communic
     this.props.toggleCalc(false);
   };
 ```
+Calculation of distance and elevation gain:
+
+![Route creation utilities](https://github.com/kiana-h/lake-hopper/draw_route.gif)
+
+## Uploading Routes: Parser for uploading trips recorded on a smartwatch
+
+xml parser: extract and calculate relevant information
+Map Drawer
+
+
+## Creating new trips 
+Each trip is created from a combination of form and map data. The form contains the trip title, description, photos, etc. The map includes the start point and all the waypoints. The waypoints contain GPS coordinates, elevation, and (if taken from a smarwatch) heart rate, calories, speed, and more. The overall trip stats are calculated by aggregation of information from individual waypoints. 
+
+A main Trip Creator component is responsible for managing the state and communicating between the form and the map components while the user is inputting data. Once the trip is submitted, the trip component 
+
+![Creating new activities](https://github.com/kiana-h/new_activity.gif)
+
+
+
 
 ## Technologies
 * Ruby on Rails: built-in support of relational databases and RESTful routes.
