@@ -75,7 +75,9 @@ export default class MarkerManager {
     const markerInfo = `<strong>${this.capitalize(
       trip.title
     )}</strong><p>Date: ${this.formatDate(trip.start_date)}</p><p>Distance: ${
-      trip.distance && trip.distance > 0 ? `${trip.distance} Miles` : "N/A"
+      trip.distance && parseFloat(trip.distance) > 0
+        ? `${trip.distance} Miles`
+        : "N/A"
     }</p>`;
 
     const popup = new mapboxgl.Popup({
