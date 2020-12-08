@@ -94,7 +94,7 @@ class TripCreator extends React.Component {
   };
 
   noTripLocation = () => {
-    this.props.receiveErrors(
+    this.props.receiveTripErrors(
       this.props.mode === "draw"
         ? [
             "Missing Trip Location Info:",
@@ -108,7 +108,7 @@ class TripCreator extends React.Component {
     );
   };
   noTitle = () => {
-    this.props.receiveErrors(["Title can't be blank"]);
+    this.props.receiveTripErrors(["Title can't be blank"]);
   };
 
   generateMapImageUrl = (mapImageUrl) => {
@@ -181,9 +181,8 @@ class TripCreator extends React.Component {
     this.setState({ firstPoint: [lng, lat] });
   };
 
-  toggleCalc = () => {
-    const newState = !this.state.calculating;
-    this.setState({ calculating: newState });
+  toggleCalc = (bool) => {
+    this.setState({ calculating: bool });
   };
 
   reset = () => {

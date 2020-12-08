@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import TripCreator from "./trip_creator";
 import {
   postTrip,
-  receiveErrors,
+  receiveTripErrors,
   startPostingTrip,
 } from "../../actions/trip_actions";
 // import { postActivities } from "../../actions/activity_actions";
@@ -10,7 +10,7 @@ import {
 const mapDispatchToProps = (dispatch) => ({
   createTrip: (trip) => dispatch(postTrip(trip)),
   // createActivities: (activities) => dispatch(postActivities(activities)),
-  receiveErrors: (error) => dispatch(receiveErrors(error)),
+  receiveTripErrors: (error) => dispatch(receiveTripErrors(error)),
   startPosting: () => dispatch(startPostingTrip()),
 });
 

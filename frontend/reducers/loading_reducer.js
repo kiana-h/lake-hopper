@@ -3,7 +3,7 @@ import {
   START_LOADING_TRIP,
   RECEIVE_TRIP,
   RECEIVE_TRIPS,
-  RECEIVE_ERRORS,
+  RECEIVE_TRIP_ERRORS,
   START_POSTING_TRIP,
   COMPLETE_POSTING_TRIP,
 } from "../actions/trip_actions";
@@ -27,7 +27,7 @@ const loadingReducer = (state = initialState, action) => {
         detailLoading: false,
         tripPosting: false,
       });
-    case RECEIVE_ERRORS:
+    case RECEIVE_TRIP_ERRORS:
       return Object.assign({}, state, {
         tripPosting: false,
         detailLoading: false,
