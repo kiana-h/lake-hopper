@@ -14,7 +14,7 @@ Lake Hopper is a web app created for backpackers which allows them to see all of
 
 1. **Trip Dashboard:** Displaying all of a user's trips on a map, along with a summary of each trip. MapBox GL has been integrated for displaying the trips based on coordinates, searching (with geocoding), as well as filtering the trips based on map bounds.
 
-2. **Two Methods for Trip Creation:**
+2. **Two Modes for Trip Creation:**
 - **Draw Mode:** Users can draw and edit custom routes on a map using waypoints. Mapbox Directions API has been used to generate and draw the optimal path between given waypoints.
 - **Upload Mode:** Users can upload multiple activity files from their smartwatch/fitness app, which are parsed using an xml parser and processed to gather relevant information such as average heart rate, calories, active time, etc.
 
