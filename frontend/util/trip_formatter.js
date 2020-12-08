@@ -81,7 +81,7 @@ export const getElevationSum = (activities) => {
   return (elevationGain * 3.28084).toFixed();
 };
 
-const getDate = (date) => {
+export const getDate = (date) => {
   const dateSplit = date.split("-");
   const dateJoin = [dateSplit[1], dateSplit[2], dateSplit[0]].join("-");
   return new Date(dateJoin);
