@@ -2,10 +2,12 @@ import {
   getTripInfo,
   getDistanceSum,
   getElevationSum,
+  getDate,
 } from "../util/trip_formatter";
 
 export const selectTrips = (state) => {
   let trips = Object.values(state.entities.trips).reverse();
+  trips.sort((a, b) => getDate(b.start_date) - getDate(a.start_date));
   for (let trip of trips) {
     if (trip && trip.activitySummaries) {
       trip.distance = getDistanceSum(trip.activitySummaries);
