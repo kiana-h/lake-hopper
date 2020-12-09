@@ -40,15 +40,26 @@ class TripMap extends React.Component {
   }
 
   registerListeners = () => {
-    this.map.on("moveend", (e) => {
-      const mapBounds = this.map.getBounds();
-      const ne = mapBounds.getNorthEast();
-      const sw = mapBounds.getSouthWest();
-      const bounds = {
-        northEast: { lat: ne.lat, lng: ne.lng },
-        southWest: { lat: sw.lat, lng: sw.lng },
-      };
-      this.props.updateFilter("bounds", bounds);
+    this.map.on("moveend", (eventData) => {
+      let sendAction = true;
+      if (
+        eventData &&
+        eventData.originalEvent &&
+        eventData.originalEvent.type === "resize"
+      ) {
+        sendAction = false;
+      }
+
+      if (sendAction) {
+        const mapBounds = this.map.getBounds();
+        const ne = mapBounds.getNorthEast();
+        const sw = mapBounds.getSouthWest();
+        const bounds = {
+          northEast: { lat: ne.lat, lng: ne.lng },
+          southWest: { lat: sw.lat, lng: sw.lng },
+        };
+        this.props.updateFilter("bounds", bounds);
+      }
     });
   };
 
