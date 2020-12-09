@@ -184,11 +184,22 @@ export default class MarkerDrawer {
     }
 
     this.map.on("moveend", () => {
+      this.disableMapInteractivity();
       const canvas = this.map.getCanvas();
       const dataUrl = canvas.toDataURL("image/jpeg");
       const blobData = this.dataURItoBlob(dataUrl);
       generateMapImage(blobData);
     });
+  };
+
+  disableMapInteractivity = () => {
+    this.map.boxZoom.disable();
+    this.map.scrollZoom.disable();
+    this.map.dragPan.disable();
+    this.map.dragRotate.disable();
+    this.map.keyboard.disable();
+    this.map.doubleClickZoom.disable();
+    this.map.touchZoomRotate.disable();
   };
 
   dataURItoBlob = (dataURI) => {
