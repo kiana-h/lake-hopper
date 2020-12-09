@@ -47,7 +47,7 @@ export default function TripForm({
   let disableForm = state.uploadingFile || submitted || calculating;
   let disableDistanceElevation =
     mode === "upload" || routesDrawn || calculating;
-  let disableDate = mode === "upload";
+  let disableDate = mode === "upload" || submitted;
 
   const renderErrors = () => {
     if (!errors.length) {
