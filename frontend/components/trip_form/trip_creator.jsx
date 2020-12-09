@@ -185,7 +185,7 @@ class TripCreator extends React.Component {
     this.setState({ calculating: bool });
   };
 
-  reset = () => {
+  resetMap = () => {
     this.setState({
       distance: 0,
       elevation_gain: 0,
@@ -198,9 +198,17 @@ class TripCreator extends React.Component {
     });
   };
 
+  resetAll = () => {
+    this.resetMap();
+    this.setState({
+      title: "",
+      description: "",
+    });
+  };
+
   render() {
     if (!this.props.mode) {
-      return <CreateType reset={this.reset} />;
+      return <CreateType reset={this.resetAll} />;
     }
 
     const mapProps = {
@@ -209,7 +217,7 @@ class TripCreator extends React.Component {
       lat: this.initMapProps.lat,
       lng: this.initMapProps.lng,
       zoom: this.initMapProps.zoom,
-      clear: this.reset,
+      clear: this.resetMap,
       updateFirstPoint: this.updateFirstPoint,
       submitted: this.state.submitted,
       posting: this.props.posting,
