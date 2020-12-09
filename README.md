@@ -63,7 +63,7 @@ drawPath = async (rawCoordinates, distance) => {
 ```
 
 Calculation of distance and elevation gain:
-![Creating new activities](https://github.com/kiana-h/lake-hopper/readme_assets/02_draw_1080.mov)
+![Creating new activities](https://github.com/kiana-h/lake-hopper/readme_assets/02_draw_4k.gif)
 ![Route creation utilities](https://github.com/kiana-h/lake-hopper/draw_route.gif)
 
 ## Uploading Routes: Parser for uploading trips recorded on a smartwatch
