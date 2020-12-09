@@ -47,7 +47,7 @@ export default function SignUp({ errors, signup, login }) {
       password: window.demo_password,
     };
     login(user);
-    history.push("/home");
+    history.push("/trips");
   };
 
   const renderErrors = () => {
