@@ -148,7 +148,7 @@ export default class MarkerDrawer {
     return markers;
   };
 
-  zoomToPath = (routes, firstPoint, generateMapImageUrl) => {
+  zoomToPath = (routes, firstPoint, generateMapImage) => {
     let firstPointCoords;
     if (!firstPoint) {
       firstPoint = this.getFirstPoint(routes[0].trackpoints[0]);
@@ -183,10 +183,6 @@ export default class MarkerDrawer {
       });
     }
 
-    // this.map.on("moveend", () => {
-    //   const mapImageUrl = this.map.getCanvas().toDataURL();
-    //   generateMapImageUrl(mapImageUrl);
-    // });
     this.map.on("moveend", () => {
       const canvas = this.map.getCanvas();
       const dataUrl = canvas.toDataURL("image/jpeg");
