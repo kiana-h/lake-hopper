@@ -30,7 +30,6 @@ class TripMap extends React.Component {
       center: [this.props.lng, this.props.lat],
       zoom: this.props.zoom,
       preserveDrawingBuffer: true,
-      interactive: false,
     });
 
     this.MapDrawer = new MapDrawer(this.map, mapboxgl.accessToken);
