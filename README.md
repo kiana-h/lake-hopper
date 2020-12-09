@@ -30,6 +30,7 @@ An outdoor-activity-focused map
 Reset
 Stats
 
+
 ![Route creation utilities](https://github.com/kiana-h/lake-hopper/route_creation_modes.png)
 
 ## Drawing Routes: MapBox API integration for route creation
@@ -62,7 +63,7 @@ drawPath = async (rawCoordinates, distance) => {
 ```
 
 Calculation of distance and elevation gain:
-
+![Creating new activities](https://github.com/kiana-h/lake-hopper/readme_assets/02_draw_1080.mov)
 ![Route creation utilities](https://github.com/kiana-h/lake-hopper/draw_route.gif)
 
 ## Uploading Routes: Parser for uploading trips recorded on a smartwatch
