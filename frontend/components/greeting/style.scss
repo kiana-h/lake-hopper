@@ -11,6 +11,7 @@ a {
 }
 
 .nav-elements {
+  z-index: 1000;
   margin: 0 20px;
   @include lg {
     margin: 0 100px;
