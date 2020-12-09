@@ -183,10 +183,25 @@ export default class MarkerDrawer {
       });
     }
 
+    // this.map.on("moveend", () => {
+    //   const mapImageUrl = this.map.getCanvas().toDataURL();
+    //   generateMapImageUrl(mapImageUrl);
+    // });
     this.map.on("moveend", () => {
-      const mapImageUrl = this.map.getCanvas().toDataURL();
-      generateMapImageUrl(mapImageUrl);
+      const canvas = this.map.getCanvas();
+      const dataUrl = canvas.toDataURL("image/jpeg");
+      const blobData = this.dataURItoBlob(dataUrl);
+      generateMapImage(blobData);
     });
+  };
+
+  dataURItoBlob = (dataURI) => {
+    const binary = atob(dataURI.split(",")[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: "image/jpeg" });
   };
 
   getFirstPoint = (lap) => {

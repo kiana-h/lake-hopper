@@ -62,7 +62,7 @@ class TripUploadMap extends React.Component {
       this.MapDrawer.zoomToPath(
         this.props.routes,
         firstPoint,
-        this.props.generateMapImageUrl
+        this.props.generateMapImage
       );
     }
 

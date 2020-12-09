@@ -10,10 +10,10 @@ class Api::TripsController < ApplicationController
 
     def create
         @trip = current_user.trips.new(trip_params)
-        actvs = activity_params
-        if actvs
+        activity_inputs = activity_params
+        if activity_inputs
             @activities = []
-            actvs.each do |activity|
+            activity_inputs.each do |activity|
                 @activities.push(@trip.activities.new(activity))
             end
         end
@@ -31,7 +31,7 @@ class Api::TripsController < ApplicationController
     private
 
     def trip_params
-        params.require(:trip).permit(:title, :description, :user_id, :mapImageUrl, :start_date, :end_date, :location_lat, :location_lng, photos: [], activities_attributes: [:id, :elevation_gain, :distance, :trackpoints])
+        params.require(:trip).permit(:title, :description, :user_id, :start_date, :end_date, :location_lat, :location_lng, photos: [], activities_attributes: [:id, :elevation_gain, :distance, :trackpoints])
     end
 
     def activity_params

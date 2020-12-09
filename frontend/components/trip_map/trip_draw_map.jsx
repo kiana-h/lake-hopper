@@ -66,7 +66,7 @@ class TripDrawMap extends React.Component {
       this.MapDrawer.zoomToPath(
         this.props.routes,
         firstPoint,
-        this.props.generateMapImageUrl
+        this.props.generateMapImage
       );
     }
   }
@@ -81,7 +81,6 @@ class TripDrawMap extends React.Component {
   handleClick = (coords) => {
     let color = this.state.markers.length ? this.color.tail : this.color.head;
     const newMarker = this.MapDrawer.addMarker(coords, color, true);
-
     // set drag listener for each marker
     this.registerMarkerListener(newMarker, this.state.markers.length);
     // add marker to state
@@ -157,14 +156,15 @@ class TripDrawMap extends React.Component {
   };
 
   drawPath = async (rawCoordinates, distance) => {
-    // draw the path
+    //generate id for mapbox layer based on path index
     const i = this.state.markers.length - 2;
     const id = `route-${i}`;
+    // draw the path
     this.MapDrawer.addPath(rawCoordinates, id);
     // fetch elevation data
     const elevationData = await MapApiUtil.fetchElevation(rawCoordinates);
     const { elevation_gain, trackpoints } = elevationData;
-    // push route to trip creator (parent)
+    // create new route and push to trip creator (parent component)
     let routes = { ...this.props.routes };
     routes[i] = {
       trackpoints: [trackpoints],
@@ -172,6 +172,7 @@ class TripDrawMap extends React.Component {
       elevation_gain: elevation_gain,
     };
     this.props.updateRoutes(routes);
+    // toggle loading state
     this.props.toggleCalc(false);
   };
 

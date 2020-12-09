@@ -41,7 +41,7 @@ export default function ImageGridList({
 
   if (photoUrls) {
     let num = Math.max(5, photoUrls.length);
-    for (let i = 0; i < photoUrls.length; i++) {
+    for (let i = 1; i < photoUrls.length; i++) {
       imgObject = {
         img: photoUrls[i],
         title: `${title}-${i}`,

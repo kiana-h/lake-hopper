@@ -111,7 +111,7 @@ class TripCreator extends React.Component {
     this.props.receiveTripErrors(["Title can't be blank"]);
   };
 
-  generateMapImageUrl = (mapImageUrl) => {
+  generateMapImage = (mapImageUrl) => {
     this.setState({ mapImageUrl }, this.compileTrip);
   };
 
@@ -131,9 +131,11 @@ class TripCreator extends React.Component {
     tripData.append("trip[description]", this.state.description);
     tripData.append("trip[start_date]", this.state.start_date);
     tripData.append("trip[end_date]", this.state.end_date);
-    tripData.append("trip[mapImageUrl]", this.state.mapImageUrl);
+    // tripData.append("trip[mapImageUrl]", this.state.mapImageUrl);
     tripData.append("trip[location_lat]", this.state.firstPoint[1]);
     tripData.append("trip[location_lng]", this.state.firstPoint[0]);
+
+    tripData.append("trip[photos][]", this.state.mapImageUrl);
     if (this.state.photos.length) {
       for (let photo of this.state.photos) {
         tripData.append("trip[photos][]", photo);
@@ -221,7 +223,7 @@ class TripCreator extends React.Component {
       updateFirstPoint: this.updateFirstPoint,
       submitted: this.state.submitted,
       posting: this.props.posting,
-      generateMapImageUrl: this.generateMapImageUrl,
+      generateMapImage: this.generateMapImage,
       toggleCalc: this.toggleCalc,
       noTripLocation: this.noTripLocation,
     };

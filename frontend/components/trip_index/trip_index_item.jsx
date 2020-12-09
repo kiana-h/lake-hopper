@@ -42,7 +42,7 @@ class TripIndexItem extends React.Component {
       >
         <img
           className={style["trip-item-photo"]}
-          src={trip.photos_url ? trip.photos_url[0] : trip.mapImageUrl || ""}
+          src={trip.photo_url || ""}
         ></img>
         <div className={style["trip-item-text"]}>
           <div className="dark-shade-100">

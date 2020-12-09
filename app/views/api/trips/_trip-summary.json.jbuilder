@@ -1,7 +1,11 @@
-json.extract! trip, :id ,:user_id, :title, :start_date, :end_date, :description, :location_lat, :location_lng, :mapImageUrl
+json.extract! trip, :id ,:user_id, :title, :start_date, :end_date, :description, :location_lat, :location_lng
 if trip.photos.attached? 
-    photos = [url_for(trip.photos[0])]  
-    json.photos_url photos
+    if trip.photos.length > 1
+        photo = url_for(trip.photos[1]) 
+    else
+        photo = url_for(trip.photos[0])
+    end 
+    json.photo_url photo
 end
 
 
