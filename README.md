@@ -1,6 +1,6 @@
 # Lake Hopper
 
-[Live Website]() (https://lakehopper.io)
+Live Website: http://lakehopper.io
 
 I initially created Lake Hopper to record my own backpacking trips. As an avid backpacker, I wanted a place where I could see all of my past trips and save all the routes, photos, and notes for every trip in one place.
 
@@ -29,6 +29,7 @@ Lake Hopper is a web app created for backpackers which allows them to see all of
 An outdoor-activity-focused map
 Reset
 Stats
+
 
 ![Route creation utilities](https://github.com/kiana-h/lake-hopper/route_creation_modes.png)
 
@@ -62,7 +63,7 @@ drawPath = async (rawCoordinates, distance) => {
 ```
 
 Calculation of distance and elevation gain:
-
+![Creating new activities](https://github.com/kiana-h/lake-hopper/readme_assets/02_draw_1080.mov)
 ![Route creation utilities](https://github.com/kiana-h/lake-hopper/draw_route.gif)
 
 ## Uploading Routes: Parser for uploading trips recorded on a smartwatch
