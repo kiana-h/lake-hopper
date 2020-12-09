@@ -14,6 +14,10 @@ class Parser {
     let activities = tcdb["Activities"];
     let activity = activities["Activity"];
     this.activity.activityId = activity["Id"];
+    if (!Array.isArray(activity["Lap"])) {
+      activity["Lap"] = [activity["Lap"]];
+    }
+
     let grossHr = 0;
     const getFirstElevation = (activity) => {
       let firstLap = activity["Lap"][0];
@@ -39,6 +43,9 @@ class Parser {
           Number(rawLap["TotalTimeSeconds"]);
       }
       let lap = [];
+      if (!Array.isArray(rawLap["Track"]["Trackpoint"])) {
+        rawLap["Track"]["Trackpoint"] = [rawLap["Track"]["Trackpoint"]];
+      }
       for (let trackpoint of rawLap["Track"]["Trackpoint"]) {
         if (trackpoint["Position"]) {
           let newTrackPoint = new Trackpoint(trackpoint);
