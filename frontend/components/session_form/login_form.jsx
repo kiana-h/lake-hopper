@@ -121,7 +121,7 @@ function SignIn({ errors, login }) {
 
           <Grid container justify="flex-end" className={classes.bottomLink}>
             <Grid item>
-              <Link href="#/signup" variant="body2">
+              <Link href="/signup" variant="body2">
                 Don't have an account? Sign Up
               </Link>
             </Grid>
