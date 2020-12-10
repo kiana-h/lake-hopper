@@ -8,8 +8,6 @@ I had found myself using multiple apps for backpacking: AllTrails for creating n
 
 Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the frontend, and MapBox GL for map interactivity.
 
-Lake Hopper is a web app created for backpackers which allows them to see all of their trips, create routes, upload activities from their fitness app or smartwatch, save photos and notes for each trip, and get stats like overall distance and elevation gain for multi-day trips.
-
 ## Features
 
 1. **Trip Dashboard:** Displaying all of a user's trips on a map, along with a summary of each trip. MapBox GL has been integrated for displaying the trips based on coordinates, searching (with geocoding), as well as filtering the trips based on map bounds.
@@ -24,6 +22,10 @@ Lake Hopper is a web app created for backpackers which allows them to see all of
 
 5. **User Authentication:** Secure frontend to backend user authentication using BCrypt.
 
+## Trip Dashboard:
+
+
+
 ## Creating Routes On A Map:
 
 An outdoor-activity-focused map
@@ -31,9 +33,11 @@ Reset
 Stats
 
 
-![Route creation utilities](https://github.com/kiana-h/lake-hopper/route_creation_modes.png)
+![Creating Routes on a Map](https://github.com/kiana-h/lake-hopper/route_creation_modes.png)
 
 ## Drawing Routes: MapBox API integration for route creation
+
+![Drawing Routes](https://github.com/kiana-h/lake-hopper/blob/master/readme_assets/01_draw-mode.gif)
 
 Search using MapBox GL geocoding:
 Handle click:
@@ -63,12 +67,14 @@ drawPath = async (rawCoordinates, distance) => {
 ```
 
 Calculation of distance and elevation gain:
-![Creating new activities](https://github.com/kiana-h/lake-hopper/blob/master/readme_assets/01_draw-mode.gif)
+
 
 ## Uploading Routes: Parser for uploading trips recorded on a smartwatch
 
 xml parser: extract and calculate relevant information
 Map Drawer
+
+![Uploading Routes](https://github.com/kiana-h/new_activity.gif)
 
 ## Creating new trips
 
@@ -76,7 +82,7 @@ Each trip is created from a combination of form and map data. The form contains 
 
 A main Trip Creator component is responsible for managing the state and communicating between the form and the map components while the user is inputting data. Once the trip is submitted, the trip component
 
-![Creating new activities](https://github.com/kiana-h/new_activity.gif)
+
 
 ## Technologies
 
