@@ -104,6 +104,8 @@
   z-index: 500;
 }
 .photo {
-  width: 700px;
+  width: 100%;
+  min-height: 700px;
+  max-height: 500px;
   height: auto;
 }
