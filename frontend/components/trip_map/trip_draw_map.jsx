@@ -219,9 +219,6 @@ class TripDrawMap extends React.Component {
         <div className={style.mapTop}></div>
         <div key={this.props.submitted}></div>
         <div id="coordinates" className={style.edit_buttons}>
-          {/* <div className={style.edit_button} onClick={this.undo}>
-              <FontAwesomeIcon icon={faUndo} />
-            </div> */}
           <div
             className={`secondary ${style.edit_button}`}
             onClick={this.clear}
