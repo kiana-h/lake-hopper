@@ -26,48 +26,24 @@ Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the f
 
 
 
-## Creating Routes On A Map:
-
-An outdoor-activity-focused map
-Reset
-Stats
-
-
-![Creating Routes on a Map](https://github.com/kiana-h/lake-hopper/route_creation_modes.png)
-
 ## Drawing Routes: MapBox API integration for route creation
+
+- Navigation: Users can navigate to their target location by using the search bar which implements the MapBox geocoding API to translate an address to GPS coordinates. 
+- Creating Markers: Clicking on the map creates a marker at the given coordinates and the optimal route is calculated using Mapbox Directions API which provides the coordinates for the points along the path. 
+- Editing Markers: Users can edit the path by draggin the markers around, which updates the marker coordinates and redraws the routes and recalculates the overall distance and elevation gain.  
+- Drawing on the Map: A "Map Drawer" class is designed to keep track of all the sources, layers, and markers. The routes are transformed into a geoJSON object which is overlayed on the map. 
+- Clearing the Map: A clear button is added to erase all the drawn elements on the map and reset the Map Drawer class. 
+- Distance / Elevation Gain: Mapbox provides the distance between the given markers. It does not, however, provide any elevation information. So the elevation for each coordinate along the path is fetched from Open Elevation API. The overall elevation gain is calculated by iterating through and adding up all the points along the path (not just the markers).  
+
 
 ![Drawing Routes](https://github.com/kiana-h/lake-hopper/blob/master/readme_assets/01_draw-mode.gif)
 
-Search using MapBox GL geocoding:
-Handle click:
-Handle drag:
+Click Event => get Coordinates from gap => Draw marker on map => Fetch route to previous marker from MapBox Directions API => Generate a new geoJSon object on the map => Fetch elevation information from Open Elevation API => Update overall distance & Elevation gain
 
 ```js
-drawPath = async (rawCoordinates, distance) => {
-  //generate id for mapbox layer based on path index
-  const i = this.state.markers.length - 2;
-  const id = `route-${i}`;
-  // draw the path
-  this.MapDrawer.addPath(rawCoordinates, id);
-  // fetch elevation data
-  const elevationData = await MapApiUtil.fetchElevation(rawCoordinates);
-  const { elevation_gain, trackpoints } = elevationData;
-  // create new route and push to trip creator (parent component)
-  let routes = { ...this.props.routes };
-  routes[i] = {
-    trackpoints: [trackpoints],
-    distance: distance,
-    elevation_gain: elevation_gain,
-  };
-  this.props.updateRoutes(routes);
-  // toggle loading state
-  this.props.toggleCalc(false);
-};
+
+
 ```
-
-Calculation of distance and elevation gain:
-
 
 ## Uploading Routes: Parser for uploading trips recorded on a smartwatch
 
