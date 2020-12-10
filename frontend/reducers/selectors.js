@@ -20,10 +20,14 @@ export const selectTrips = (state) => {
 export const selectTrip = (state, tripId) => {
   let trip = state.entities.trips[tripId];
   let tripWithInfo;
-  if (trip && trip.activities && trip.activities[0].trackpoints) {
-    let parsedTrackpoints;
+  if (
+    trip &&
+    trip.activities &&
+    trip.activities[0] &&
+    trip.activities[0].trackpoints
+  ) {
     let activities = trip.activities.map((activity) => {
-      parsedTrackpoints = JSON.parse(activity.trackpoints);
+      let parsedTrackpoints = JSON.parse(activity.trackpoints);
       activity.trackpoints = parsedTrackpoints;
       return activity;
     });

@@ -36,7 +36,7 @@ class TripMap extends React.Component {
 
     // handle the non-interactive display mode
     this.map.on("load", () => {
-      if (!this.props.routes) {
+      if (!this.props.routes.length) {
         const coords = [this.props.lng, this.props.lat];
         this.MapDrawer.addMarker(coords, this.color.head);
       }
