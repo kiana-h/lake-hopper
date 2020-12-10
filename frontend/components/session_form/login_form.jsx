@@ -39,13 +39,17 @@ function SignIn({ errors, login }) {
     }));
   };
 
-  const demoLogin = () => {
+  const demoLogin = async () => {
     const user = {
       email: window.demo_email,
       password: window.demo_password,
     };
-    login(user);
-    history.push("/trips");
+    try {
+      await login(user);
+      history.push("/trips");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const renderErrors = () => {
