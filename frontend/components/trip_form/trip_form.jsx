@@ -44,7 +44,7 @@ export default function TripForm({
   let showInputs = mode === "draw" || activities[0];
   let showUploadButton = mode === "upload" && !activities[0];
 
-  let disableForm = state.uploadingFile || submitted || calculating;
+  let disableForm = state.uploadingFile || submitted;
   let disableDistanceElevation =
     mode === "upload" || routesDrawn || calculating;
   let disableDate = mode === "upload" || submitted;
