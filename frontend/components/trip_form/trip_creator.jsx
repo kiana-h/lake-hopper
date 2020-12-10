@@ -9,6 +9,7 @@ import {
   getDistanceSum,
   getElevationSum,
 } from "../../util/trip_formatter";
+import { noTitle, noTripLocation } from "./errors";
 
 const initialState = {
   title: "",
@@ -44,7 +45,6 @@ class TripCreator extends React.Component {
     const activities = Object.values(routes);
     let distance = parseFloat(getDistanceSum(activities));
     let elevation_gain = parseFloat(getElevationSum(activities));
-
     // if the route was uploaded
     if (routes[0] && routes[0]["activityId"]) {
       // extract start & end dates
@@ -93,24 +93,6 @@ class TripCreator extends React.Component {
     }
   };
 
-  noTripLocation = () => {
-    this.props.receiveTripErrors(
-      this.props.mode === "draw"
-        ? [
-            "Missing Trip Location Info:",
-            "  - Draw your route on the map, or",
-            "  - Specify the starting point by clicking on the map",
-          ]
-        : [
-            "Missing Trip Location Info:",
-            "  - Upload a .tcx file to get trip info",
-          ]
-    );
-  };
-  noTitle = () => {
-    this.props.receiveTripErrors(["Title can't be blank"]);
-  };
-
   generateMapImage = (mapImageUrl) => {
     this.setState({ mapImageUrl }, this.compileTrip);
   };
@@ -133,14 +115,12 @@ class TripCreator extends React.Component {
     tripData.append("trip[end_date]", this.state.end_date);
     tripData.append("trip[location_lat]", this.state.firstPoint[1]);
     tripData.append("trip[location_lng]", this.state.firstPoint[0]);
-
     tripData.append("trip[photos][]", this.state.mapImageUrl);
     if (this.state.photos.length) {
       for (let photo of this.state.photos) {
         tripData.append("trip[photos][]", photo);
       }
     }
-
     let route;
     let activities = [];
     for (let routeNum in this.state.routes) {
@@ -191,7 +171,6 @@ class TripCreator extends React.Component {
       distance: 0,
       elevation_gain: 0,
       routes: {},
-      photos: [],
       submitted: false,
       mapImageUrl: "",
       firstPoint: null,
