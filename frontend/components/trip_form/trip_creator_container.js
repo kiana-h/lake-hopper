@@ -5,7 +5,6 @@ import {
   receiveTripErrors,
   startPostingTrip,
 } from "../../actions/trip_actions";
-// import { postActivities } from "../../actions/activity_actions";
 
 const mapDispatchToProps = (dispatch) => ({
   createTrip: (trip) => dispatch(postTrip(trip)),

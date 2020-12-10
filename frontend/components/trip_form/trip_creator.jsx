@@ -131,7 +131,6 @@ class TripCreator extends React.Component {
     tripData.append("trip[description]", this.state.description);
     tripData.append("trip[start_date]", this.state.start_date);
     tripData.append("trip[end_date]", this.state.end_date);
-    // tripData.append("trip[mapImageUrl]", this.state.mapImageUrl);
     tripData.append("trip[location_lat]", this.state.firstPoint[1]);
     tripData.append("trip[location_lng]", this.state.firstPoint[0]);
 
