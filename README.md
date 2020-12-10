@@ -60,6 +60,6 @@ A main Trip Creator component is responsible for managing the state and communic
 ## Technologies
 
 - Ruby on Rails
-- MapBox GL & Open Elevation API
+- MapBox GL + Open Elevation API
 - React + Redux
 - Material UI
