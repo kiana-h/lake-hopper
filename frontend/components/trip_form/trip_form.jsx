@@ -80,10 +80,19 @@ export default function TripForm({
   };
 
   const processFiles = async (files) => {
-    const routes = {};
+    const rawRoutes = [];
     for (let i = 0; i < files.length; i++) {
       const parsedFile = await parseFile(files[i]);
-      routes[i] = parsedFile;
+      rawRoutes[i] = parsedFile;
+    }
+
+    rawRoutes.sort(
+      (a, b) => new Date(a["activityId"]) - new Date(b["activityId"])
+    );
+    debugger;
+    const routes = {};
+    for (let i = 0; i < rawRoutes.length; i++) {
+      routes[i] = rawRoutes[i];
     }
     updateRoutes(routes);
 
