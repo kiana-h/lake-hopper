@@ -47,7 +47,7 @@ export default function UserMenu({ user, logout }) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Link to="/home" className={style["user-menu-link"]}>
+          <Link to="/trips" className={style["user-menu-link"]}>
             Profile
           </Link>
         </MenuItem>
