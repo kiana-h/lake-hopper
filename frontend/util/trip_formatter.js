@@ -30,15 +30,15 @@ export const today = () => {
 export const getTripInfo = (rawTrip) => {
   let trip = { ...rawTrip };
   let activities = trip.activities;
-  // let distance = 0;
-  // let elevationGain = 0;
+  let distance = 0;
+  let elevationGain = 0;
   let hr = 0;
   let activeTime = 0;
   let calories = 0;
   let i = 0;
   for (let activity of activities) {
-    // distance += activity.distance;
-    // elevationGain += activity.elevation_gain;
+    distance += activity.distance;
+    elevationGain += activity.elevation_gain;
     if (activity.avg_hr) {
       hr += activity.avg_hr;
     }
