@@ -21,8 +21,8 @@ const Greeting = ({ currentUser, logout }) => {
         </Link>
         <div className="menu flex-center">
           <Link to="/">Home</Link>
-          <Link to="/">About</Link>
           <Link to="/trips">My Trips</Link>
+          <Link to="/about">About</Link>
           <UserElements />
         </div>
       </div>

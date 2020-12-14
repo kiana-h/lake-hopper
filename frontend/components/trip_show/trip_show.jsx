@@ -1,4 +1,5 @@
 import React from "react";
+import PuffLoader from "react-spinners/PuffLoader";
 import TripDetail from "./trip_detail";
 import TripMap from "../trip_map/trip_static_map";
 import ImageGridList from "./photo_array";
@@ -9,16 +10,24 @@ class TripShow extends React.Component {
     super(props);
     this.state = {
       photo: null,
+      loading: false,
     };
   }
   componentDidMount() {
+    this.setState({ loading: true });
     this.props.fetchTrip(this.props.tripId);
   }
-  componentDidUpdate() {
-    if (!this.props.trip) {
-      this.props.fetchTrip(this.props.tripId);
-    }
-  }
+  // componentDidUpdate() {
+  //   if (!this.props.trip) {
+  //     this.props.fetchTrip(this.props.tripId);
+  //   }
+  // }
+
+  finishLoading = () => {
+    this.setState({ loading: false });
+    console.log("done");
+  };
+
   getFirstPoint = (lap) => {
     for (let trackpoint of lap) {
       if (trackpoint.lat && trackpoint.lng) {
@@ -38,7 +47,19 @@ class TripShow extends React.Component {
   replaceMapWithPhoto = (photo) => {
     this.setState({ photo });
   };
-
+  loadingSpinner = () => {
+    if (this.state.loading || this.props.tripLoading) {
+      return (
+        <div className={style.mapLoader}>
+          <PuffLoader
+            size={100}
+            color={"#bc9bff"}
+            loading={this.state.loading}
+          />
+        </div>
+      );
+    }
+  };
   render() {
     if (!this.props.trip) {
       return <div></div>;
@@ -48,18 +69,27 @@ class TripShow extends React.Component {
     return (
       <div>
         <div className="flex-top">
-          <TripDetail trip={trip} className={style["trip-detail"]} />
-          <div className={style["map-offset"]}>
-            <TripMap
-              lat={trip.location_lat}
-              lng={trip.location_lng}
-              zoom={12}
-              routes={trip.activities}
-              getFirstPoint={this.getFirstPoint}
-              photo={this.state.photo}
-            />
-          </div>
+          <TripDetail
+            trip={trip}
+            className={style["trip-detail"]}
+            loading={this.state.loading}
+          />
+          {!this.props.tripLoading && (
+            <div className={style["map-offset"]}>
+              {this.loadingSpinner()}
+              <TripMap
+                lat={trip.location_lat}
+                lng={trip.location_lng}
+                zoom={12}
+                routes={trip.activities}
+                getFirstPoint={this.getFirstPoint}
+                photo={this.state.photo}
+                finishLoading={this.finishLoading}
+              />
+            </div>
+          )}
         </div>
+
         {trip.photos_url && (
           <ImageGridList
             photoUrls={trip.photos_url}

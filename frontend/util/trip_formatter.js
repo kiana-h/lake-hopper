@@ -30,15 +30,15 @@ export const today = () => {
 export const getTripInfo = (rawTrip) => {
   let trip = { ...rawTrip };
   let activities = trip.activities;
-  let distance = 0;
-  let elevationGain = 0;
+  // let distance = 0;
+  // let elevationGain = 0;
   let hr = 0;
   let activeTime = 0;
   let calories = 0;
   let i = 0;
   for (let activity of activities) {
-    distance += activity.distance;
-    elevationGain += activity.elevation_gain;
+    // distance += activity.distance;
+    // elevationGain += activity.elevation_gain;
     if (activity.avg_hr) {
       hr += activity.avg_hr;
     }
@@ -54,8 +54,8 @@ export const getTripInfo = (rawTrip) => {
   const timeDiff =
     getDate(trip.end_date).getTime() - getDate(trip.start_date).getTime();
   trip.days = (timeDiff / (1000 * 3600 * 24) + 1).toFixed();
-  trip.distance = (distance * 0.000621371).toFixed(2);
-  trip.elevationGain = (elevationGain * 3.28084).toFixed();
+  // trip.distance = (distance * 0.000621371).toFixed(2);
+  // trip.elevationGain = (elevationGain * 3.28084).toFixed();
   trip.hr = hr > 0 ? (hr / i).toFixed() : null;
   trip.calories = calories > 0 ? calories : null;
   trip.activeTime =

@@ -5,7 +5,13 @@ import MapIcon from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { dateRange, capitalize } from "../../util/trip_formatter";
+import PuffLoader from "react-spinners/PuffLoader";
+
+import {
+  dateRange,
+  capitalize,
+  formatNumberComma,
+} from "../../util/trip_formatter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +54,14 @@ const useStyles = makeStyles((theme) => ({
   date: {
     marginBottom: theme.spacing(4),
   },
+  indexLoad: {
+    position: "relative",
+    top: "250px",
+    left: "200px",
+  },
 }));
 
-export default function TripDetail({ trip }) {
+export default function TripDetail({ trip, loading }) {
   const classes = useStyles();
   const dates = () => {
     const dateString = dateRange(trip);
@@ -60,7 +71,16 @@ export default function TripDetail({ trip }) {
       </Typography>
     );
   };
-
+  const loadingSpinner = () => {
+    if (loading) {
+      console.log("loading");
+      return (
+        <div className={classes.indexLoad}>
+          <PuffLoader size={50} color={"#6FCF97"} loading={loading} />
+        </div>
+      );
+    }
+  };
   return (
     <Container component="main" maxWidth="xs" className={classes.root}>
       <CssBaseline />
@@ -76,13 +96,15 @@ export default function TripDetail({ trip }) {
             <div className={classes.infoItem}>
               <Typography variant="body2">
                 <strong>Distance: </strong>{" "}
-                {trip.distance ? `${trip.distance} Miles` : "n/a"}
+                {trip.distance > 0 ? `${trip.distance} Miles` : "n/a"}
               </Typography>
             </div>
             <div className={classes.infoItem}>
               <Typography variant="body2">
                 <strong>Elevation Gain: </strong>
-                {trip.elevationGain ? `${trip.elevationGain} Feet` : "n/a"}
+                {trip.elevation_gain > 0
+                  ? `${formatNumberComma(trip.elevation_gain)} Feet`
+                  : "n/a"}
               </Typography>
             </div>
           </div>
@@ -110,7 +132,9 @@ export default function TripDetail({ trip }) {
             <div className={classes.infoItem}>
               <Typography variant="body2">
                 <strong>Calories: </strong>{" "}
-                {trip.calories ? `${trip.calories} Kcal` : "n/a"}
+                {trip.calories
+                  ? `${formatNumberComma(trip.calories)} Kcal`
+                  : "n/a"}
               </Typography>
             </div>
           </div>
@@ -118,6 +142,7 @@ export default function TripDetail({ trip }) {
         <Typography variant="body1" className={classes.description}>
           {trip.description}
         </Typography>
+        {loadingSpinner()}
       </div>
     </Container>
   );

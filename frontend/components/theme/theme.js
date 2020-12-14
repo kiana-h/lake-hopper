@@ -35,7 +35,7 @@ const Theme = createMuiTheme({
     },
     errorList: {
       display: "flex",
-      width: "100%",
+      width: "400px",
       flexDirection: "column",
       alignItems: "center",
       textAlign: "center",

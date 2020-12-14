@@ -9,7 +9,6 @@ import {
   getDistanceSum,
   getElevationSum,
 } from "../../util/trip_formatter";
-import { noTitle, noTripLocation } from "./errors";
 
 const initialState = {
   title: "",
@@ -83,6 +82,24 @@ class TripCreator extends React.Component {
     this.setState({ [id]: value });
   };
 
+  noTripLocation = () => {
+    this.props.receiveTripErrors(
+      this.props.mode === "draw"
+        ? [
+            "Missing Trip Location Info:",
+            "  - Draw your route on the map, or",
+            "  - Specify the starting point by clicking on the map",
+          ]
+        : [
+            "Missing Trip Location Info:",
+            "  - Upload a .tcx file to get trip info",
+          ]
+    );
+  };
+  noTitle = () => {
+    this.props.receiveTripErrors(["Title can't be blank"]);
+  };
+
   submit = () => {
     if (!this.state.firstPoint && !this.state.routes[0]) {
       this.noTripLocation();
@@ -115,17 +132,19 @@ class TripCreator extends React.Component {
     tripData.append("trip[end_date]", this.state.end_date);
     tripData.append("trip[location_lat]", this.state.firstPoint[1]);
     tripData.append("trip[location_lng]", this.state.firstPoint[0]);
+    tripData.append("trip[distance]", this.state.distance);
+    tripData.append("trip[elevation_gain]", this.state.elevation_gain);
     tripData.append("trip[photos][]", this.state.mapImageUrl);
     if (this.state.photos.length) {
       for (let photo of this.state.photos) {
         tripData.append("trip[photos][]", photo);
       }
     }
-    let route;
+
     let activities = [];
     for (let routeNum in this.state.routes) {
       const activity = {};
-      route = this.state.routes[routeNum];
+      let route = this.state.routes[routeNum];
       activity.trackpoints = JSON.stringify(route.trackpoints);
       activity.elevation_gain = route.elevation_gain;
       activity.distance = route.distance;
@@ -142,10 +161,6 @@ class TripCreator extends React.Component {
 
   navigateToSearch = () => {
     this.props.history.push("/trips");
-  };
-
-  setMode = (mode) => {
-    this.setState({ mode: mode });
   };
 
   getFirstPoint = (lap) => {
@@ -179,11 +194,7 @@ class TripCreator extends React.Component {
   };
 
   resetAll = () => {
-    this.resetMap();
-    this.setState({
-      title: "",
-      description: "",
-    });
+    this.setState(initialState);
   };
 
   render() {

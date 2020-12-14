@@ -7,3 +7,10 @@
   height: 500px;
   overflow: scroll;
 }
+
+.mapLoader {
+  z-index: 750;
+  position: absolute;
+  top: 200px;
+  left: 300px;
+}
