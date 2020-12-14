@@ -31,7 +31,7 @@ export default function SignUp({ errors, signup, login, clearErrors }) {
       await signup(state);
       history.push("/trips");
     } catch (e) {
-      console.log(e);
+      console.log;
     }
   };
 
@@ -52,7 +52,7 @@ export default function SignUp({ errors, signup, login, clearErrors }) {
       await login(user);
       history.push("/trips");
     } catch (e) {
-      console.log(e);
+      console.log;
     }
   };
 

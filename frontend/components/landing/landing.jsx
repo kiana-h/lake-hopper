@@ -14,7 +14,7 @@ const Landing = ({ currentUser, login, history, background }) => {
       await login(user);
       history.push("/trips");
     } catch (e) {
-      console.log(e);
+      console.log;
     }
   };
 

@@ -112,7 +112,7 @@ class Trackpoint {
         this.lat = Number(position["LatitudeDegrees"]);
         this.lng = Number(position["LongitudeDegrees"]);
       } catch (e) {
-        console.log(e);
+        console.log;
       }
     }
     if (keys.includes("AltitudeMeters")) {
@@ -126,7 +126,7 @@ class Trackpoint {
         let hr = raw_obj["HeartRateBpm"];
         this.hr = Number(hr["Value"]);
       } catch (e) {
-        console.log(e);
+        console.log;
       }
     }
   }

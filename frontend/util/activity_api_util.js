@@ -11,7 +11,7 @@ export const fetchActivity = (id) => {
   return $.ajax({
     method: "GET",
     url: `/api/activities/${id}`,
-    error: (err) => console.log(err),
+    error: (err) => console.log,
   });
 };
 

@@ -10,11 +10,11 @@ class TripShow extends React.Component {
     super(props);
     this.state = {
       photo: null,
-      loading: false,
+      mapLoading: false,
     };
   }
   componentDidMount() {
-    this.setState({ loading: true });
+    this.setState({ mapLoading: true });
     this.props.fetchTrip(this.props.tripId);
   }
   // componentDidUpdate() {
@@ -24,8 +24,7 @@ class TripShow extends React.Component {
   // }
 
   finishLoading = () => {
-    this.setState({ loading: false });
-    console.log("done");
+    this.setState({ mapLoading: false });
   };
 
   getFirstPoint = (lap) => {
@@ -48,13 +47,13 @@ class TripShow extends React.Component {
     this.setState({ photo });
   };
   loadingSpinner = () => {
-    if (this.state.loading || this.props.tripLoading) {
+    if (this.state.mapLoading || this.props.tripLoading) {
       return (
         <div className={style.mapLoader}>
           <PuffLoader
             size={100}
             color={"#bc9bff"}
-            loading={this.state.loading}
+            loading={this.state.mapLoading}
           />
         </div>
       );

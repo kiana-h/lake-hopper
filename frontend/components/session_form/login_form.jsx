@@ -30,7 +30,7 @@ function SignIn({ errors, login, clearErrors }) {
       await login(state);
       history.push("/trips");
     } catch (e) {
-      console.log(e);
+      console.log;
     }
   };
 
@@ -51,7 +51,7 @@ function SignIn({ errors, login, clearErrors }) {
       await login(user);
       history.push("/trips");
     } catch (e) {
-      console.log(e);
+      console.log;
     }
   };
 
