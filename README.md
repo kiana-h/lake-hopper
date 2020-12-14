@@ -1,7 +1,7 @@
 # Lake Hopper
 
 Live Website: lakehopper.io
-Live Website: (https://lakehopper.io/ "lakehopper.io")
+Live Website: [lakehopper.io](https://lakehopper.io/)
 
 I initially created Lake Hopper to record my own backpacking trips. As an avid backpacker, I wanted a place where I could see all of my past trips and save all the routes, photos, and notes for every trip in one place.
 
