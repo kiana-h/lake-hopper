@@ -8,12 +8,21 @@ import {
 export const selectTrips = (state) => {
   let trips = Object.values(state.entities.trips).reverse();
   trips.sort((a, b) => getDate(b.start_date) - getDate(a.start_date));
+  // for (let trip of trips) {
+  //   if (trip && trip.activitySummaries) {
+  //     trip.distance = getDistanceSum(trip.activitySummaries);
+  //     trip.elevationGain = getElevationSum(trip.activitySummaries);
+  //   }
+  // }
+
   for (let trip of trips) {
-    if (trip && trip.activitySummaries) {
-      trip.distance = getDistanceSum(trip.activitySummaries);
-      trip.elevationGain = getElevationSum(trip.activitySummaries);
+    if (trip) {
+      trip.distance = trip.distance > 0 ? trip.distance : "N/A";
+      trip.elevation_gain =
+        trip.elevation_gain > 0 ? trip.elevation_gain : "N/A";
     }
   }
+
   return trips;
 };
 

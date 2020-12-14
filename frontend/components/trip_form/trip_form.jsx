@@ -89,7 +89,6 @@ export default function TripForm({
     rawRoutes.sort(
       (a, b) => new Date(a["activityId"]) - new Date(b["activityId"])
     );
-    debugger;
     const routes = {};
     for (let i = 0; i < rawRoutes.length; i++) {
       routes[i] = rawRoutes[i];

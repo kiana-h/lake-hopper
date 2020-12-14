@@ -33,6 +33,7 @@ class TripIndexItem extends React.Component {
     if (!trip) {
       return <div></div>;
     }
+
     return (
       <div
         onClick={this.handleClick}
@@ -56,8 +57,8 @@ class TripIndexItem extends React.Component {
             </p>
             <p>
               <strong>Elevation Gain: </strong>
-              {trip.elevationGain > 0
-                ? formatNumberComma(trip.elevationGain) + " Feet"
+              {trip.elevation_gain > 0
+                ? formatNumberComma(trip.elevation_gain) + " Feet"
                 : "N/A"}
             </p>
           </div>

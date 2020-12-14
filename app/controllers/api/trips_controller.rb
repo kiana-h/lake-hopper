@@ -31,7 +31,7 @@ class Api::TripsController < ApplicationController
     private
 
     def trip_params
-        params.require(:trip).permit(:title, :description, :user_id, :start_date, :end_date, :location_lat, :location_lng, photos: [], activities_attributes: [:id, :elevation_gain, :distance, :trackpoints])
+        params.require(:trip).permit(:title, :description, :user_id, :start_date, :end_date, :location_lat, :location_lng, :distance, :elevation_gain, photos: [], activities_attributes: [:id, :elevation_gain, :distance, :trackpoints])
     end
 
     def activity_params
