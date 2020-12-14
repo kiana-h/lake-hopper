@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -13,10 +13,12 @@ import { List, ListItem } from "@material-ui/core";
 import theme from "../theme/theme";
 import useStyles from "./form-style";
 
-export default function SignUp({ errors, signup, login }) {
+export default function SignUp({ errors, signup, login, clearErrors }) {
   const classes = useStyles();
   const history = useHistory();
-
+  useEffect(() => {
+    if (errors.length) clearErrors();
+  }, []);
   const [state, setState] = useState({
     username: "",
     email: "",
@@ -54,15 +56,25 @@ export default function SignUp({ errors, signup, login }) {
     }
   };
 
+  // const renderErrors = () => {
+  //   if (!errors) {
+  //     return;
+  //   }
+  //   return errors.map((error, i) => (
+  //     <ListItem className={classes.errorItem} key={`error-${i}`}>
+  //       {error}
+  //     </ListItem>
+  //   ));
+  // };
   const renderErrors = () => {
-    if (!errors) {
+    if (!errors.length) {
       return;
     }
-    return errors.map((error, i) => (
-      <ListItem className={classes.errorItem} key={`error-${i}`}>
-        {error}
-      </ListItem>
-    ));
+    return (
+      <List style={theme.palette.errorList}>
+        <ListItem style={theme.palette.errorItem}>{errors[0]}</ListItem>
+      </List>
+    );
   };
 
   return (
