@@ -74,7 +74,7 @@ export default class MarkerDrawer {
     this.map.getSource(`route-${id}`).setData(geojson);
   };
 
-  drawUploadedRoutes = (routes) => {
+  drawUploadedRoutes = (routes, callback) => {
     let route, coordinates, id, lap;
 
     const firstLap = routes[0].trackpoints[0];

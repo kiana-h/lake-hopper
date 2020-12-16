@@ -8,6 +8,7 @@ import TripIndex from "./trip_index/trip_index_container";
 import TripCreator from "./trip_form/trip_creator_container";
 import TripShow from "./trip_show/trip_show_container";
 import Landing from "./landing/landing_container";
+import About from "./about/about";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <ProtectedRoute path="/trips/new" component={TripCreator} />
           <Route path="/trips/:tripId" component={TripShow} />
           <Route path="/trips" component={TripIndex} />
+          <Route path="/about" component={About} />
           <Route exact path="/" component={Landing} />
         </Switch>
       </div>

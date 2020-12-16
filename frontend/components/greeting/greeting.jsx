@@ -15,7 +15,7 @@ const Greeting = ({ currentUser, logout }) => {
   const AppBar = () => (
     <nav>
       <div className={`flex-center ${style["nav-elements"]}`}>
-        <Link to="/" className={`dark-shade-100 ${style.logo}`}>
+        <Link to="/trips" className={`dark-shade-100 ${style.logo}`}>
           <img className={style.mountain} src={window.logo_purple}></img>
           <h1>Lake Hopper</h1>
         </Link>

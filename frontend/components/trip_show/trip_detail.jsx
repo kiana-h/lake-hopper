@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TripDetail({ trip, loading }) {
+export default function TripDetail({ trip }) {
   const classes = useStyles();
   const dates = () => {
     const dateString = dateRange(trip);
@@ -71,16 +71,7 @@ export default function TripDetail({ trip, loading }) {
       </Typography>
     );
   };
-  const loadingSpinner = () => {
-    if (loading) {
-      console.log("loading");
-      return (
-        <div className={classes.indexLoad}>
-          <PuffLoader size={50} color={"#6FCF97"} loading={loading} />
-        </div>
-      );
-    }
-  };
+
   return (
     <Container component="main" maxWidth="xs" className={classes.root}>
       <CssBaseline />
@@ -142,7 +133,6 @@ export default function TripDetail({ trip, loading }) {
         <Typography variant="body1" className={classes.description}>
           {trip.description}
         </Typography>
-        {loadingSpinner()}
       </div>
     </Container>
   );

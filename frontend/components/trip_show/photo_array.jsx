@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -35,7 +35,6 @@ export default function ImageGridList({
   replaceMapWithPhoto,
 }) {
   const classes = useStyles();
-
   let tileData = [];
   let imgObject;
 
