@@ -8,7 +8,6 @@ import {
 
 const mapDispatchToProps = (dispatch) => ({
   createTrip: (trip) => dispatch(postTrip(trip)),
-  // createActivities: (activities) => dispatch(postActivities(activities)),
   receiveTripErrors: (error) => dispatch(receiveTripErrors(error)),
   startPosting: () => dispatch(startPostingTrip()),
 });

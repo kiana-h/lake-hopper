@@ -34,9 +34,9 @@ class TripCreator extends React.Component {
     };
 
     this.initMapProps = {
-      lng: -99.9434,
-      lat: 38.5209,
-      zoom: 3,
+      lng: -119.595498,
+      lat: 37.749749,
+      zoom: 14,
     };
   }
 
