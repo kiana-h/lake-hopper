@@ -45,7 +45,7 @@ Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the f
 
 * There are many different file types for recorded activites, but I started with tcx because it seemed to be the most "information-rich" type. It not only includes GPS coordinates, but also additional information like heart rate, calories, etc. 
 
-![Uploading Routes]((https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/upload_video.gif))
+![Uploading Routes](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/upload_video.gif)
 
 ## Creating New Trips
 
@@ -55,7 +55,7 @@ A main TripCreator component is responsible for managing the state and communica
 
 ## Displaying Trips
 
-![Trip Index]((https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip-show.png))
+![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip-show.png)
 
 ## Technologies
 
