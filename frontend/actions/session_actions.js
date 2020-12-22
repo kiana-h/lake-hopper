@@ -3,6 +3,7 @@ import * as ApiUtil from "../util/session_api_util";
 export const RECEIVE_USER = "RECEIVE_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const RECEIVE_SESSION_ERRORS = "RECEIVE_SESSION_ERRORS";
+export const CLEAR_SESSION_ERRORS = "CLEAR_SESSION_ERRORS";
 
 export const receiveUser = (user) => ({
   type: RECEIVE_USER,
@@ -16,6 +17,10 @@ export const logoutUser = () => ({
 export const receiveSessionErrors = (errors) => ({
   type: RECEIVE_SESSION_ERRORS,
   errors: errors,
+});
+
+export const clearSessionErrors = () => ({
+  type: CLEAR_SESSION_ERRORS,
 });
 
 // Async Actions

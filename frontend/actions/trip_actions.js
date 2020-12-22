@@ -6,6 +6,7 @@ export const START_LOADING_TRIPS = "START_LOADING_TRIPS";
 export const START_LOADING_TRIP = "START_LOADING_TRIP";
 export const START_POSTING_TRIP = "START_POSTING_TRIP";
 export const COMPLETE_POSTING_TRIP = "COMPLETE_POSTING_TRIP";
+export const CLEAR_TRIP_ERRORS = "CLEAR_TRIP_ERRORS";
 
 export const receiveTrips = (trips) => ({
   type: RECEIVE_TRIPS,
@@ -39,6 +40,10 @@ export const receiveTripErrors = (errors) => ({
   errors,
 });
 
+export const clearTripErrors = () => {
+  type: CLEAR_TRIP_ERRORS;
+};
+
 export const fetchTrips = (filters) => (dispatch) => {
   dispatch(startLoadingTrips());
   ApiUtil.fetchTrips(filters).then(
@@ -50,6 +55,7 @@ export const fetchTrips = (filters) => (dispatch) => {
 };
 
 export const fetchTrip = (id) => (dispatch) => {
+  dispatch(startLoadingTrip());
   ApiUtil.fetchTrip(id).then((trip) => {
     return dispatch(receiveTrip(trip));
   });
