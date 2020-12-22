@@ -24,11 +24,8 @@ export const fetchElevation = async (coordinates) => {
   const coordinateString = coordinates
     .map((coordinate) => [coordinate[1], coordinate[0]])
     .join("|");
-  // headers are not properly set up on opentopodata
-  // using cors-anywhere to fetch data through a back-end request
-  const url =
-    "https://api.opentopodata.org/v1/srtm90m?locations=" + coordinateString;
-
+  // const url ="https://api.opentopodata.org/v1/srtm90m?locations=" + coordinateString;
+  const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${coordinateString}&key=${google_api_key}`;
   const rawResponse = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
   const response = await rawResponse.json();
   const coords = response.results;
