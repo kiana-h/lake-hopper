@@ -21,7 +21,9 @@
     "font-awesome": "^4.7.0",
     "i": "^0.3.6",
     "mapbox-gl": "^1.12.0",
+    "marked": "^1.2.7",
     "npm": "^6.14.8",
+    "raw-loader": "^4.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-map-gl": "^5.2.9",
@@ -67,6 +69,5 @@
   "bugs": {
     "url": "https://github.com/kiana-h/lake-hopper/issues"
   },
-  "homepage": "https://github.com/kiana-h/lake-hopper#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/kiana-h/lake-hopper#readme"
 }
