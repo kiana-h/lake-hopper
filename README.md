@@ -55,7 +55,7 @@ A main TripCreator component is responsible for managing the state and communica
 
 ## Displaying Trips
 
-![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_show.gif)
+![Trip Show](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_show.gif)
 
 ## Technologies
 
