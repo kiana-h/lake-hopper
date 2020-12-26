@@ -24,7 +24,7 @@ Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the f
 
 ## Trip Dashboard:
 
-![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip-index.png)
+![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_index.gif)
 
 ## Drawing Routes: MapBox API integration for route creation
 
@@ -55,7 +55,7 @@ A main TripCreator component is responsible for managing the state and communica
 
 ## Displaying Trips
 
-![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip-show.png)
+![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_show.gif)
 
 ## Technologies
 
