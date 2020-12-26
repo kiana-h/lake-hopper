@@ -22,9 +22,6 @@ Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the f
 
 5. **User Authentication:** User authentication using BCrypt.
 
-## Trip Dashboard:
-
-![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_index.gif)
 
 ## Drawing Routes: MapBox API integration for route creation
 
@@ -52,6 +49,10 @@ Lake Hopper runs on a Rails/PostgreSQL backend, uses React.js and Redux on the f
 Each trip is created from a combination of form and map data. The form contains the trip title, description, photos, etc. The map includes the routes and all the waypoints. The waypoints contain GPS coordinates, elevation, and (if taken from a smarwatch) heart rate, calories, speed, and more. The overall trip stats are calculated by aggregation of information from individual waypoints.
 
 A main TripCreator component is responsible for managing the state and communicating between the form and the map components. Once the trip is submitted, the Trip Creator combines and organizes the data and sends it over to the Rails trip controller. 
+
+## Trip Dashboard:
+
+![Trip Index](https://raw.githubusercontent.com/kiana-h/lake-hopper/master/readme_assets/trip_index.gif)
 
 ## Displaying Trips
 
