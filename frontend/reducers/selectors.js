@@ -1,20 +1,8 @@
-import {
-  getTripInfo,
-  getDistanceSum,
-  getElevationSum,
-  getDate,
-} from "../util/trip_formatter";
+import { getTripInfo, getDate } from "../util/trip_formatter";
 
 export const selectTrips = (state) => {
   let trips = Object.values(state.entities.trips).reverse();
   trips.sort((a, b) => getDate(b.start_date) - getDate(a.start_date));
-  // for (let trip of trips) {
-  //   if (trip && trip.activitySummaries) {
-  //     trip.distance = getDistanceSum(trip.activitySummaries);
-  //     trip.elevationGain = getElevationSum(trip.activitySummaries);
-  //   }
-  // }
-
   for (let trip of trips) {
     if (trip) {
       trip.distance = trip.distance > 0 ? trip.distance : "N/A";
@@ -22,7 +10,6 @@ export const selectTrips = (state) => {
         trip.elevation_gain > 0 ? trip.elevation_gain : "N/A";
     }
   }
-
   return trips;
 };
 
