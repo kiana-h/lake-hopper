@@ -89,7 +89,7 @@ class TripShow extends React.Component {
           )}
         </div>
 
-        {trip.photos_url.length && (
+        {trip.photos_url && (
           <ImageGridList
             photoUrls={trip.photos_url}
             title={trip.title}
