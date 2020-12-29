@@ -32,3 +32,4 @@ playground
 
 .env
 .DS_Store
+app/assets/.DS_Store
