@@ -24,6 +24,14 @@
       window.demo_email = "<%= Rails.application.credentials.demo[:email] %>"
       window.demo_password = "<%= Rails.application.credentials.demo[:password] %>"
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8G606812C2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8G606812C2');
+    </script>
   </head>
 
   <body>
