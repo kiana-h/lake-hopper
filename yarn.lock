@@ -2799,7 +2799,7 @@
   dependencies:
     "ms" "2.1.2"
 
-"debuglog@*", "debuglog@^1.0.1":
+"debuglog@^1.0.1":
   "integrity" "sha1-qiT/uaw9+aI1GDfPstJ5NgzXhJI="
   "resolved" "https://registry.npmjs.org/debuglog/-/debuglog-1.0.1.tgz"
   "version" "1.0.1"
@@ -4229,7 +4229,7 @@
     "pkg-dir" "^3.0.0"
     "resolve-cwd" "^2.0.0"
 
-"imurmurhash@*", "imurmurhash@^0.1.4":
+"imurmurhash@^0.1.4":
   "integrity" "sha1-khi5srkoojixPcT7a21XbyMUU+o="
   "resolved" "https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz"
   "version" "0.1.4"
@@ -5141,11 +5141,6 @@
   dependencies:
     "signal-exit" "^3.0.2"
 
-"lodash._baseindexof@*":
-  "integrity" "sha1-/lK1OhxnYeQmGNZU5KJXie1hgiw="
-  "resolved" "https://registry.npmjs.org/lodash._baseindexof/-/lodash._baseindexof-3.1.0.tgz"
-  "version" "3.1.0"
-
 "lodash._baseuniq@~4.6.0":
   "integrity" "sha1-DrtE5FaBSveQXGIS+iybLVG4Qeg="
   "resolved" "https://registry.npmjs.org/lodash._baseuniq/-/lodash._baseuniq-4.6.0.tgz"
@@ -5154,29 +5149,12 @@
     "lodash._createset" "~4.0.0"
     "lodash._root" "~3.0.0"
 
-"lodash._bindcallback@*":
-  "integrity" "sha1-5THCdkTPi1epnhftlbNcdIeJOS4="
-  "resolved" "https://registry.npmjs.org/lodash._bindcallback/-/lodash._bindcallback-3.0.1.tgz"
-  "version" "3.0.1"
-
-"lodash._cacheindexof@*":
-  "integrity" "sha1-PcaayCSY0u5ePOVgkbr9Ktx73pI="
-  "resolved" "https://registry.npmjs.org/lodash._cacheindexof/-/lodash._cacheindexof-3.0.2.tgz"
-  "version" "3.0.2"
-
-"lodash._createcache@*":
-  "integrity" "sha1-VtagZAF2JeeevKa4AY4XRAvc8JM="
-  "resolved" "https://registry.npmjs.org/lodash._createcache/-/lodash._createcache-3.1.2.tgz"
-  "version" "3.1.2"
-  dependencies:
-    "lodash._getnative" "^3.0.0"
-
 "lodash._createset@~4.0.0":
   "integrity" "sha1-D0ZZ+7CddRlPqeK4imZE02PJ/iY="
   "resolved" "https://registry.npmjs.org/lodash._createset/-/lodash._createset-4.0.3.tgz"
   "version" "4.0.3"
 
-"lodash._getnative@*", "lodash._getnative@^3.0.0":
+"lodash._getnative@^3.0.0":
   "integrity" "sha1-VwvH3t5G1hzc3mh9ZdPuy6o6r/U="
   "resolved" "https://registry.npmjs.org/lodash._getnative/-/lodash._getnative-3.9.1.tgz"
   "version" "3.9.1"
@@ -5200,11 +5178,6 @@
   "integrity" "sha1-QVxEePK8wwEgwizhDtMib30+GOA="
   "resolved" "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
   "version" "4.5.0"
-
-"lodash.restparam@*":
-  "integrity" "sha1-k2pOMJ7zMKdkXtQUWYbIWuWyCAU="
-  "resolved" "https://registry.npmjs.org/lodash.restparam/-/lodash.restparam-3.6.1.tgz"
-  "version" "3.6.1"
 
 "lodash.union@~4.6.0":
   "integrity" "sha1-SLtQiECfFvGCFmZkHETdGqrjzYg="
@@ -5907,7 +5880,6 @@
     "cmd-shim" "^3.0.3"
     "columnify" "~1.5.4"
     "config-chain" "^1.1.12"
-    "debuglog" "*"
     "detect-indent" "~5.0.0"
     "detect-newline" "^2.1.0"
     "dezalgo" "~1.0.3"
@@ -5922,7 +5894,6 @@
     "has-unicode" "~2.0.1"
     "hosted-git-info" "^2.8.8"
     "iferr" "^1.0.2"
-    "imurmurhash" "*"
     "infer-owner" "^1.0.4"
     "inflight" "~1.0.6"
     "inherits" "^2.0.4"
@@ -5942,14 +5913,8 @@
     "libnpx" "^10.2.4"
     "lock-verify" "^2.1.0"
     "lockfile" "^1.0.4"
-    "lodash._baseindexof" "*"
     "lodash._baseuniq" "~4.6.0"
-    "lodash._bindcallback" "*"
-    "lodash._cacheindexof" "*"
-    "lodash._createcache" "*"
-    "lodash._getnative" "*"
     "lodash.clonedeep" "~4.5.0"
-    "lodash.restparam" "*"
     "lodash.union" "~4.6.0"
     "lodash.uniq" "~4.5.0"
     "lodash.without" "~4.4.0"
