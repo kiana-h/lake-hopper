@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -6,17 +6,17 @@ import TextField from "@material-ui/core/TextField";
 import ExploreIcon from "@material-ui/icons/Explore";
 import Typography from "@material-ui/core/Typography";
 import { List, ListItem } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import InputAdornment from "@material-ui/core/InputAdornment";
+
 import { formatNumberComma } from "../../util/trip_formatter";
 import style from "./style.scss";
 import theme from "../theme/theme";
 import useStyles from "./form-style";
-
 import parseFile from "../../util/tcx-parser";
 
 export default function TripForm({
   errors,
+  clearErrors,
   submit,
   mode,
   distance,
@@ -39,20 +39,19 @@ export default function TripForm({
     uploadingFile: false,
   });
 
-  // Set up visible/disabled inputs based on state and props
+  useEffect(() => {
+    clearErrors();
+  }, []);
 
+  // Set up visible/disabled inputs based on state and props
   let showInputs = mode === "draw" || activities[0];
   let showUploadButton = mode === "upload" && !activities[0];
-
   let disableForm = state.uploadingFile || submitted;
   let disableDistanceElevation =
     mode === "upload" || routesDrawn || calculating;
   let disableDate = mode === "upload" || submitted;
 
   const renderErrors = () => {
-    if (!errors.length) {
-      return;
-    }
     return (
       <List style={theme.palette.errorList}>
         {errors.map((error, i) => (
@@ -63,8 +62,8 @@ export default function TripForm({
       </List>
     );
   };
-  // Draw mode methods
 
+  // Draw mode methods
   const handleChange = (e) => {
     const { id, value } = e.currentTarget;
     updateProp(id, value);
@@ -133,7 +132,7 @@ export default function TripForm({
             Create New Trip
           </Typography>
         </div>
-        {renderErrors()}
+        {errors.length && renderErrors()}
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"

@@ -235,6 +235,7 @@ class TripCreator extends React.Component {
           routesDrawn={Object.keys(this.state.routes).length > 0}
           calculating={this.state.calculating}
           errors={this.props.errors}
+          clearErrors={this.props.clearTripErrors}
           posting={this.props.posting}
           submitted={this.state.submitted}
         />

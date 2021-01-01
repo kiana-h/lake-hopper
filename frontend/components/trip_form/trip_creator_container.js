@@ -4,11 +4,13 @@ import {
   postTrip,
   receiveTripErrors,
   startPostingTrip,
+  clearTripErrors,
 } from "../../actions/trip_actions";
 
 const mapDispatchToProps = (dispatch) => ({
   createTrip: (trip) => dispatch(postTrip(trip)),
   receiveTripErrors: (error) => dispatch(receiveTripErrors(error)),
+  clearTripErrors: () => dispatch(clearTripErrors()),
   startPosting: () => dispatch(startPostingTrip()),
 });
 
