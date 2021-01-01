@@ -40,9 +40,9 @@ export const receiveTripErrors = (errors) => ({
   errors,
 });
 
-export const clearTripErrors = () => {
-  type: CLEAR_TRIP_ERRORS;
-};
+export const clearTripErrors = () => ({
+  type: CLEAR_TRIP_ERRORS,
+});
 
 export const fetchTrips = (filters) => (dispatch) => {
   dispatch(startLoadingTrips());
