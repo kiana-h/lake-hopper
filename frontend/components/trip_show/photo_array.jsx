@@ -19,9 +19,13 @@ const useStyles = makeStyles((theme) => ({
   gridList: {
     flexWrap: "nowrap",
     transform: "translateZ(0)",
-    overflowX: "scroll",
+    overflowX: "auto",
     width: "1200px",
+    "&:-webkit-scrollbar": {
+      display: "none",
+    },
   },
+
   title: {
     color: theme.palette.primary.light,
   },
@@ -81,9 +85,9 @@ export default function ImageGridList({
           </GridListTile>
         ))}
       </GridList>
-      {photoUrls.length > 5 && (
+      {/* {photoUrls.length > 5 && (
         <ArrowForwardIosIcon className={classes.arrowForward} />
-      )}
+      )} */}
     </div>
   );
 }
