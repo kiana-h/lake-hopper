@@ -46,8 +46,9 @@ class TripShow extends React.Component {
   replaceMapWithPhoto = (photo) => {
     this.setState({ photo });
   };
+
   loadingSpinner = () => {
-    if (this.state.mapLoading || this.props.tripLoading) {
+    if (!this.props.trip.days) {
       return (
         <div className={style.mapLoader}>
           <PuffLoader
@@ -59,6 +60,7 @@ class TripShow extends React.Component {
       );
     }
   };
+
   render() {
     if (!this.props.trip) {
       return <div></div>;
@@ -73,9 +75,9 @@ class TripShow extends React.Component {
             className={style["trip-detail"]}
             loading={this.state.loading}
           />
-          {!this.props.tripLoading && (
-            <div className={style["map-offset"]}>
-              {this.loadingSpinner()}
+          <div className={style["map-offset"]}>
+            {this.loadingSpinner()}
+            {!this.props.tripLoading && (
               <TripMap
                 lat={trip.location_lat}
                 lng={trip.location_lng}
@@ -85,8 +87,8 @@ class TripShow extends React.Component {
                 photo={this.state.photo}
                 finishLoading={this.finishLoading}
               />
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {trip.photos_url && trip.photos_url.length > 1 && (
