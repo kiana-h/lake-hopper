@@ -19,6 +19,7 @@ export const fetchRoute = async (start, end, token, id) => {
   return result;
 };
 
+//get elevation data from opentopodata
 export const fetchElevation = (coordinates) => {
   const path = coordinates.map((coordinate) => {
     return { lat: coordinate[1], lng: coordinate[0] };
@@ -55,8 +56,8 @@ const calcElevationGain = (coordinates) => {
     }
     currentPoint = point.elevation;
     trackpoint = {
-      lat: point.location ? point.location.lat : null,
-      lng: point.location ? point.location.lng : null,
+      lat: point.location ? point.location.lat() : null,
+      lng: point.location ? point.location.lng() : null,
       elevation: point.elevation || null,
     };
     trackpoints.push(trackpoint);
