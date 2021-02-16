@@ -25,9 +25,15 @@ export const fetchElevation = async (coordinates) => {
     .map((coordinate) => [coordinate[1], coordinate[0]])
     .join("|");
   // const url ="https://api.opentopodata.org/v1/srtm90m?locations=" + coordinateString;
+
   const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${coordinateString}&key=${google_api_key}`;
-  const rawResponse = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+  // const rawResponse = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+
+  const rawResponse = await fetch(
+    `https://thingproxy.freeboard.io/fetch/${url}`
+  );
   const response = await rawResponse.json();
+
   const coords = response.results;
   return calcElevationGain(coords);
 };
