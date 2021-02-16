@@ -19,23 +19,25 @@ export const fetchRoute = async (start, end, token, id) => {
   return result;
 };
 
-//get elevation data from opentopodata
-export const fetchElevation = async (coordinates) => {
-  const coordinateString = coordinates
-    .map((coordinate) => [coordinate[1], coordinate[0]])
-    .join("|");
-  // const url ="https://api.opentopodata.org/v1/srtm90m?locations=" + coordinateString;
+export const fetchElevation = (coordinates) => {
+  const path = coordinates.map((coordinate) => {
+    return { lat: coordinate[1], lng: coordinate[0] };
+  });
 
-  const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${coordinateString}&key=${google_api_key}`;
-  // const rawResponse = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+  const elevator = new google.maps.ElevationService();
 
-  const rawResponse = await fetch(
-    `https://thingproxy.freeboard.io/fetch/${url}`
-  );
-  const response = await rawResponse.json();
-
-  const coords = response.results;
-  return calcElevationGain(coords);
+  return new Promise((resolve, reject) => {
+    elevator.getElevationAlongPath(
+      {
+        path: path,
+        samples: 256,
+      },
+      (coordinates) => {
+        const elevationData = calcElevationGain(coordinates);
+        resolve(elevationData);
+      }
+    );
+  });
 };
 
 //helper method: get total elevation gain from an array of coordinate objects

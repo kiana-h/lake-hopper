@@ -46,6 +46,16 @@ class TripDrawMap extends React.Component {
       // add navigation control
       this.MapDrawer.addNavigationControl();
 
+      // set up google elevation service
+      if (!window.google) {
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.src = `https://maps.google.com/maps/api/js?key=${google_api_key}`;
+        var x = document.getElementsByTagName("script")[0];
+        x.parentNode.insertBefore(s, x);
+        //We cannot access google.maps until it's finished loading
+      }
+
       // add listeners for drawing
       this.registerListeners();
     });
