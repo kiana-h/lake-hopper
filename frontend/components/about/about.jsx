@@ -8,8 +8,6 @@ import style from "./style.scss";
 import theme from "../theme/theme";
 import readme from "../../../README.md";
 
-// test comment
-
 const About = () => {
   return (
     <div
