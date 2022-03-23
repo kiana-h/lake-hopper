@@ -20,25 +20,18 @@ export const fetchRoute = async (start, end, token, id) => {
 };
 
 //get elevation data from opentopodata
-export const fetchElevation = (coordinates) => {
+export const fetchElevation = async (coordinates) => {
   const path = coordinates.map((coordinate) => {
     return { lat: coordinate[1], lng: coordinate[0] };
   });
 
   const elevator = new google.maps.ElevationService();
-
-  return new Promise((resolve, reject) => {
-    elevator.getElevationAlongPath(
-      {
-        path: path,
-        samples: 256,
-      },
-      (coordinates) => {
-        const elevationData = calcElevationGain(coordinates);
-        resolve(elevationData);
-      }
-    );
+  const response = await elevator.getElevationAlongPath({
+    path: path,
+    samples: 256,
   });
+
+  return calcElevationGain(response.results);
 };
 
 //helper method: get total elevation gain from an array of coordinate objects
